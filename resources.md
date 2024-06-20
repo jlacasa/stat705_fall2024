@@ -13,4 +13,4 @@ description: Listing of recommended textbooks and papers.
 
 **Recommended software-related resources:**
 - R Core Team (2023) R: A Language and Environment for Statistical Computing. R Foundation for Statistical Computing. [link](https://cran.r-project.org/)
-- Wickham et al. (2023), R for Data Science, Second edition. O'Reilly Media. [link](https://r4ds.hadley.nz/)
+- Wickham et al. (2023). R for Data Science (2nd ed.). O'Reilly Media. [link](https://r4ds.hadley.nz/)

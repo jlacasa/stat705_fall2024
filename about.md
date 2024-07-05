@@ -28,10 +28,31 @@ Tempus iaculis urna id volutpat lacus laoreet non curabitur gravida. Vulputate d
 {{ schedule }}
 {% endfor %}
 
-## Resources
+## Grading
 
-Lacus viverra vitae congue eu. Suspendisse in est ante in nibh mauris cursus mattis. Nisl vel pretium lectus quam id leo in. Euismod lacinia at quis risus sed vulputate odio. Non enim praesent elementum facilisis. Aliquet sagittis id consectetur purus ut faucibus pulvinar elementum integer. Id interdum velit laoreet id donec ultrices tincidunt arcu. Urna molestie at elementum eu facilisis sed odio. Auctor urna nunc id cursus metus aliquam eleifend. Volutpat commodo sed egestas egestas fringilla phasellus. Libero nunc consequat interdum varius sit amet mattis. Imperdiet nulla malesuada pellentesque elit eget gravida cum sociis natoque. Tortor vitae purus faucibus ornare suspendisse. Auctor elit sed vulputate mi.
+The course will be for 3 credits, graded on an A-F scale. A (>90%), B (90%-80%), C (80%-70%), D (70%-60%), and F (<60%).
 
-## Assignments
 
-Vehicula ipsum a arcu cursus vitae congue. Etiam dignissim diam quis enim lobortis scelerisque fermentum dui. Risus sed vulputate odio ut enim blandit. Aliquam id diam maecenas ultricies mi eget. Id consectetur purus ut faucibus pulvinar elementum integer enim neque. Eget mi proin sed libero enim sed faucibus. Sem integer vitae justo eget magna fermentum iaculis. In mollis nunc sed id semper risus in. Sit amet risus nullam eget felis eget. Mattis ullamcorper velit sed ullamcorper morbi tincidunt ornare massa eget. Nascetur ridiculus mus mauris vitae ultricies leo integer malesuada. Porta non pulvinar neque laoreet suspendisse interdum consectetur libero id. At varius vel pharetra vel turpis nunc eget. Scelerisque purus semper eget duis at tellus.
+## General Policies
+
+Class attendance is expected.  
+
+
+## Academic Honesty  
+
+Kansas State University
+
+
+## Academic Accommodations for Students with Disabilities  
+
+Students with disabilities who need classroom accommodations, access to technology, or information about emergency building/campus evacuation processes should contact the Student Access Center and/or their instructor.  Services are available to students with a wide range of disabilities including, but not limited to, physical disabilities, medical conditions, learning disabilities, attention deficit disorder, depression, and anxiety.  If you are a student enrolled in campus/online courses through the Manhattan or Olathe campuses, contact the Student Access Center at accesscenter@k-state.edu, 785-532-6441.
+
+
+## Expectations for Classroom Conduct  
+
+All student activities in the University, including this course, are governed by the Student Judicial Conduct Code as outlined in the Student Government Association By Laws, Article VI, Section 3, number 2. Students that engage in behavior that disrupts the learning environment may be asked to leave the class.
+
+
+## Copyright Notification  
+
+During this course, students are prohibited from selling notes to or being paid for taking notes by any person or commercial firm, or posting lecture notes on any websites without the express written permission of the professor teaching this course.

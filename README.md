@@ -24,8 +24,7 @@ The main goal is that this course acts as a primer for statistical thinking.
 Students taking this class should learn the basics to fit a statistical model to data. 
 The process to fit a statistical model to data taught in this course focuses on (1) the data generating process (including the sources of uncertainty), (2) writing out the statistical model that reflects that data generating process, and (3) fitting the model to observed data using R. 
 
-**What this course is not:**  
-- An R programming course (however, help will be provided).
+**What this course is not:** an R programming course (however, help will be provided).
 
 **Prerequisites:** One previous statistics course. Some background R programming is convenient, but not required.   
 

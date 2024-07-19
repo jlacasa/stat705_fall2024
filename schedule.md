@@ -1,10 +1,10 @@
 ---
 layout: page
-title: Schedule and Notes
+title: Schedule
 description: Listing of course modules, topics, and scripts.
 ---
 
-# Schedule and Notes
+# Schedule
 
 {% for module in site.modules %}
 {{ module }}

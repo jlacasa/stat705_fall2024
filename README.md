@@ -15,7 +15,7 @@ Fall 2024
 
 **Time:** Mon-Wed-Fri 9:30 am - 10.20 am  
 
-**Course Description:**  This course introduces students to statistical modeling and, more broadly, statistical thinking (more on statistical thinking [here]() and [here](https://www.tandfonline.com/doi/full/10.1080/00031305.2018.1518264)). 
+**Course Description:**  This course introduces students to statistical modeling and, more broadly, statistical thinking (more on statistical thinking [here](https://errorstatistics.com/wp-content/uploads/2016/01/brown-and-kass_what-is-statistics-with-discussion.pdf)). 
 We will cover linear regression, ANOVA, model checking, and model selection. We may cover more advanced topics like generalized linear (mixed) models, Bayesian regression, and missing data techniques.
 At the end of this course, students are expected to know how to apply different basic statistical concepts using R software.  
 

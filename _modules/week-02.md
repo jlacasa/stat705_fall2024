@@ -16,7 +16,7 @@ Aug 28
 Aug 30
 : Dealing with outliers[Intro to Stat Modeling](#)
   : [R script](#).
-: **New Assignment**{: .label .label-green } Due 08/30.
+: **New Assignment**{: .label .label-green } Due 08/27.
   : [See Assignment 1](#).
 
 

@@ -16,7 +16,7 @@ Aug 28
 Aug 30
 : Dealing with outliers
   : [](#).
-: **New Assignment**{: .label .label-green } Due 08/27.
+: **New Assignment**{: .label .label-green } Due 09/03
   : [](#).
 
 

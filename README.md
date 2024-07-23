@@ -10,6 +10,7 @@ seo:
 
 # STAT 705 - Regression and Analysis of Variance  
 Fall 2024  
+Kansas State University
 
 **Instructor:** Dr. Josefina Lacasa (see [staff](staff.md) page)  
 

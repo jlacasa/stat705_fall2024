@@ -8,10 +8,10 @@ Aug 19
 
 Aug 21
 : Intro to statistical modeling
-  : [html](#)
+  : [](#)
 
 Aug 23
 : Intro to statistical modeling
-  : [R script](#)
+  : [](#)
 : **New Assignment**{: .label .label-green } Due 08/30.
   : [See Assignment 1](#).

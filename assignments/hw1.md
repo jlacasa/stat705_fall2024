@@ -1,6 +1,6 @@
 ---
 layout: page
-title: HW01  Intro to Stat Modeling I
+title: HW01  Intro Stat Modeling
 permalink: /assignments/hw1
 parent: Assignments
 nav_order: 1

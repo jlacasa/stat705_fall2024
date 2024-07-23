@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Final Project
-permalink: /assignments/hw1
+permalink: /assignments/final_project
 parent: Assignments
 nav_order: 10
 ---

@@ -11,13 +11,13 @@ Aug 27
 
 Aug 28
 : Two
-  : [R script](#)
+  : [](#)
 
 Aug 30
-: Dealing with outliers[Intro to Stat Modeling](#)
-  : [R script](#).
+: Dealing with outliers
+  : [](#).
 : **New Assignment**{: .label .label-green } Due 08/27.
-  : [See Assignment 1](#).
+  : [](#).
 
 
   

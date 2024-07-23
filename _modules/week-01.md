@@ -4,7 +4,7 @@ title: Introduction to Statistical Modeling
 
 Aug 19
 : Welcome!
-  : [R](https://cran.r-project.org/), [RStudio](https://posit.co/download/rstudio-desktop/), [other resources](https://jlacasa.github.io/STAT705_F2024/resources/).
+  : [R script](https://jlacasa.github.io/STAT705_F2024//classes/day01_08192024), [R](https://cran.r-project.org/), [RStudio](https://posit.co/download/rstudio-desktop/), [other resources](https://jlacasa.github.io/STAT705_F2024/resources/)
 
 Aug 21
 : Intro to statistical modeling

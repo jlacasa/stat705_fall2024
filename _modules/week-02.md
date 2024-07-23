@@ -7,7 +7,7 @@ Aug 26
   : [R script]()
 
 Aug 27
-: **Assignment 1 due**{: .label .label-red }
+: **Assignment 1 due 2 pm**{: .label .label-red }
 
 Aug 28
 : Two

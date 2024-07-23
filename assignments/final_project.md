@@ -3,6 +3,7 @@ layout: page
 title: Final Project
 permalink: /assignments/hw1
 parent: Assignments
+nav_order: 10
 ---
 
 # Final project  

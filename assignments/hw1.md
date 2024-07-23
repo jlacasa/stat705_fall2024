@@ -7,3 +7,11 @@ nav_order: 1
 ---
 
 # Homework 1 **Due Tuesday 27 August at 2pm CT**{: .label .label-red }
+
+## Learning objectives  
+- Check R skills. 
+- Review concepts.
+
+## Exercise 1. 
+
+## Exercise 2. 

@@ -14,7 +14,7 @@ nav_order: 1
 
 ## Exercise 1. 
 
-Load the data using the R code below and show the relationship between --- and ---.  
+Load the data using the R code below and show the relationship between weight and length.  
 
 ```
 url <- ""
@@ -24,5 +24,5 @@ data <- read.csv(url)
 ## Exercise 2. 
 When you read the newspaper this week, find an article with a statement that is backed up by a statistical analysis. 
 - Paste the article url in your handout and point at the statistical analysis.
-- 
+- List one strength and one weakness of this analysis.
 

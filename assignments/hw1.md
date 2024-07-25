@@ -13,8 +13,11 @@ nav_order: 1
 - Review concepts. 
 
 ## Exercise 1. 
+
 ```{r }
 url <- ""
+
 data <- read.csv(url)
 ```
+
 ## Exercise 2. 

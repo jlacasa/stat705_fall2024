@@ -14,5 +14,5 @@ nav_order: 10
 3. c
 
 ## Partial deadlines  
-### Project proposal **Due Friday September 13th at 2pm CT**{: .label .label-red }
-### Written report **Due Friday November 22nd at 2pm CT**{: .label .label-red }
+### Project proposal **Due Friday September 13 at 2pm CT**{: .label .label-red }
+### Written report **Due Friday November 22 at 2pm CT**{: .label .label-red }

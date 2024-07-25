@@ -14,6 +14,7 @@ nav_order: 1
 
 ## Exercise 1. 
 ```{r }
-library(tidyverse)
+url <- ""
+data <- read.csv(url)
 ```
 ## Exercise 2. 

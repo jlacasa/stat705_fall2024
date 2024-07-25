@@ -3,18 +3,24 @@ title: Linear Models and Estimation
 ---
 
 Aug 26
-: One 
+: What is a linear model anyways 
   : [R script]()
 
 Aug 27
 : **Assignment 1 due 2 pm**{: .label .label-red }
 
 Aug 28
-: Two
+: More on linear models
   : [](#)
 
 Aug 30
-: Dealing with outliers
+: More on linear models
+  : [](#)
+
+Sep 02
+: What happens with all these assumptions
+  : [](#).
+: **Keywords:** outliers; data cleaning.
   : [](#).
 : **New Assignment**{: .label .label-green } Due 09/03
   : [](#).

@@ -10,8 +10,10 @@ nav_order: 1
 
 ## Learning objectives  
 - Check R skills. 
-- Review concepts.
+- Review concepts. 
 
 ## Exercise 1. 
-
+```{r }
+library(tidyverse)
+```
 ## Exercise 2. 

@@ -9,6 +9,8 @@ Aug 19
 Aug 21
 : Intro to statistical modeling
   : [](#)
+: **Complete survey**{: .label .label-green } Due 08/27
+  : [go to survey](#).
 
 Aug 23
 : Intro to statistical modeling

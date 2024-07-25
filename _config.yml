@@ -17,7 +17,7 @@ title: STAT 705
 tagline: Kansas State University
 description: An introduction to statistical modeling 
 author: Josefina Lacasa
-baseurl: '/STAT705_F2024' # the subpath of your site, e.g. /blog
+baseurl: '/stat705_fall2024' # the subpath of your site, e.g. /blog
 url: 'https://jlacasa.github.io' # the base hostname & protocol for your site, e.g. http://example.com
 exclude: ["Gemfile", "Gemfile.lock", "LICENSE"]
 

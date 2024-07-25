@@ -14,10 +14,8 @@ nav_order: 1
 
 ## Exercise 1. 
 
-```{r }  
-
+```
 url <- ""
-
 data <- read.csv(url)
 ```
 

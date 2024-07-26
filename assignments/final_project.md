@@ -9,8 +9,12 @@ nav_order: 10
 # Final project  
 
 Students will engage in a semester-long project. 
+Semester projects may deal with any topic that interests the student, as long as it is approved by the instructors. 
+Broadly, students are expected to identify a research problem and develop an appropriate statistical model to solve that problem. 
+Students are also expected to produce a reproducible statistical analysis and a tutorial (e.g., a pdf of html file describing the code). 
 
 <img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/regular/lightbulb.svg" width="50" height="50"> This type of activities is an example of active learning, that has shown significant advances ---.  
+
 
 
 ## Learning objectives  

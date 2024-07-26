@@ -11,7 +11,7 @@ nav_order: 10
 ## Learning objectives  
 1. Identify a statistical model that is appropriate to answer a research question.  
 2. Evaluate said statistical model and reflect on strengths and weaknesses. 
-3. Communicate the results. 
+3. Interpret and communicate the results. 
 
 ## Partial deadlines  
 ### Project proposal **Due Friday September 13 at 2pm CT**{: .label .label-red }

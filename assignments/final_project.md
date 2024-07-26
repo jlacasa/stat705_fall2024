@@ -8,6 +8,11 @@ nav_order: 10
 
 # Final project  
 
+Students will engage in a semester-long project. 
+
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/regular/lightbulb.svg" width="50" height="50"> This type of activities is an example of active learning, that has shown significant advances ---.  
+
+
 ## Learning objectives  
 1. Identify a statistical model that is appropriate to answer a research question.  
 2. Evaluate said statistical model and reflect on strengths and weaknesses. 

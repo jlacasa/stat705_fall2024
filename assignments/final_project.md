@@ -13,7 +13,7 @@ Semester projects may deal with any topic that interests the student, as long as
 Broadly, students are expected to identify a research problem and develop an appropriate statistical model to solve that problem. 
 Students are also expected to produce a reproducible statistical analysis and a tutorial (e.g., a pdf of html file describing the code). 
 
-<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/regular/lightbulb.svg" width="10" height="10"> This type of activities is an example of active learning, that has shown significant advances ---.  
+<img src="https://raw.githubusercontent.com/FortAwesome/Font-Awesome/6.x/svgs/regular/lightbulb.svg" width="15" height="15"> This type of activities is an example of active learning, that has shown significant advances ---.  
 
 
 

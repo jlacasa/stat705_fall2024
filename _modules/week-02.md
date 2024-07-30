@@ -7,7 +7,8 @@ Aug 26
   : [R script]()
 
 Aug 27
-: **Assignment 1 due 2 pm**{: .label .label-red }
+: 
+  : **Assignment 1 due 2 pm**{: .label .label-red }
 
 Aug 28
 : More on linear models
@@ -16,8 +17,8 @@ Aug 28
 Aug 30
 : More on linear models
   : [](#)
-: **New Assignment**{: .label .label-green } Due 09/10
-  : [](#)
+: 
+  : **New Assignment**{: .label .label-green } Due 09/10
 
 Sep 02
 : Labor day
@@ -26,9 +27,6 @@ Sep 02
 Sep 04
 : What happens with all these assumptions
   : [](#)
-: **Keywords:** outliers; data cleaning.
-  : [](#)
-
 
 
   

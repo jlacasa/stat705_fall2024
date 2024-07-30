@@ -13,4 +13,5 @@ Aug 21
 Aug 23
 : Intro to statistical modeling
   : [html](#)<br />  
+: []()
   : **New Assignment**{: .label .label-green } Due 08/27

@@ -19,7 +19,14 @@ nav_order: 1
 
 ## About
 
-This course...
+This course introduces students to statistical modeling and, more broadly, statistical thinking (more on statistical thinking [here](https://errorstatistics.com/wp-content/uploads/2016/01/brown-and-kass_what-is-statistics-with-discussion.pdf)). 
+We will cover linear regression, ANOVA, model checking, and model selection. We may cover more advanced topics like generalized linear (mixed) models, Bayesian regression, and missing data techniques.
+At the end of this course, students are expected to know how to apply different basic statistical concepts using R software.  
+
+**Main Goal of this Course:**  
+The main goal is that this course acts as a primer for statistical thinking. 
+Students taking this class should learn the basics to fit a statistical model to data. 
+The process to fit a statistical model to data taught in this course focuses on (1) the data generating process (including the sources of uncertainty), (2) writing out the statistical model that reflects that data generating process, and (3) fitting the model to observed data using R. 
 
 ## Lecture
 

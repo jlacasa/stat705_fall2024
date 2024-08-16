@@ -8,7 +8,7 @@ Aug 19
 
 Aug 21
 : Intro to statistical modeling
-  : **Complete [survey](#)**{: .label .label-yellow } Due 08/21
+  : **Complete [survey](https://forms.gle/Anv7f1uFUZDwoDsS9)**{: .label .label-yellow } Due 08/21
 
 Aug 23
 : Intro to statistical modeling

@@ -28,28 +28,37 @@ The main goal is that this course acts as a primer for statistical thinking.
 Students taking this class should learn the basics to fit a statistical model to data. 
 The process to fit a statistical model to data taught in this course focuses on (1) the data generating process (including the sources of uncertainty), (2) writing out the statistical model that reflects that data generating process, and (3) fitting the model to observed data using R. 
 
-## Lecture
+**Prerequisites**: One previous statistics course.
 
-Lectures  
+## Weekly schedule
 
 {% for schedule in site.schedules %}
 {{ schedule }}
 {% endfor %}
 
 ## Grading
+The course will be for 3 credits, graded on an A-F scale. A (>90%), B (90%-80%), C (80%-70%), D (70%-60%), and F (<60%). Final grade will be based on the following criteria:
+Attendance and participation 20% | Assignments 40% | Final project and presentation 40%
 
-The course will be for 3 credits, graded on an A-F scale. A (>90%), B (90%-80%), C (80%-70%), D (70%-60%), and F (<60%).
+### Attendance  
+Attendance to lectures and in-class participation are expected. Coming
+late to class, leaving early, or failing to attend class will lower your grade.
+
+### Assignments  
+Homework assignments will be notified at least a week in advance.
+
+### Final project  
+Semester projects may deal with any topic that interests the student and is approved by the instructor.Projects are expected to identify a research problem and elaborate a statistical model that is appropriate for solving that problem. Projects consist of a manuscript and a tutorial that describes all the steps of the analysis in a reproducible manner. More information [here](https://jlacasa.github.io/stat705_fall2024/assignments/final_project).
 
 
 ## General Policies
 
-Class attendance is expected.  
-
+## Generative AI policy  
+Students may use generative AI tools as an assistant to complete their homework or projects but are required to understand every step of their work. Failure to justify their own work may reduce the student’s grade.
 
 ## Academic Honesty  
 
-Kansas State University
-
+Undergraduate and graduate students, by registration, acknowledge the jurisdiction of the Honor System (www.ksu.edu/honor). The policies and procedures of the Honor System apply to all full and part-time students enrolled. A grade of XF can result from a breach of academic honesty.
 
 ## Academic Accommodations for Students with Disabilities  
 

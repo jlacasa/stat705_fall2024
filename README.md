@@ -12,7 +12,8 @@ seo:
 Fall 2024  
 Kansas State University
 
-**Instructor:** Dr. Josefina Lacasa 
+**Instructor:** Dr. Josefina Lacasa  
+
 **Teaching Assistant:** Robert Sholl  
 
 **Time:** Mon-Wed-Fri 9:30 am - 10.20 am  

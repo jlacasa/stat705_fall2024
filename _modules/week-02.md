@@ -6,13 +6,11 @@ Aug 26
 : What is a linear model anyways 
   : [R script]()
 
-Aug 27
-: [](#) 
-  : **Assignment 1 due 2 pm**{: .label .label-red }
-
 Aug 28
 : More on linear models
-  : [](#)
+  : [html](#)
+: [](#) 
+  : **Assignment 1 due 2 pm**{: .label .label-red }
 
 Aug 30
 : More on linear models

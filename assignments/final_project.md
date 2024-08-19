@@ -26,3 +26,6 @@ Write a page-long project proposal that states the problem, the objective of the
 Submit a report containing: 
 1. A manuscript with Introduction, Methods (including a clear and complete description of the statistical model), Results and Conclusions.
 2. A tutorial with code and detailed comments.   
+
+## Practical reads  
+1. Broman, K. W., & Woo, K. H. (2018). Data Organization in Spreadsheets. The American Statistician, 72(1), 2–10. [https://doi.org/10.1080/00031305.2017.1375989](https://doi.org/10.1080/00031305.2017.1375989)

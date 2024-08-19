@@ -32,7 +32,7 @@ schedule:
         end: 4:00 PM
         location: D 107
   - name: Tuesday
-      - name: Office Hours (Robert)
+      - name: Office Hours 
         start: 9:00 AM
         end: 10:00 AM
         location: D 109
@@ -47,7 +47,7 @@ schedule:
         end: 11:30 AM
         location: Zoom
   - name: Thursday
-      - name: Office Hours (Robert)
+      - name: Office Hours
         start: 9:00 AM
         end: 10:00 AM
         location: D 109

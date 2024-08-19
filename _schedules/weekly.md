@@ -32,6 +32,7 @@ schedule:
         end: 4:00 PM
         location: D 107
   - name: Tuesday
+    events:
       - name: Office Hours 
         start: 9:00 AM
         end: 10:00 AM
@@ -47,6 +48,7 @@ schedule:
         end: 11:30 AM
         location: Zoom
   - name: Thursday
+    events:
       - name: Office Hours
         start: 9:00 AM
         end: 10:00 AM

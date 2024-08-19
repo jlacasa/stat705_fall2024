@@ -28,10 +28,14 @@ schedule:
         end: 10:20 AM
         location: D 207
       - name: Office Hours
-        start: 10:30 AM
-        end: 11:30 AM
+        start: 3:00 PM
+        end: 4:00 PM
         location: D 107
   - name: Tuesday
+      - name: Office Hours (Robert)
+        start: 9:00 AM
+        end: 10:00 AM
+        location: D 109
   - name: Wednesday
     events:
       - name: Lecture
@@ -43,6 +47,10 @@ schedule:
         end: 11:30 AM
         location: Zoom
   - name: Thursday
+      - name: Office Hours (Robert)
+        start: 9:00 AM
+        end: 10:00 AM
+        location: D 109
   - name: Friday
     events:
       - name: Lecture

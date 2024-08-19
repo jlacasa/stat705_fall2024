@@ -14,7 +14,7 @@ nav_order: 1
 
 ## Exercise 1. 
 
-Load the data using the R code below and visualize the relationship between weight and length.
+Load the data using the R code below and visualize the relationship between stem length and plant weight.
 
 ```
 url <- ""

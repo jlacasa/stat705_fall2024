@@ -26,3 +26,4 @@ When you read the newspaper this week, find an article with a statement that is 
 - Paste the article url in your handout and point at the statistical analysis.
 - List one strength and one weakness of this analysis.
 
+Download .Rmd [here](github.com/jlacasa/stat705_fall2024/blob/main/homeworks/hw1.Rmd).

@@ -12,6 +12,6 @@ Aug 21
 
 Aug 23
 : Intro to statistical modeling
-  : [html](#)
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day02_08212024)
 : []()
   : **[New Assignment](https://jlacasa.github.io/stat705_fall2024/assignments/hw1)**{: .label .label-green } Due 08/27

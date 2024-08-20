@@ -36,7 +36,7 @@ schedule:
       - name: Office Hours 
         start: 9:00 AM
         end: 10:00 AM
-        location: D 109
+        location: D 009C
   - name: Wednesday
     events:
       - name: Lecture
@@ -52,7 +52,7 @@ schedule:
       - name: Office Hours
         start: 9:00 AM
         end: 10:00 AM
-        location: D 109
+        location: D 009C
   - name: Friday
     events:
       - name: Lecture

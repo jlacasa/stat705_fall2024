@@ -46,7 +46,7 @@ schedule:
       - name: Office Hours
         start: 10:30 AM
         end: 11:30 AM
-        location: Zoom
+        location: Zoom [link on Canvas]
   - name: Thursday
     events:
       - name: Office Hours

@@ -58,7 +58,7 @@ schedule:
       - name: Lecture
         start: 9:30 AM
         end: 10:20 AM
-        location: 150 Wheeler
+        location: D 207
       - name: Office Hours
         start: 10:30 AM
         end: 11:30 AM

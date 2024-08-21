@@ -44,8 +44,8 @@ schedule:
         end: 10:20 AM
         location: D 207
       - name: Office Hours
-        start: 10:30 AM
-        end: 11:30 AM
+        start: 3:00 PM
+        end: 4:00 PM
         location: Zoom [link on Canvas]
   - name: Thursday
     events:

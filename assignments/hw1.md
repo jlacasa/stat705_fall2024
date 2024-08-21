@@ -13,6 +13,7 @@ nav_order: 1
 - Review concepts. 
 
 In an Rmd file, complete the exercises below and knit to pdf or html. Submit the (pdf or html) file to canvas. Please name your file "Assignment1_YourLastName" (e.g., Assignment1_Smith.pdf).
+Download template .Rmd [here](github.com/jlacasa/stat705_fall2024/blob/main/homeworks/hw1.Rmd).
 
 ## Exercise 1. 
 
@@ -28,4 +29,3 @@ When you read the newspaper this week, find an article with a statement that is 
 - Paste the article url in your handout and point at the statistical analysis.
 - List one strength and one weakness of this analysis.
 
-Download .Rmd [here](github.com/jlacasa/stat705_fall2024/blob/main/homeworks/hw1.Rmd).

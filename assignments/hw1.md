@@ -12,9 +12,11 @@ nav_order: 1
 - Check R skills. 
 - Review concepts. 
 
+In an Rmd file, complete the exercises below and knit to pdf or html. Submit the (pdf or html) file to canvas. Please name your file "Assignment1_YourLastName" (e.g., Assignment1_Smith.pdf).
+
 ## Exercise 1. 
 
-Load the data using the R code below and visualize the relationship between stem length and plant weight. Propose a statistical model to describe this relationship. 
+Load the data using the R code below and visualize the relationship between stem length and plant weight. Propose a statistical model to describe this relationship using statistical notation. Your can write it out using LaTeX, or writing it out on paper and pasting the picture in your Rmd. 
 
 ```
 url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_class.csv"

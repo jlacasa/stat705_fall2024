@@ -78,6 +78,8 @@ To the whiteboard!
 
 Live R session
 
+See code [here](https://github.com/jlacasa/stat705_fall2024/tree/main/classes/in_class_code/day2_inclass.Rmd).
+
 ## For next class:
 
 -   Read Chapter 2 from the book.

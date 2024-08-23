@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -66,12 +100,12 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="from-last-class">From last class</h2>
 <ul>
 <li>Fill out <a href="https://forms.gle/Vb1Xx9eoemUzBUar9">this form</a> if you need a project partner.</li>
-<li>Our legume example.</li>
+<li>Back to our clover example.</li>
 </ul>
 </section>
 <section id="the-general-linear-model" class="level2">
 <h2 class="anchored" data-anchor-id="the-general-linear-model">The General Linear Model</h2>
-<p>We slightly talked about this, but what we do when we fit models using the <code>lm</code> function is fitting the General linear model. We can express our model as:</p>
+<p>When we fit models using the <code>lm</code> function, we are fitting a general linear model. We can express our model as:</p>
 <p><span class="math display">\[y_i \sim \text{N}(\mu_i, \sigma^2),\]</span></p>
 <p><span class="math display">\[\mu_i = z_{1 i}\cdot \beta{1} + z_{2 i}\cdot \beta_2 + z_{3 i}\cdot \beta_3,\]</span></p>
 <p><span class="math display">\[z_{1 i} \left \{
@@ -83,21 +117,24 @@ ul.task-list li input[type="checkbox"] {
   \begin{aligned}
     &amp; 1 &amp;&amp; \text{if species B} \\
     &amp; 0 &amp;&amp; \text{else}
-  \end{aligned} \right.,\]</span> <span class="math display">\[z_{3 i} \left \{
+  \end{aligned} \right.,\]</span></p>
+<p><span class="math display">\[z_{3 i} \left \{
   \begin{aligned}
     &amp; 1 &amp;&amp; \text{if species C} \\
     &amp; 0 &amp;&amp; \text{else}
-  \end{aligned} \right.,\]</span> for <span class="math inline">\(i = 1, 2, ... n\)</span> where <span class="math inline">\(n\)</span> is the total number of observations. Our data can only be A, <strong>or</strong> C, <strong>or</strong> D. So that basically gives us rows of 1s and 0s.</p>
+  \end{aligned} \right.,\]</span></p>
+<p>for <span class="math inline">\(i = 1, 2, ... n\)</span> where <span class="math inline">\(n\)</span> is the total number of observations. Our data can only be A, <strong>or</strong> C, <strong>or</strong> D. So that basically gives us rows of 1s and 0s.</p>
 <p>Recall that our <strong>design matrix</strong> looked very much like</p>
 <p><span class="math display">\[\mathbf{X}=
 \left(
 \matrix{0 &amp; 0 &amp; 1 \\
-0 &amp; 0 &amp; 1 \\
+0 &amp; 1 &amp; 0 \\
 1 &amp; 0 &amp; 0 \\
 0 &amp; 1 &amp; 0 \\
 1 &amp; 0 &amp; 0 \\
 0 &amp; 0 &amp; 1}
 \right).\]</span></p>
+<p>In this case, the matrix has 6 rows, so <span class="math inline">\(n=6\)</span>.</p>
 <div class="alert alert-warning">
 <p><strong>But what is the General linear model?</strong><br>
 </p>
@@ -110,23 +147,54 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>Normality</strong></li>
 </ol>
 </div>
-<section id="estimation" class="level3">
-<h3 class="anchored" data-anchor-id="estimation">Estimation</h3>
-<p>The method we are using is called Maximum Likelihood Estimation. It is important to know this because in your applied work you will find several options to pick from.</p>
-<div class="alert alert-warning">
-<p><strong>Some cool properties</strong><br>
-</p>
-<ul>
-<li>We get unbiased estimates for <span class="math inline">\(\boldsymbol{\beta}\)</span>!</li>
-</ul>
+</section>
+<section id="another-linear-model-example" class="level2">
+<h2 class="anchored" data-anchor-id="another-linear-model-example">Another linear model example</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/corn_example1.csv"</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  N_rate rep yield_Mgha
+1      0   1   3.325132
+2     30   1   6.611261
+3     60   1  11.836717
+4     90   1  13.118971
+5    120   1  15.053427
+6    150   1  12.658913</code></pre>
 </div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(N_rate, yield_Mgha))<span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(N<span class="sc">~</span>rate<span class="sc">~</span>(kg<span class="sc">~</span>N<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})), </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>Yield<span class="sc">~</span>(Mg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day03_08232024_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Let’s write out the statistical model.</p>
+<p><span class="math display">\[y_i \sim \text{N}(\mu_i, \sigma^2),\]</span></p>
+<p><span class="math display">\[\mu_i = \beta_0 + \beta_1\cdot x_i + \beta_2 \cdot x_i^2,\]</span></p>
 </section>
-<section id="estimation---applied-example" class="level3">
-<h3 class="anchored" data-anchor-id="estimation---applied-example">Estimation - applied example</h3>
+<section id="estimation" class="level2">
+<h2 class="anchored" data-anchor-id="estimation">Estimation</h2>
+<p>The method we are using in <code>lm</code> is called Maximum Likelihood Estimation.</p>
+<ul>
+<li>Least Squares versus Maximum Likelihood</li>
+<li>Maximum Likelihood versus Bayesian (it’s all about assumptions!)</li>
+</ul>
+<section id="estimation---an-applied-example" class="level3">
+<h3 class="anchored" data-anchor-id="estimation---an-applied-example">Estimation - an applied example</h3>
+<p>Live R session.</p>
 </section>
 </section>
-<section id="more-general-notation" class="level2">
-<h2 class="anchored" data-anchor-id="more-general-notation">More general notation</h2>
+<section id="general-notation" class="level2">
+<h2 class="anchored" data-anchor-id="general-notation">General notation</h2>
 <div class="alert alert-info">
 <p><span class="math display">\[\mathbf{y} \sim \text{N}(\boldsymbol{\mu}, \sigma^2\mathbf{I}),\]</span></p>
 <p><span class="math display">\[\boldsymbol{\mu} = \mathbf{X}\boldsymbol{\beta},\]</span></p>
@@ -139,7 +207,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li>Read chapter 3 from the book.</li>
 <li>Remember <a href="https://jlacasa.github.io/stat705_fall2024/assignments/hw1">Assignment 1</a> is on.</li>
-<li>Heads up, we’ll have an in-class quiz.</li>
+<li>Heads up, in-class quiz for attendance.</li>
 </ul>
 </section>
 

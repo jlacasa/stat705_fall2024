@@ -11,9 +11,9 @@ Aug 21
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day02_08212024)
 : []()
   : **Complete [survey](https://forms.gle/Anv7f1uFUZDwoDsS9)**{: .label .label-yellow } Due 08/21
+: []()
+  : **[New Assignment](https://jlacasa.github.io/stat705_fall2024/assignments/hw1)**{: .label .label-green } Due 08/27
 
 Aug 23
 : Intro to statistical modeling
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day03_08232024)
-: []()
-  : **[New Assignment](https://jlacasa.github.io/stat705_fall2024/assignments/hw1)**{: .label .label-green } Due 08/27

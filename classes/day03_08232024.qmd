@@ -7,7 +7,7 @@ editor: visual
 ## From last class
 
 -   Fill out [this form](https://forms.gle/Vb1Xx9eoemUzBUar9) if you need a project partner.
--   Back to our clover example.  
+-   Back to our clover example.
 
 ## The General Linear Model
 
@@ -27,14 +27,14 @@ $$z_{2 i} \left \{
   \begin{aligned}
     & 1 && \text{if species B} \\
     & 0 && \text{else}
-  \end{aligned} \right.,$$ 
-  
+  \end{aligned} \right.,$$
+
 $$z_{3 i} \left \{
   \begin{aligned}
     & 1 && \text{if species C} \\
     & 0 && \text{else}
-  \end{aligned} \right.,$$ 
-  
+  \end{aligned} \right.,$$
+
 for $i = 1, 2, ... n$ where $n$ is the total number of observations. Our data can only be A, **or** C, **or** D. So that basically gives us rows of 1s and 0s.
 
 Recall that our **design matrix** looked very much like
@@ -49,7 +49,7 @@ $$\mathbf{X}=
 0 & 0 & 1} 
 \right).$$
 
-In this case, the matrix has 6 rows, so $n=6$.  
+In this case, the matrix has 6 rows, so $n=6$.
 
 ::: {.alert .alert-warning}
 <strong>But what is the General linear model?</strong>\
@@ -81,11 +81,20 @@ data %>%
        y = expression(Grain~Yield~(Mg~ha^{-1})))
 ```
 
+Let's write out the statistical model.
+
+$$y_i \sim \text{N}(\mu_i, \sigma^2),$$
+
+$$\mu_i = \beta_0 + \beta_1\cdot x_i + \beta_2 \cdot x_i^2,$$
+
 ## Estimation
 
-The method we are using is called Maximum Likelihood Estimation. It is important to know this because in your applied work you will find several options to pick from.
+The method we are using in `lm` is called Maximum Likelihood Estimation.
 
-### Estimation - an applied example  
+-   Least Squares versus Maximum Likelihood
+-   Maximum Likelihood versus Bayesian (it's all about assumptions!)
+
+### Estimation - an applied example
 
 Live R session.
 
@@ -105,4 +114,4 @@ where $\mathbf{y}$ are the observed data, $\boldsymbol{\mu}$ is the expected val
 
 -   Read chapter 3 from the book.
 -   Remember [Assignment 1](https://jlacasa.github.io/stat705_fall2024/assignments/hw1) is on.
--   Heads up, we'll have an in-class quiz.
+-   Heads up, in-class quiz for attendance.

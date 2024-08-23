@@ -1,0 +1,108 @@
+---
+title: "Day 3 - 08/23/2024"
+format: html
+editor: visual
+---
+
+## From last class
+
+-   Fill out [this form](https://forms.gle/Vb1Xx9eoemUzBUar9) if you need a project partner.
+-   Back to our clover example.  
+
+## The General Linear Model
+
+When we fit models using the `lm` function, we are fitting a general linear model. We can express our model as:
+
+$$y_i \sim \text{N}(\mu_i, \sigma^2),$$
+
+$$\mu_i = z_{1 i}\cdot \beta{1} + z_{2 i}\cdot \beta_2 + z_{3 i}\cdot \beta_3,$$
+
+$$z_{1 i} \left \{
+  \begin{aligned}
+    & 1 && \text{if species A} \\
+    & 0 && \text{else}
+  \end{aligned} \right.,$$
+
+$$z_{2 i} \left \{
+  \begin{aligned}
+    & 1 && \text{if species B} \\
+    & 0 && \text{else}
+  \end{aligned} \right.,$$ 
+  
+$$z_{3 i} \left \{
+  \begin{aligned}
+    & 1 && \text{if species C} \\
+    & 0 && \text{else}
+  \end{aligned} \right.,$$ 
+  
+for $i = 1, 2, ... n$ where $n$ is the total number of observations. Our data can only be A, **or** C, **or** D. So that basically gives us rows of 1s and 0s.
+
+Recall that our **design matrix** looked very much like
+
+$$\mathbf{X}= 
+\left( 
+\matrix{0 & 0 & 1 \\
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+0 & 1 & 0 \\
+1 & 0 & 0 \\
+0 & 0 & 1} 
+\right).$$
+
+In this case, the matrix has 6 rows, so $n=6$.  
+
+::: {.alert .alert-warning}
+<strong>But what is the General linear model?</strong>\
+
+**We assume:**
+
+1.  Linearity\
+2.  Homoscedasticity
+3.  Independence
+4.  **Normality**
+:::
+
+## Another linear model example
+
+```{r}
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/corn_example1.csv"
+data <- read.csv(url)
+head(data)
+```
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+
+data %>% 
+  ggplot(aes(N_rate, yield_Mgha))+
+  geom_point()+
+  theme_classic()+
+  labs(x = expression(N~rate~(kg~N~ha^{-1})), 
+       y = expression(Grain~Yield~(Mg~ha^{-1})))
+```
+
+## Estimation
+
+The method we are using is called Maximum Likelihood Estimation. It is important to know this because in your applied work you will find several options to pick from.
+
+### Estimation - an applied example  
+
+Live R session.
+
+## General notation
+
+::: {.alert .alert-info}
+$$\mathbf{y} \sim \text{N}(\boldsymbol{\mu}, \sigma^2\mathbf{I}),$$
+
+$$\boldsymbol{\mu} = \mathbf{X}\boldsymbol{\beta},$$
+
+where $\mathbf{y}$ are the observed data, $\boldsymbol{\mu}$ is the expected value,
+
+**This notation is convenient to think about the data for your project.** One row per observation (rows in $\mathbf{X}$), one variable per column (columns in $\mathbf{X}$).
+:::
+
+## For next week
+
+-   Read chapter 3 from the book.
+-   Remember [Assignment 1](https://jlacasa.github.io/stat705_fall2024/assignments/hw1) is on.
+-   Heads up, we'll have an in-class quiz.

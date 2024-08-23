@@ -1,7 +1,7 @@
 ---
 name: Robert Sholl
 role: Teaching Assistant
-email: rmshool 'at' ksu.edu
+email: rmsholl 'at' ksu.edu
 website: https://sites.google.com/view/rmshollksu/home
 photo: robert.jpg
 meta:

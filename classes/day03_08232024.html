@@ -153,23 +153,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  N_rate rep yield_Mgha
-1      0   1   3.325132
-2     30   1   6.611261
-3     60   1  11.836717
-4     90   1  13.118971
-5    120   1  15.053427
-6    150   1  12.658913</code></pre>
+<pre><code>  plant_density rep yield_Mgha
+1             0   1   3.325132
+2             3   1   6.476261
+3             6   1  11.296717
+4             9   1  11.903971
+5            12   1  12.893427
+6            15   1   9.283913</code></pre>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>data <span class="sc">%&gt;%</span> </span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(N_rate, yield_Mgha))<span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(plant_density, yield_Mgha))<span class="sc">+</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(N<span class="sc">~</span>rate<span class="sc">~</span>(kg<span class="sc">~</span>N<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})), </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(Plant<span class="sc">~</span>density<span class="sc">~</span>(plants<span class="sc">~</span>m<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>})), </span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>Yield<span class="sc">~</span>(Mg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day03_08232024_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>

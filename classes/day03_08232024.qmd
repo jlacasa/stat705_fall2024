@@ -72,10 +72,10 @@ head(data)
 library(tidyverse)
 
 data %>% 
-  ggplot(aes(N_rate, yield_Mgha))+
+  ggplot(aes(plant_density, yield_Mgha))+
   geom_point()+
   theme_classic()+
-  labs(x = expression(N~rate~(kg~N~ha^{-1})), 
+  labs(x = expression(Plant~density~(plants~m^{-2})), 
        y = expression(Grain~Yield~(Mg~ha^{-1})))
 ```
 
@@ -85,8 +85,7 @@ $$y_i \sim \text{N}(\mu_i, \sigma^2),$$
 
 $$\mu_i = \beta_0 + \beta_1\cdot x_i + \beta_2 \cdot x_i^2.$$
 
-- **Is this a linear model?**
-
+-   **Is this a linear model?**
 
 ## Estimation
 
@@ -94,11 +93,11 @@ The method we are using in `lm` is called Maximum Likelihood Estimation.
 
 #### Least Squares estimation (LSE) versus Maximum Likelihood estimation (MLE)
 
-- LSE minimizes $\Sigma_{i=1}^n \varepsilon_i^2$, where $\varepsilon_i = y_i-\mu_i$.
-- That gives us $\hat{\boldsymbol{\beta}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$.
-- If the errors are independent and identically normally distributed, $\hat{\boldsymbol{\beta}}_{LSE} = \hat{\boldsymbol{\beta}}_{MLE}$.
-- what does "independent and identically normally distributed" mean?
-- $\hat{\boldsymbol{\beta}}$ is the best linear unbiased estimator! 
+-   LSE minimizes $\Sigma_{i=1}^n \varepsilon_i^2$, where $\varepsilon_i = y_i-\mu_i$.
+-   That gives us $\hat{\boldsymbol{\beta}} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$.
+-   If the errors are independent and identically normally distributed, $\hat{\boldsymbol{\beta}}_{LSE} = \hat{\boldsymbol{\beta}}_{MLE}$.
+-   what does "independent and identically normally distributed" mean?
+-   $\hat{\boldsymbol{\beta}}$ is the best linear unbiased estimator!
 
 ### Estimation - an applied example
 
@@ -111,7 +110,7 @@ $$\mathbf{y} \sim \text{N}(\boldsymbol{\mu}, \sigma^2\mathbf{I}),$$
 
 $$\boldsymbol{\mu} = \mathbf{X}\boldsymbol{\beta},$$
 
-where $\mathbf{y}$ are the observed data, $\boldsymbol{\mu}$ is the expected value, $\sigma^2$ is the variance, $\mathbf{X}$ is the design matrix, and $\boldsymbol{\beta}$ is a vector of parameters. 
+where $\mathbf{y}$ are the observed data, $\boldsymbol{\mu}$ is the expected value, $\sigma^2$ is the variance, $\mathbf{X}$ is the design matrix, and $\boldsymbol{\beta}$ is a vector of parameters.
 
 **This notation is convenient to think about the data for your project.** One row per observation (rows in $\mathbf{X}$), one variable per column (columns in $\mathbf{X}$).
 :::

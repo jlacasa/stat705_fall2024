@@ -10,7 +10,7 @@ Aug 28
 : More on linear models
   : [html](#)
 : [](#) 
-  : **Assignment 1 due 2 pm**{: .label .label-red }
+  : **Assignment 1 due 6 pm**{: .label .label-red }
 
 Aug 30
 : More on linear models

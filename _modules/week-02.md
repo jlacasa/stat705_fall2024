@@ -3,14 +3,14 @@ title: Linear Models and Estimation
 ---
 
 Aug 26
-: What is a linear model anyways 
-  : [R script]()
+: What is a linear model anyways? 
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day04_08262024)
 
 Aug 28
 : More on linear models
   : [html](#)
 : [](#) 
-  : **Assignment 1 due 2 pm**{: .label .label-red }
+  : **Assignment 1 due 6 pm**{: .label .label-red }
 
 Aug 30
 : More on linear models

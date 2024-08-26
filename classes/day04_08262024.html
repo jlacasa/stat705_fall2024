@@ -105,7 +105,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="linear-models" class="level2">
 <h2 class="anchored" data-anchor-id="linear-models">Linear models</h2>
-<p>A model is a <strong>linear model</strong> when the <span class="math inline">\(\underline{\text{parameters}}\)</span> enter linearly.</p>
+<p>A model is a <strong>linear model</strong> when the <strong>parameters</strong> enter linearly.</p>
 <ul>
 <li><ol type="a">
 <li><span class="math inline">\(\mu_i = \beta_0 + x_i \beta_1 + x^2_i \beta_2\)</span></li>
@@ -133,12 +133,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>How do we interpret them?</li>
 </ul></li>
 </ul>
-<p><strong>Recall the clover example</strong>:<br>
-- 3 clover species planted in pots.</p>
+<p><strong>Recall the clover example</strong>:</p>
 <ul>
-<li><p>24 plants per species.</p></li>
-<li><p>After 2 months, we harvest and weigh their biomass.</p></li>
-<li><p>We want to <strong>estimate</strong> how much biomass each genotype produces, eventually know how much and which one produces more.</p></li>
+<li>3 clover species planted in pots.<br>
+</li>
+<li>24 plants per species.<br>
+</li>
+<li>After 2 months, we harvest and weigh their biomass.<br>
+</li>
+<li>We want to <strong>estimate</strong> how much biomass each genotype produces, eventually know how much and which one produces more.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -158,11 +161,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>By programming <code>m1 &lt;- lm(agb_g ~ 0 + species, data = dd_lotus)</code>, we are fitting</p>
 <p><span class="math display">\[\mathbf{y} \sim \text{N}(\boldsymbol{\mu}, \sigma^2\mathbf{I}),\]</span> <span class="math display">\[\boldsymbol{\mu}=\mathbf{X}\boldsymbol{\beta}.\]</span></p>
-<ul>
-<li>What is another way of writing the model shown here?</li>
-</ul>
-<section id="means" class="level4">
-<h4 class="anchored" data-anchor-id="means">Means</h4>
+<p><strong>What is another way of writing the model shown here?</strong></p>
+<section id="point-estimates-in-boldsymbolbeta" class="level4">
+<h4 class="anchored" data-anchor-id="point-estimates-in-boldsymbolbeta">Point estimates in <span class="math inline">\(\boldsymbol{\beta}\)</span></h4>
 <p>Let’s calculate <span class="math inline">\(\hat{\boldsymbol{\beta}}_{LSE} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(m1)</span>
@@ -214,60 +215,82 @@ speciesD 2.143253</code></pre>
 -1.0413558 -0.4618581  0.0325275  0.4484598  1.4173242 </code></pre>
 </div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day04_08262024_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">residuals</span>(m1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day04_08262024_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 <p>This will help us for model diagnostics (coming soon!)</p>
 </section>
-<section id="confidence-intervals" class="level4">
-<h4 class="anchored" data-anchor-id="confidence-intervals">Confidence intervals</h4>
-<p>Confidence intervals are a measure of uncertainty. They are related to other measures of uncertainty, like <span class="math inline">\(\sigma^2\)</span>. We know that <span class="math display">\[CI = \hat{\beta} \pm t_{\alpha/2, \text{rdf}}\ \text{se}\]</span></p>
-<p>First, let’s calculate the standard error:</p>
+<section id="variance-sigma2" class="level4">
+<h4 class="anchored" data-anchor-id="variance-sigma2">Variance <span class="math inline">\(\sigma^2\)</span></h4>
+<ul>
+<li>Perhaps one of the most important parameters we will estimate.<br>
+</li>
+<li>Prediction accuracy.</li>
+<li>Prediction intervals, estimation intervals.</li>
+<li>Degrees of freedom. From <span class="math inline">\(n-1\)</span> to <span class="math inline">\(n-p\)</span>.</li>
+</ul>
 <p>Let’s calculate <span class="math inline">\(\hat{\sigma}^2 = \frac{\boldsymbol{\hat{\varepsilon}^T\hat{\varepsilon}}}{n-p} = \frac{RSS}{n-p}\)</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>RSS <span class="ot">&lt;-</span> <span class="fu">sum</span>(residuals<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dd_lotus)</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(beta_hat)</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>(sigma2_hat <span class="ot">&lt;-</span> RSS<span class="sc">/</span>(n<span class="sc">-</span>p)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>RSS <span class="ot">&lt;-</span> <span class="fu">sum</span>(residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dd_lotus)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(beta_hat)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>(sigma2_hat <span class="ot">&lt;-</span> RSS<span class="sc">/</span>(n<span class="sc">-</span>p)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3704</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>(sigma_hat <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(sigma2_hat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>(sigma_hat <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(sigma2_hat))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6086049</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)<span class="sc">$</span>sigma</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)<span class="sc">$</span>sigma</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6086049</code></pre>
 </div>
 </div>
+</section>
+<section id="confidence-intervals" class="level4">
+<h4 class="anchored" data-anchor-id="confidence-intervals">Confidence intervals</h4>
+<p>Confidence intervals are a measure of uncertainty. They are related to other measures of uncertainty, like <span class="math inline">\(\sigma^2\)</span>. We know that <span class="math display">\[CI = \hat{\beta} \pm t_{\alpha/2, \text{rdf}}\ \text{se},\]</span> where <span class="math inline">\(t_{\alpha/2, \text{rdf}}\)</span> is the t-score that corresponds to the confidence level (i.e., <span class="math inline">\(\alpha\)</span>) with the residuals degrees of freedom <span class="math inline">\(\text{rdf}\)</span>, and <span class="math inline">\(\text{se}\)</span> is the standard error.</p>
+<p>First, let’s calculate the standard error:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>unscaled_covariance <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>unscaled_covariance <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>(se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(unscaled_covariance))<span class="sc">*</span>sigma_hat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>(se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(unscaled_covariance))<span class="sc">*</span>sigma_hat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>speciesA speciesC speciesD 
 0.124231 0.124231 0.124231 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>residuals_degrees_freedom <span class="ot">&lt;-</span> n<span class="sc">-</span>p</span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>(t_score <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="at">p=</span>alpha<span class="sc">/</span><span class="dv">2</span>, <span class="at">df =</span> residuals_degrees_freedom, <span class="at">lower.tail=</span>F))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>residuals_degrees_freedom <span class="ot">&lt;-</span> n<span class="sc">-</span>p</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>(t_score <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="at">p=</span>alpha<span class="sc">/</span><span class="dv">2</span>, <span class="at">df =</span> residuals_degrees_freedom, <span class="at">lower.tail=</span>F))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.994945</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>se<span class="sc">*</span>t_score</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>se<span class="sc">*</span>t_score</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>speciesA speciesC speciesD 
 0.247834 0.247834 0.247834 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lower =</span> beta_hat <span class="sc">-</span> se<span class="sc">*</span>t_score, </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">upper =</span> beta_hat <span class="sc">+</span> se<span class="sc">*</span>t_score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lower =</span> beta_hat <span class="sc">-</span> se<span class="sc">*</span>t_score, </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">upper =</span> beta_hat <span class="sc">+</span> se<span class="sc">*</span>t_score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            lower    upper
 speciesA 2.688742 3.184410
@@ -276,7 +299,7 @@ speciesD 1.895419 2.391086</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            2.5 %   97.5 %
 speciesA 2.688742 3.184410
@@ -288,7 +311,7 @@ speciesD 1.895419 2.391086</code></pre>
 <section id="in-summary" class="level4">
 <h4 class="anchored" data-anchor-id="in-summary">In <code>summary</code>:</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:

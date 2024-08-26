@@ -11,7 +11,7 @@ editor: visual
 
 ## Linear models  
 
-A model is a **linear model** when the $\underline{\text{parameters}}$ enter linearly. 
+A model is a **linear model** when the **parameters** enter linearly. 
 
 - a) $\mu_i = \beta_0 + x_i \beta_1 + x^2_i \beta_2$
 
@@ -32,12 +32,10 @@ $$\mu_i = \left \{
   -   How do we interpret them?
 
 **Recall the clover example**:  
+
 - 3 clover species planted in pots.  
-
 - 24 plants per species.  
-
 - After 2 months, we harvest and weigh their biomass.   
-
 - We want to **estimate** how much biomass each genotype produces, eventually know how much and which one produces more.   
 
 ```{r message=FALSE, warning=FALSE}
@@ -53,9 +51,9 @@ By programming `m1 <- lm(agb_g ~ 0 + species, data = dd_lotus)`, we are fitting
 $$\mathbf{y} \sim \text{N}(\boldsymbol{\mu}, \sigma^2\mathbf{I}),$$
 $$\boldsymbol{\mu}=\mathbf{X}\boldsymbol{\beta}.$$
 
-- What is another way of writing the model shown here? 
+**What is another way of writing the model shown here?**  
 
-#### Means  
+#### Point estimates in $\boldsymbol{\beta}$  
 
 Let's calculate $\hat{\boldsymbol{\beta}}_{LSE} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$
 
@@ -81,15 +79,23 @@ head(residuals(m1))
 quantile(residuals(m1))
 ```
 
+```{r}
+hist(residuals)
+```
+
+```{r}
+hist(residuals(m1))
+```
+
+
 This will help us for model diagnostics (coming soon!)
 
-#### Confidence intervals   
+#### Variance $\sigma^2$  
 
-
-Confidence intervals are a measure of uncertainty. They are related to other measures of uncertainty, like $\sigma^2$. We know that 
-$$CI = \hat{\beta} \pm t_{\alpha/2, \text{rdf}}\ \text{se}$$
-
-First, let's calculate the standard error:  
+- Perhaps one of the most important parameters we will estimate.  
+- Prediction accuracy. 
+- Prediction intervals, estimation intervals. 
+- Degrees of freedom. From $n-1$ to $n-p$.
 
 Let's calculate $\hat{\sigma}^2 = \frac{\boldsymbol{\hat{\varepsilon}^T\hat{\varepsilon}}}{n-p} = \frac{RSS}{n-p}$
 
@@ -104,6 +110,14 @@ p <- length(beta_hat)
 ```{r}
 summary(m1)$sigma
 ```
+
+#### Confidence intervals   
+
+Confidence intervals are a measure of uncertainty. They are related to other measures of uncertainty, like $\sigma^2$. We know that 
+$$CI = \hat{\beta} \pm t_{\alpha/2, \text{rdf}}\ \text{se},$$
+where $t_{\alpha/2, \text{rdf}}$ is the t-score that corresponds to the confidence level (i.e., $\alpha$) with the residuals degrees of freedom $\text{rdf}$, and $\text{se}$ is the standard error. 
+
+First, let's calculate the standard error:  
 
 ```{r}
 unscaled_covariance <- solve(t(X)%*%X)

@@ -261,7 +261,7 @@ speciesD 2.143253</code></pre>
 </section>
 <section id="confidence-intervals" class="level4">
 <h4 class="anchored" data-anchor-id="confidence-intervals">Confidence intervals</h4>
-<p>Confidence intervals are a measure of uncertainty. They are related to other measures of uncertainty, like <span class="math inline">\(\sigma^2\)</span>. We know that <span class="math display">\[CI = \hat{\beta} \pm t_{\alpha/2, \text{rdf}}\ s.e.,\]</span> where <span class="math inline">\(t_{\alpha/2, \text{rdf}}\)</span> is the t-score that corresponds to the confidence level (i.e., <span class="math inline">\(\alpha\)</span>) with the residuals degrees of freedom <span class="math inline">\(\text{rdf}\)</span>, and <span class="math inline">\(s.e.\)</span> is the standard error.</p>
+<p>Confidence intervals are a measure of uncertainty. They are related to other measures of uncertainty, like <span class="math inline">\(\sigma^2\)</span>. We know that <span class="math display">\[CI = \hat{\beta} \pm t_{\alpha/2, dfe} \ s.e.,\]</span> where <span class="math inline">\(t_{\alpha/2, dfe}\)</span> is the t-score that corresponds to the confidence level (i.e., <span class="math inline">\(\alpha\)</span>) with the degrees of freedom of the error <span class="math inline">\(\text{rdf}\)</span>, and <span class="math inline">\(s.e.\)</span> is the standard error.</p>
 <p>First, let’s calculate the standard error:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>unscaled_covariance <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -275,8 +275,8 @@ speciesD 2.143253</code></pre>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>residuals_degrees_freedom <span class="ot">&lt;-</span> n<span class="sc">-</span>p</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>(t_score <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="at">p=</span>alpha<span class="sc">/</span><span class="dv">2</span>, <span class="at">df =</span> residuals_degrees_freedom, <span class="at">lower.tail=</span>F))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>dfe <span class="ot">&lt;-</span> n<span class="sc">-</span>p</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>(t_score <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="at">p=</span>alpha<span class="sc">/</span><span class="dv">2</span>, <span class="at">df =</span> dfe, <span class="at">lower.tail=</span>F))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.994945</code></pre>
 </div>

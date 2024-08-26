@@ -87,6 +87,8 @@ $$\mu_i = \beta_0 + \beta_1\cdot x_i + \beta_2 \cdot x_i^2.$$
 
 -   **Is this a linear model?**
 
+Live R code example to fit this model to the data [here](https://github.com/jlacasa/stat705_fall2024/blob/main/classes/in_class_code/day3_inclass.Rmd).
+
 ## Estimation
 
 The method we are using in `lm` is called Maximum Likelihood Estimation.

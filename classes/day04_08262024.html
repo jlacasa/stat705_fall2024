@@ -137,8 +137,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 - 3 clover species planted in pots.</p>
 <ul>
 <li><p>24 plants per species.</p></li>
-<li><p>After 2 months, we harvest and weight their biomass.</p></li>
-<li><p>We want to <strong>estimate</strong> how much biomass each genotype produces, eventually know how much and which one more.</p></li>
+<li><p>After 2 months, we harvest and weigh their biomass.</p></li>
+<li><p>We want to <strong>estimate</strong> how much biomass each genotype produces, eventually know how much and which one produces more.</p></li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -166,14 +166,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Let’s calculate <span class="math inline">\(\hat{\boldsymbol{\beta}}_{LSE} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}\)</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>X <span class="ot">&lt;-</span> <span class="fu">model.matrix</span>(m1)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(X) <span class="ot">&lt;-</span> <span class="cn">NULL</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> dd_lotus<span class="sc">$</span>agb_g</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>(beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X) <span class="sc">%*%</span> <span class="fu">t</span>(X)<span class="sc">%*%</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> dd_lotus<span class="sc">$</span>agb_g</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>(beta_hat <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X) <span class="sc">%*%</span> <span class="fu">t</span>(X)<span class="sc">%*%</span>y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>         [,1]
-[1,] 2.936576
-[2,] 2.396695
-[3,] 2.143253</code></pre>
+<pre><code>             [,1]
+speciesA 2.936576
+speciesC 2.396695
+speciesD 2.143253</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -219,7 +218,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="confidence-intervals" class="level4">
 <h4 class="anchored" data-anchor-id="confidence-intervals">Confidence intervals</h4>
-<p>Confidence intervals are a measure of uncertainty. It’s related to other measures of uncertainty. First, let’s calculate the standard error:</p>
+<p>Confidence intervals are a measure of uncertainty. They are related to other measures of uncertainty, like <span class="math inline">\(\sigma^2\)</span>. We know that <span class="math display">\[CI = \hat{\beta} \pm t_{\alpha/2, \text{rdf}}\ \text{se}\]</span></p>
+<p>First, let’s calculate the standard error:</p>
 <p>Let’s calculate <span class="math inline">\(\hat{\sigma}^2 = \frac{\boldsymbol{\hat{\varepsilon}^T\hat{\varepsilon}}}{n-p} = \frac{RSS}{n-p}\)</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>RSS <span class="ot">&lt;-</span> <span class="fu">sum</span>(residuals<span class="sc">^</span><span class="dv">2</span>)</span>
@@ -244,9 +244,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>unscaled_covariance <span class="ot">&lt;-</span> <span class="fu">solve</span>(<span class="fu">t</span>(X)<span class="sc">%*%</span>X)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>(sample_se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(unscaled_covariance))<span class="sc">*</span>sigma_hat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>(se <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(<span class="fu">diag</span>(unscaled_covariance))<span class="sc">*</span>sigma_hat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.124231 0.124231 0.124231</code></pre>
+<pre><code>speciesA speciesC speciesD 
+0.124231 0.124231 0.124231 </code></pre>
 </div>
 </div>
 <div class="cell">
@@ -258,19 +259,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>sample_se<span class="sc">*</span>t_score</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>se<span class="sc">*</span>t_score</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.247834 0.247834 0.247834</code></pre>
+<pre><code>speciesA speciesC speciesD 
+0.247834 0.247834 0.247834 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lower =</span> beta_hat <span class="sc">-</span> sample_se<span class="sc">*</span>t_score, </span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">upper =</span> beta_hat <span class="sc">+</span> sample_se<span class="sc">*</span>t_score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(<span class="at">lower =</span> beta_hat <span class="sc">-</span> se<span class="sc">*</span>t_score, </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">upper =</span> beta_hat <span class="sc">+</span> se<span class="sc">*</span>t_score)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>     lower    upper
-1 2.688742 3.184410
-2 2.148861 2.644529
-3 1.895419 2.391086</code></pre>
+<pre><code>            lower    upper
+speciesA 2.688742 3.184410
+speciesC 2.148861 2.644529
+speciesD 1.895419 2.391086</code></pre>
 </div>
 </div>
 <div class="cell">

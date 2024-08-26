@@ -114,8 +114,8 @@ summary(m1)$sigma
 #### Confidence intervals   
 
 Confidence intervals are a measure of uncertainty. They are related to other measures of uncertainty, like $\sigma^2$. We know that 
-$$CI = \hat{\beta} \pm t_{\alpha/2, \text{rdf}}\ \text{se},$$
-where $t_{\alpha/2, \text{rdf}}$ is the t-score that corresponds to the confidence level (i.e., $\alpha$) with the residuals degrees of freedom $\text{rdf}$, and $\text{se}$ is the standard error. 
+$$CI = \hat{\beta} \pm t_{\alpha/2, \text{rdf}}\ s.e.,$$
+where $t_{\alpha/2, \text{rdf}}$ is the t-score that corresponds to the confidence level (i.e., $\alpha$) with the residuals degrees of freedom $\text{rdf}$, and $s.e.$ is the standard error. 
 
 First, let's calculate the standard error:  
 

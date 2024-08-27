@@ -5,6 +5,7 @@ editor: visual
 ---
 
 Set the parameters
+
 ```{r}
 ## 'true' parameters
 beta0_truth <- 5

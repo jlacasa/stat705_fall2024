@@ -1,0 +1,18 @@
+---
+title: "Day 5 - Estimation live example"
+format: html
+editor: visual
+---
+
+Libraries
+```{r}
+
+```
+
+Data
+```{r}
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/corn_example1.csv"
+data <- read.csv(url) 
+head(data)
+```
+

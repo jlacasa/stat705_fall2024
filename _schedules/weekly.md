@@ -30,13 +30,13 @@ schedule:
       - name: Office Hours
         start: 3:00 PM
         end: 4:00 PM
-        location: D 107
+        location: D 107 (Lacasa)
   - name: Tuesday
     events:
       - name: Office Hours 
         start: 9:00 AM
         end: 10:00 AM
-        location: D 009C
+        location: D 009C (Sholl)
   - name: Wednesday
     events:
       - name: Lecture
@@ -46,13 +46,13 @@ schedule:
       - name: Office Hours
         start: 3:00 PM
         end: 4:00 PM
-        location: Zoom [link on Canvas]
+        location: Zoom [link on Canvas] (Lacasa)
   - name: Thursday
     events:
       - name: Office Hours
         start: 9:00 AM
         end: 10:00 AM
-        location: D 009C
+        location: D 009C (Sholl)
   - name: Friday
     events:
       - name: Lecture
@@ -62,5 +62,5 @@ schedule:
       - name: Office Hours
         start: 10:30 AM
         end: 11:30 AM
-        location: D 107
+        location: D 107 (Lacasa)
 ---

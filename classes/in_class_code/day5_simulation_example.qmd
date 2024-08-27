@@ -1,0 +1,66 @@
+---
+title: "Day 5 - 08/28/2024"
+format: html
+editor: visual
+---
+
+Set the parameters
+```{r}
+## 'true' parameters
+beta0_truth <- 5
+beta1_truth <- .25
+
+## data
+x <- seq(1000, 1200, by = 4)
+mu <- beta0_truth + x*beta1_truth 
+n <- length(x) # total number of observations
+set.seed(3298)
+epsilon <- rnorm(n, 0, sqrt(10)) # error
+
+# observed data
+y <- mu + epsilon
+```
+
+```{r}
+plot(x, y)
+points(x, mu, ty = 'l', col = 'red')
+```
+
+```{r}
+simulated_data <- data.frame(x= x, y=y)
+```
+
+```{r}
+m1 <- lm(y ~ 1 + x, data = simulated_data)
+```
+
+```{r}
+coef(m1)
+confint(m1)
+```
+
+```{r}
+n_sims <- 1000
+slope <- numeric(length = n_sims)
+calibration <- numeric(length = n_sims)
+
+for (i in 1:n_sims){
+  e <- rnorm(n, 0, sqrt(10))
+  y <- mu + e
+  simulated_data <- data.frame(x= x, y=y)
+  m1 <- lm(y ~ 1 + x, data = simulated_data)
+  slope[i] <- coef(m1)[2]
+  calibration[i] <- dplyr::between(coef(m1)[2], confint(m1)[2], confint(m1)[4])
+}
+mean(calibration)
+```
+
+```{r}
+hist(slope)
+```
+
+```{r}
+beta1_truth
+mean(slope)
+```
+

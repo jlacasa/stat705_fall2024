@@ -11,8 +11,7 @@ Libraries
 
 Data
 ```{r}
-url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/corn_example1.csv"
-data <- read.csv(url) 
-head(data)
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_hw1.csv"
+data <- read.csv(url)
 ```
 

@@ -8,15 +8,13 @@ Aug 26
 
 Aug 28
 : More on linear models
-  : [html](#)
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day05_08282024)
 : [](#) 
   : **Assignment 1 due 6 pm**{: .label .label-red }
 
 Aug 30
 : More on linear models
   : [](#)
-: [](#) 
-  : **New Assignment**{: .label .label-green } Due 09/10
 
 Sep 02
 : Labor day

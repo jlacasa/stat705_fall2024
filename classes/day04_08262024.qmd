@@ -22,8 +22,8 @@ A model is a **linear model** when the **parameters** enter linearly.
 - d) The famous linear-plus-plateau model:
 $$\mu_i = \left \{
   \begin{aligned}
-    & \beta_0 + x \beta_1 && \text{if } x \leq x_{crit}\\
-    & \beta_0 + x_{crit} \beta_1 && \text{if } x > x_{crit}
+    & \beta_0 + x_i \beta_1 && \text{if } x_i \leq x_{crit}\\
+    & \beta_0 + x_{crit} \beta_1 && \text{if } x_i > x_{crit}
   \end{aligned} \right.$$
 
 ## Estimation  

@@ -1,9 +1,8 @@
 ---
-title: "Day 5 - 08/28/2024"
+title: "Simulation example for day 5 - 08/28/2024"
 format: html
 editor: visual
 ---
-
 
 ```{r setup, include=FALSE, message=FALSE, warning=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

@@ -7,13 +7,13 @@ Aug 26
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day04_08262024)
 
 Aug 28
-: More on linear models
+: More on linear models (estimation)
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day05_08282024)
 : [](#) 
   : **Assignment 1 due 6 pm**{: .label .label-red }
 
 Aug 30
-: More on linear models
+: More on linear models (uncertainty)
   : [](#)
 
 Sep 02
@@ -21,7 +21,15 @@ Sep 02
   : 
 
 Sep 04
-: What happens with all these assumptions
+: More on linear models (inference)
+  : [](#)
+
+Sep 06
+: More on linear models (inference)
+  : [](#)
+
+Sep 08
+: More on linear models (inference)
   : [](#)
 
 

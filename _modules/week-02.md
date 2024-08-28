@@ -1,5 +1,5 @@
 ---
-title: Linear Models & Estimation
+title: Linear Models - Estimation
 ---
 
 Aug 26

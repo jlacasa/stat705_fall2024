@@ -1,5 +1,5 @@
 ---
-title: Linear Models Inference
+title: Linear Models - Inference
 ---
 
 Sep 02

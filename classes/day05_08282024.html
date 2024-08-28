@@ -103,7 +103,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><strong>A few things to review</strong></p>
 <ul>
 <li>What is an unbiased estimator?<br>
-When we compute <span class="math inline">\(\hat{\beta}\)</span>, there are no systematic mechanisms in the computation of <span class="math inline">\(\hat{\beta}\)</span> that will lead to over/underestimation of <span class="math inline">\(\beta\)</span>. That is why we expect to obtain <span class="math inline">\(\beta\)</span> (i.e., the “true” <span class="math inline">\(\beta\)</span>) back.</li>
+When we use <span class="math inline">\(\hat{\beta}\)</span> as an estimator of <span class="math inline">\(\beta\)</span>, there are no systematic mechanisms in the computation of <span class="math inline">\(\hat{\beta}\)</span> that will lead to over/underestimation of <span class="math inline">\(\beta\)</span>. That is why we expect to obtain <span class="math inline">\(\beta\)</span> (i.e., the “true” <span class="math inline">\(\beta\)</span>) back.</li>
 </ul></li>
 </ul>
 </section>
@@ -185,7 +185,7 @@ speciesD 2.143253</code></pre>
 </section>
 <section id="confidence-intervals" class="level3">
 <h3 class="anchored" data-anchor-id="confidence-intervals">Confidence intervals</h3>
-<p>Confidence intervals are a measure of uncertainty. They are related to other measures of uncertainty, like <span class="math inline">\(\sigma^2\)</span>. We know that <span class="math display">\[CI = \hat{\beta} \pm t_{\alpha/2, dfe} \ s.e.,\]</span> where <span class="math inline">\(t_{\alpha/2, dfe}\)</span> is the t-score that corresponds to the confidence level (i.e., <span class="math inline">\(\alpha\)</span>) with the degrees of freedom of the error <span class="math inline">\(\text{rdf}\)</span>, and <span class="math inline">\(s.e.\)</span> is the standard error.</p>
+<p>Confidence intervals are a measure of uncertainty. They are related to other measures of uncertainty, like <span class="math inline">\(\sigma^2\)</span>. We know that <span class="math display">\[CI = \hat{\beta} \pm t_{dfe, 1 - \alpha/2} \ s.e.,\]</span> where <span class="math inline">\(t_{\alpha/2, dfe}\)</span> is the t-score that corresponds to the confidence level (i.e., <span class="math inline">\(\alpha\)</span>) with the degrees of freedom of the error <span class="math inline">\(\text{rdf}\)</span>, and <span class="math inline">\(s.e.\)</span> is the standard error.</p>
 <ul>
 <li><p>Why t distribution?</p></li>
 <li><p>Let’s calculate the standard error:</p></li>
@@ -203,7 +203,7 @@ speciesD 2.143253</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>dfe <span class="ot">&lt;-</span> n<span class="sc">-</span>p</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>(t_score <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="at">p=</span>alpha<span class="sc">/</span><span class="dv">2</span>, <span class="at">df =</span> dfe, <span class="at">lower.tail=</span>F))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>(t_score <span class="ot">&lt;-</span> <span class="fu">qt</span>(<span class="at">p=</span><span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>, <span class="at">df =</span> dfe, <span class="at">lower.tail=</span>T))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.994945</code></pre>
 </div>
@@ -234,6 +234,12 @@ speciesC 2.148861 2.644529
 speciesD 1.895419 2.391086</code></pre>
 </div>
 </div>
+<section id="interpretation" class="level4">
+<h4 class="anchored" data-anchor-id="interpretation">Interpretation</h4>
+<ul>
+<li>“We are 95% confident that …”</li>
+</ul>
+</section>
 </section>
 <section id="in-summary" class="level3">
 <h3 class="anchored" data-anchor-id="in-summary">In <code>summary</code>:</h3>

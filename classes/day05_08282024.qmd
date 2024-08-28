@@ -10,7 +10,7 @@ editor: visual
 
 - **A few things to review**  
     - What is an unbiased estimator?  
-  When we compute $\hat{\beta}$, there are no systematic mechanisms in the computation of $\hat{\beta}$ that will lead to over/underestimation of $\beta$. That is why we expect to obtain $\beta$ (i.e., the "true" $\beta$) back.   
+  When we use $\hat{\beta}$ as an estimator of $\beta$, there are no systematic mechanisms in the computation of $\hat{\beta}$ that will lead to over/underestimation of $\beta$. That is why we expect to obtain $\beta$ (i.e., the "true" $\beta$) back.   
 
 ## Estimation
 
@@ -66,7 +66,7 @@ summary(m1)$sigma
 
 ### Confidence intervals
 
-Confidence intervals are a measure of uncertainty. They are related to other measures of uncertainty, like $\sigma^2$. We know that $$CI = \hat{\beta} \pm t_{\alpha/2, dfe} \ s.e.,$$ where $t_{\alpha/2, dfe}$ is the t-score that corresponds to the confidence level (i.e., $\alpha$) with the degrees of freedom of the error $\text{rdf}$, and $s.e.$ is the standard error.  
+Confidence intervals are a measure of uncertainty. They are related to other measures of uncertainty, like $\sigma^2$. We know that $$CI = \hat{\beta} \pm t_{dfe, 1 - \alpha/2} \ s.e.,$$ where $t_{\alpha/2, dfe}$ is the t-score that corresponds to the confidence level (i.e., $\alpha$) with the degrees of freedom of the error $\text{rdf}$, and $s.e.$ is the standard error.  
 
 - Why t distribution?  
 
@@ -83,7 +83,7 @@ unscaled_covariance <- solve(t(X)%*%X)
 ```{r}
 alpha <- 0.05
 dfe <- n-p
-(t_score <- qt(p=alpha/2, df = dfe, lower.tail=F))
+(t_score <- qt(p=1-alpha/2, df = dfe, lower.tail=T))
 ```
 
 ```{r}
@@ -99,6 +99,9 @@ data.frame(lower = beta_hat - se*t_score,
 confint(m1)
 ```
 
+#### Interpretation  
+
+- "We are 95\% confident that ..."  
 
 ### In `summary`:  
 

@@ -23,7 +23,6 @@ EDA
 plot(data$doy, data$stm.length_cm)
 ```
 
-
 ```{r}
 m_cont <- lm(stm.length_cm ~ 1 + doy,  data = data)
 ```
@@ -31,7 +30,6 @@ m_cont <- lm(stm.length_cm ~ 1 + doy,  data = data)
 ```{r}
 model.matrix(m_cont)
 ```
-
 
 ```{r}
 coef(m_cont)
@@ -49,4 +47,3 @@ data %>%
 ```{r}
 confint(m_cont)
 ```
-

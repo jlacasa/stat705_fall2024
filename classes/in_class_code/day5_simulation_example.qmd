@@ -16,10 +16,10 @@ Set the parameters
 ## 'true' parameters
 beta0_truth <- 5
 beta1_truth <- .25
-sigma2_truth <- 10
+sigma2_truth <- 15
 
 ## data
-x <- seq(1000, 1200, by = 4)
+x <- seq(1000, 1200, length.out = 60)
 mu <- beta0_truth + x*beta1_truth 
 n <- length(x) # total number of observations
 set.seed(3298)
@@ -51,6 +51,7 @@ confint(m1)
 n_sims <- 1000
 slope <- numeric(length = n_sims)
 sigma <- numeric(length = n_sims)
+calibration <- numeric(length = n_sims)
 
 for (i in 1:n_sims){
   e <- rnorm(n, 0, sqrt(sigma2_truth))
@@ -59,6 +60,8 @@ for (i in 1:n_sims){
   m1 <- lm(y ~ 1 + x, data = simulated_data)
   slope[i] <- coef(m1)[2]
   sigma[i] <- summary(m1)$sigma
+  calibration[i] <- between(coef(m1)[2], 
+                            confint(m1)[2], confint(m1)[4])
 }
 ```
 
@@ -87,5 +90,7 @@ beta1_truth
 mean(slope)
 sigma2_truth
 mean(sigma^2)
+mean(calibration)
 ```
+
 

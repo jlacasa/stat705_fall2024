@@ -1,0 +1,16 @@
+---
+title: "Day 6 in class code"
+author: "J Lacasa"
+date: "2024-08-30"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_hw1.csv"
+data <- read.csv(url)
+```
+

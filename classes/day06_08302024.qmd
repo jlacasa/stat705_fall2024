@@ -8,6 +8,7 @@ editor: visual
 - **Assignments**. A few comments:  
   - Good overall.  
   - `geom_smooth()` is forbidden from now on! Use `stat_function()` instead.  
+  - Resubmit next Wednesday. 
   - How is a statistical model built.
     - Deterministic function
     - Likelihood function

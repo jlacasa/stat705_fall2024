@@ -13,8 +13,8 @@ Aug 28
   : **Assignment 1 due 11.59 pm**{: .label .label-red }
 
 Aug 30
-: More on linear models (uncertainty)
-  : [](#)
+: More on linear models (estimation)
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day06_08302024)
 
 
 

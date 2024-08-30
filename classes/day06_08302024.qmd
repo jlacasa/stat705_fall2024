@@ -51,7 +51,7 @@ $$\boldsymbol{\mu}=\mathbf{X}\boldsymbol{\beta}.$$
 
 ### Estimation  
 
-Let's fit the model written above to data. [R script]
+Let's fit the model written above to data. [R script](https://github.com/jlacasa/stat705_fall2024/blob/main/classes/in_class_code/day6_estimation_example.Rmd)
 
 ```{r include=FALSE, eval=TRUE}
 m_cont <- lm(stm.length_cm ~ 1 + doy,  data = data)

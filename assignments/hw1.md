@@ -20,7 +20,7 @@ Download template .Rmd [here](https://github.com/jlacasa/stat705_fall2024/blob/m
 Load the data using the R code below and visualize the relationship between day of the year (doy) and stem length. Propose a statistical model to describe this relationship using statistical notation. Your can write it out using LaTeX, or writing it out on paper and pasting the picture in your Rmd. 
 
 ```
-url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_class.csv"
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_hw1.csv"
 data <- read.csv(url)
 ```
 

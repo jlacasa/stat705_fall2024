@@ -134,7 +134,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <p>What’s a good model for the data?</p>
-<p>One option is <span class="math display">\[y_i = \beta_0 + x_i \beta_1 + \varepsilon_i, \]</span> <span class="math display">\[\varepsilon \sim N(0, \sigma^2),\]</span></p>
+<p>One option is <span class="math display">\[y_i = \beta_0 + x_i \beta_1 + \varepsilon_i, \]</span> <span class="math display">\[\varepsilon_i \sim N(0, \sigma^2),\]</span></p>
 <p>for <span class="math inline">\(i = 1, 2, ..., n\)</span> (n being the total number of observations), where <span class="math inline">\(y_i\)</span> is the length of the stem (in cm) of the <span class="math inline">\(i\)</span>th observation, <span class="math inline">\(\beta_0\)</span> is the length of the stem (in cm) at day of the year 0 (i.e., December 31 of last year), <span class="math inline">\(x_i\)</span> is the day of the year of the <span class="math inline">\(i\)</span>th observation, <span class="math inline">\(\varepsilon_i\)</span> is the residual of the <span class="math inline">\(i\)</span>th observation, that is normally distributed.</p>
 <p>This is the same as writing</p>
 <p><span class="math display">\[\mathbf{y} \sim \text{N}(\boldsymbol{\mu}, \sigma^2\mathbf{I}),\]</span> <span class="math display">\[\boldsymbol{\mu}=\mathbf{X}\boldsymbol{\beta}.\]</span></p>

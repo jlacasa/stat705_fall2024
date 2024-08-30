@@ -63,6 +63,14 @@ m_cont <- lm(stm.length_cm ~ 1 + doy,  data = data)
 confint(m_cont)
 ```
 
+**Some interpretations**  
+
+- The difference in stem length for two consecutive days is between `r round(confint(m_cont)[2], 2)` and `r round(confint(m_cont)[4], 2)` with 95\% confidence. 
+An additional day growing is associated with and increase in **average** stem length that is between `r round(confint(m_cont)[2], 2)` and `r round(confint(m_cont)[4], 2)` with 95\% confidence.[[Source (Chapter 3, page 78)](https://www.routledge.com/Understanding-Regression-Analysis-A-Conditional-Distribution-Approach/Westfall-Arias/p/book/9780367493516?srsltid=AfmBOoqnIcDRh-a5BdDe-WJfoKZRLmZd5sCEf8P52su9Jm3rLo28gRO3)].  
+
+- Also: the interval (`r round(confint(m_cont)[2], 2)`, `r round(confint(m_cont)[4], 2)` contains all the values $\beta_1^{\star}$ where we would fail to reject the null hypothesis that $\beta_1 = \beta_1^{\star}$ at level $\alpha$. [[Source](https://doi.org/10.1890/13-0590.1)].  
+
+
 
 ### How much money would you bet on the estimate? Let's do a simulation.  
 R code [here](https://github.com/jlacasa/stat705_fall2024/blob/main/classes/in_class_code/day5_simulation_example.qmd).  

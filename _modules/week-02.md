@@ -16,6 +16,13 @@ Aug 30
 : More on linear models (estimation)
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day06_08302024)
 
+Sep 02
+: Labor day
+  : 
 
-
+Sep 04
+: Uncertainty 
+  : [](https://jlacasa.github.io/stat705_fall2024/classes/day07_09042024)
+: []()
+  : **[New Assignment](https://jlacasa.github.io/stat705_fall2024/assignments/hw2)**{: .label .label-green } Due 09/11
   

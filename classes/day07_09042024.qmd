@@ -78,9 +78,10 @@ fitted.data %>%
 ## Uncertainty as affected by the data   
 
 ```{r}
-data <- read.csv(url)[c(8:12, 35:39),]
-m <- lm(stm.length_cm ~ 1 + doy,  data = data)
-doy <- seq(min(data$doy), max(data$doy), by = 1)
+set.seed(398)
+dd <- read.csv(url)[sample(1:nrow(data), size = 10, replace = FALSE),]
+m <- lm(stm.length_cm ~ 1 + doy,  data = dd)
+doy <- seq(min(dd$doy), max(dd$doy), by = 1)
 estim <- predict(m, data.frame(doy), interval="confidence")
 
 fitted.data <- bind_cols(estim, doy =doy) 
@@ -92,7 +93,7 @@ fitted.data <- bind_cols(fitted.data,
 
 fitted.data %>% 
   ggplot(aes(doy, fit))+
-  geom_point(aes(x = doy, y = stm.length_cm), data = data, color = 'grey30')+
+  geom_point(aes(x = doy, y = stm.length_cm), data = dd, color = 'grey30')+
   geom_ribbon(aes(ymin = pred_lwr, ymax = pred_upr), fill = 'grey85', alpha = .3)+
   geom_ribbon(aes(ymin = lwr, ymax = upr), fill = 'grey60', alpha = .3)+
   geom_line()+

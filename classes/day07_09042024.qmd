@@ -1,0 +1,108 @@
+---
+title: "Day 7 - 09/04/2024"
+format: html
+editor: visual
+---
+
+## From last class  
+
+- What we know so far: estimation  
+- Cool properties of $\hat{\beta}$: unbiased, minimum variance.   
+
+## Uncertainty estimation  
+
+- The importance of reporting uncertainty estimates.  
+- A funny example about reporting point estimates without uncertainty estimates.  
+- Who has heard about meta-analyses? [[link]()]  
+
+### Estimation uncertainty versus prediction uncertainty  
+
+How is the data generated? For the model  
+
+$$y_i \sim N(\mathbf{x}_i' \boldsymbol{\beta}, \sigma^2),$$  
+
+we have two sources of uncertainty:  
+
+- From estimating ${\boldsymbol{\beta}}$: $\hat{\boldsymbol{\beta}} \sim N(\boldsymbol{\beta}, \frac{\sigma^2}{(n-1)s^2_x})$ ([estimation uncertainty])
+- From observing new data: $y_{new} \sim N(\mathbf{x}_{new}' \boldsymbol{\beta}, \sigma^2)$ ([prediction uncertainty])  
+
+#### Estimation uncertainty  
+
+Recall the clover example  
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_hw1.csv"
+data <- read.csv(url)
+m <- lm(stm.length_cm ~ 1 + doy,  data = data)
+confint(m)
+``` 
+
+The 95\% confidence interval for $\beta_1$, (`r round(confint(m)[2], 2)`, `r round(confint(m)[4], 2)`), means that we can say that **the slope** of length vs. doy (i.e., the growth rate) is between those values with 95\% confidence.  
+
+What's with the confidence intervals for $E(y)$ (i.e., stem length) for a given day of the year? What is the confidence interval of $E(\mathbf{y}|\mathbf{x})$?  
+Remember that $E(y)$ is the mean of all potentially observable values of $y$. That is why this interval is somewhat smaller than the prediction interval.
+```{r}
+doy <- seq(min(data$doy), max(data$doy), by = 1)
+estim <- predict(m, data.frame(doy), interval="confidence")
+
+fitted.data <- bind_cols(estim, doy =doy) 
+
+fitted.data %>% 
+  ggplot(aes(doy, fit))+
+  geom_point(aes(x = doy, y = stm.length_cm), data = data, color = 'grey30')+
+  geom_ribbon(aes(ymin = lwr, ymax = upr), fill = 'grey60', alpha = .3)+
+  geom_line()+
+  theme_bw()
+```
+
+#### Prediction uncertainty  
+
+What's with the confidence intervals for $y$ (i.e., stem length) for a given day of the year? What is the confidence interval of $\mathbf{y}|\mathbf{x}$?  
+
+```{r}
+pred <- predict(m, data.frame(doy), interval="prediction")
+
+fitted.data <- bind_cols(fitted.data, 
+                         pred_lwr = pred[,2], 
+                         pred_upr = pred[,3]) 
+
+fitted.data %>% 
+  ggplot(aes(doy, fit))+
+  geom_point(aes(x = doy, y = stm.length_cm), data = data, color = 'grey30')+
+  geom_ribbon(aes(ymin = pred_lwr, ymax = pred_upr), fill = 'grey85', alpha = .3)+
+  geom_ribbon(aes(ymin = lwr, ymax = upr), fill = 'grey60', alpha = .3)+
+  geom_line()+
+  theme_bw()
+```
+
+## Uncertainty as affected by the data   
+
+```{r}
+data <- read.csv(url)[c(8:12, 35:39),]
+m <- lm(stm.length_cm ~ 1 + doy,  data = data)
+doy <- seq(min(data$doy), max(data$doy), by = 1)
+estim <- predict(m, data.frame(doy), interval="confidence")
+
+fitted.data <- bind_cols(estim, doy =doy) 
+pred <- predict(m, data.frame(doy), interval="prediction")
+
+fitted.data <- bind_cols(fitted.data, 
+                         pred_lwr = pred[,2], 
+                         pred_upr = pred[,3]) 
+
+fitted.data %>% 
+  ggplot(aes(doy, fit))+
+  geom_point(aes(x = doy, y = stm.length_cm), data = data, color = 'grey30')+
+  geom_ribbon(aes(ymin = pred_lwr, ymax = pred_upr), fill = 'grey85', alpha = .3)+
+  geom_ribbon(aes(ymin = lwr, ymax = upr), fill = 'grey60', alpha = .3)+
+  geom_line()+
+  theme_bw()
+```
+
+
+## For next class/later today  
+
+- Resubmit your assignments today!  
+- Questions about the project? Proposals are due next Friday (09/13)!
+
+

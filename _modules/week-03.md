@@ -16,6 +16,6 @@ Sep 06
 : []()
   : **[New Assignment](https://jlacasa.github.io/stat705_fall2024/assignments/hw2)**{: .label .label-green } Due 09/13  
 
-Sep 08
+Sep 09
 : Uncertainty III 
   : [](#)

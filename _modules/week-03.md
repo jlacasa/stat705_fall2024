@@ -1,5 +1,5 @@
 ---
-title: Linear Models - Inference
+title: Linear Models - Uncertainty Quantification
 ---
 
 Sep 02
@@ -7,15 +7,15 @@ Sep 02
   : 
 
 Sep 04
-: More on linear models (inference)
-  : [](#)
-: []()
-  : **[New Assignment](https://jlacasa.github.io/stat705_fall2024/assignments/hw2)**{: .label .label-green } Due 09/11
+: Uncertainty I 
+  : [](https://jlacasa.github.io/stat705_fall2024/classes/day07_09042024)
 
 Sep 06
-: More on linear models (inference)
+: Uncertainty II 
   : [](#)
+: []()
+  : **[New Assignment](https://jlacasa.github.io/stat705_fall2024/assignments/hw2)**{: .label .label-green } Due 09/13  
 
-Sep 08
-: More on linear models (inference)
+Sep 09
+: Uncertainty III 
   : [](#)

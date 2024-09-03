@@ -17,5 +17,3 @@ Aug 30
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day06_08302024)
 
 
-
-  

@@ -139,7 +139,9 @@ doy           0.5618765   0.7436752</code></pre>
 </div>
 <p>The 95% confidence interval for <span class="math inline">\(\beta_1\)</span>, (0.56, 0.74), means that we can say that <strong>the slope</strong> of length vs.&nbsp;doy (i.e., the growth rate) is between those values with 95% confidence.</p>
 <p>What’s with the confidence intervals for <span class="math inline">\(E(y)\)</span> (i.e., stem length) for a given day of the year? What is the confidence interval of <span class="math inline">\(E(\mathbf{y}|\mathbf{x})\)</span>?<br>
-Remember that <span class="math inline">\(E(y)\)</span> is the mean of all potentially observable values of <span class="math inline">\(y\)</span>. That is why this interval is somewhat smaller than the prediction interval.</p>
+We are looking at<br>
+<span class="math display">\[\hat{\beta_0}+\hat{\beta_1}x \pm t_{dfe, 1-\alpha/2}s.e. (\hat{\beta_0}+\hat{\beta_1}x),\]</span> where <span class="math inline">\(s.e.(\hat{\beta_0}+\hat{\beta_1}x) = \hat{\sigma}\sqrt{\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}\)</span>.</p>
+<p><strong>Note</strong>: Remember that <span class="math inline">\(E(y)\)</span> is the mean of all potentially observable values of <span class="math inline">\(y\)</span>. That is why this interval is somewhat smaller than the prediction interval.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>doy <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(data<span class="sc">$</span>doy), <span class="fu">max</span>(data<span class="sc">$</span>doy), <span class="at">by =</span> <span class="dv">1</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>estim <span class="ot">&lt;-</span> <span class="fu">predict</span>(m, <span class="fu">data.frame</span>(doy), <span class="at">interval=</span><span class="st">"confidence"</span>)</span>
@@ -159,7 +161,9 @@ Remember that <span class="math inline">\(E(y)\)</span> is the mean of all poten
 </section>
 <section id="prediction-uncertainty" class="level4">
 <h4 class="anchored" data-anchor-id="prediction-uncertainty">Prediction uncertainty</h4>
-<p>What’s with the confidence intervals for <span class="math inline">\(y\)</span> (i.e., stem length) for a given day of the year? What is the confidence interval of <span class="math inline">\(\mathbf{y}|\mathbf{x}\)</span>?</p>
+<p>What’s with the confidence intervals for <span class="math inline">\(y\)</span> (i.e., stem length) for a given day of the year? What is the confidence interval of <span class="math inline">\(\mathbf{y}|\mathbf{x}\)</span>?<br>
+Previously, we only had <span class="math inline">\(\text{Var}(\hat\beta)\)</span>. Now we have to include <span class="math inline">\(\text{Var}(\hat\varepsilon)\)</span>:</p>
+<p><span class="math display">\[s.e.y_{new}=\hat\sigma \sqrt{1+\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}\]</span></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pred <span class="ot">&lt;-</span> <span class="fu">predict</span>(m, <span class="fu">data.frame</span>(doy), <span class="at">interval=</span><span class="st">"prediction"</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -181,11 +185,14 @@ Remember that <span class="math inline">\(E(y)\)</span> is the mean of all poten
 </section>
 </section>
 </section>
-<section id="uncertainty-as-affected-by-the-data" class="level2">
-<h2 class="anchored" data-anchor-id="uncertainty-as-affected-by-the-data">Uncertainty as affected by the data</h2>
+<section id="uncertainty-as-affected-by-the-amount-of-data" class="level2">
+<h2 class="anchored" data-anchor-id="uncertainty-as-affected-by-the-amount-of-data">Uncertainty as affected by the amount of data</h2>
+<ul>
+<li>Thought experiment: what happens to both uncertainties when <span class="math inline">\(n\)</span> is infinite? (what happens to <span class="math inline">\(\text{Var}(\hat\beta)\)</span> when <span class="math inline">\(n\)</span> is infinite?)</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">398</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url)[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data), <span class="at">size =</span> <span class="dv">10</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>),]</span>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url)[<span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(data), <span class="at">size =</span> <span class="dv">9</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>),]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(stm.length_cm <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> doy,  <span class="at">data =</span> dd)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>doy <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(dd<span class="sc">$</span>doy), <span class="fu">max</span>(dd<span class="sc">$</span>doy), <span class="at">by =</span> <span class="dv">1</span>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>estim <span class="ot">&lt;-</span> <span class="fu">predict</span>(m, <span class="fu">data.frame</span>(doy), <span class="at">interval=</span><span class="st">"confidence"</span>)</span>

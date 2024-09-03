@@ -40,7 +40,12 @@ confint(m)
 The 95\% confidence interval for $\beta_1$, (`r round(confint(m)[2], 2)`, `r round(confint(m)[4], 2)`), means that we can say that **the slope** of length vs. doy (i.e., the growth rate) is between those values with 95\% confidence.  
 
 What's with the confidence intervals for $E(y)$ (i.e., stem length) for a given day of the year? What is the confidence interval of $E(\mathbf{y}|\mathbf{x})$?  
-Remember that $E(y)$ is the mean of all potentially observable values of $y$. That is why this interval is somewhat smaller than the prediction interval.
+We are looking at  
+$$\hat{\beta_0}+\hat{\beta_1}x \pm t_{dfe, 1-\alpha/2}s.e. (\hat{\beta_0}+\hat{\beta_1}x),$$
+where $s.e.(\hat{\beta_0}+\hat{\beta_1}x) = \hat{\sigma}\sqrt{\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}$.  
+
+**Note**: Remember that $E(y)$ is the mean of all potentially observable values of $y$. That is why this interval is somewhat smaller than the prediction interval.  
+
 ```{r}
 doy <- seq(min(data$doy), max(data$doy), by = 1)
 estim <- predict(m, data.frame(doy), interval="confidence")
@@ -58,6 +63,9 @@ fitted.data %>%
 #### Prediction uncertainty  
 
 What's with the confidence intervals for $y$ (i.e., stem length) for a given day of the year? What is the confidence interval of $\mathbf{y}|\mathbf{x}$?  
+Previously, we only had $\text{Var}(\hat\beta)$. Now we have to include $\text{Var}(\hat\varepsilon)$:  
+
+$$s.e.y_{new}=\hat\sigma \sqrt{1+\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}$$
 
 ```{r}
 pred <- predict(m, data.frame(doy), interval="prediction")
@@ -75,11 +83,13 @@ fitted.data %>%
   theme_bw()
 ```
 
-## Uncertainty as affected by the data   
+## Uncertainty as affected by the amount of data   
+
+- Thought experiment: what happens to both uncertainties when $n$ is infinite? (what happens to $\text{Var}(\hat\beta)$ when $n$ is infinite?)  
 
 ```{r}
-set.seed(398)
-dd <- read.csv(url)[sample(1:nrow(data), size = 10, replace = FALSE),]
+set.seed(20)
+dd <- read.csv(url)[sample(1:nrow(data), size = 9, replace = FALSE),]
 m <- lm(stm.length_cm ~ 1 + doy,  data = dd)
 doy <- seq(min(dd$doy), max(dd$doy), by = 1)
 estim <- predict(m, data.frame(doy), interval="confidence")

@@ -37,14 +37,14 @@ m <- lm(stm.length_cm ~ 1 + doy,  data = data)
 confint(m)
 ``` 
 
-The 95\% confidence interval for $\beta_1$, (`r round(confint(m)[2], 2)`, `r round(confint(m)[4], 2)`), means that we can say that **the slope** of length vs. doy (i.e., the growth rate) is between those values with 95\% confidence.  
+The 95\% confidence interval for $\beta_1$, (`r round(confint(m)[2], 2)`, `r round(confint(m)[4], 2)`), means that we can say that **the slope** of length vs. doy (i.e., the elongation rate) is between those values with 95\% confidence.  
 
-What's with the confidence intervals for $E(y)$ (i.e., stem length) for a given day of the year? What is the confidence interval of $E(\mathbf{y}|\mathbf{x})$?  
+What's with the confidence intervals for $E(y_{new})$ (i.e., stem length) for a given day of the year? That is, what is the confidence interval of $E(y_{new}|\mathbf{x})$?  
 We are looking at  
-$$\hat{\beta_0}+\hat{\beta_1}x \pm t_{dfe, 1-\alpha/2}s.e. (\hat{\beta_0}+\hat{\beta_1}x),$$
-where $s.e.(\hat{\beta_0}+\hat{\beta_1}x) = \hat{\sigma}\sqrt{\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}$.  
+$$\hat{\beta_0}+\hat{\beta_1}x_{new} \pm t_{dfe, 1-\alpha/2}s.e. (\hat{\beta_0}+\hat{\beta_1}x_{new}),$$
+where $s.e.(\hat{\beta_0}+\hat{\beta_1}x_{new}) = \hat{\sigma}\sqrt{\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}$.  
 
-**Note**: Remember that $E(y)$ is the mean of all potentially observable values of $y$. That is why this interval is somewhat smaller than the prediction interval.  
+**Note**: Remember that $E(y)$ is the **mean** of all potentially observable values of $y$. That is why this interval is somewhat smaller than the prediction interval.  
 
 ```{r}
 doy <- seq(min(data$doy), max(data$doy), by = 1)
@@ -57,7 +57,10 @@ fitted.data %>%
   geom_point(aes(x = doy, y = stm.length_cm), data = data, color = 'grey30')+
   geom_ribbon(aes(ymin = lwr, ymax = upr), fill = 'grey60', alpha = .3)+
   geom_line()+
-  theme_bw()
+  labs(x = "Day of the year", 
+       y = "Stem length (cm)")+
+  theme_classic()+
+  theme(aspect.ratio = 1)
 ```
 
 #### Prediction uncertainty  
@@ -80,12 +83,16 @@ fitted.data %>%
   geom_ribbon(aes(ymin = pred_lwr, ymax = pred_upr), fill = 'grey85', alpha = .3)+
   geom_ribbon(aes(ymin = lwr, ymax = upr), fill = 'grey60', alpha = .3)+
   geom_line()+
-  theme_bw()
+  labs(x = "Day of the year", 
+       y = "Stem length (cm)")+
+  theme_classic()+
+  theme(aspect.ratio = 1)
 ```
 
 ## Uncertainty as affected by the amount of data   
 
 - Thought experiment: what happens to both uncertainties when $n$ is infinite? (what happens to $\text{Var}(\hat\beta)$ when $n$ is infinite?)  
+- Whiteboard: analyze $\text{Var}(\hat\beta) = \frac{\sigma^2}{(n-1)s^2_x}$ when $n$ is infinity. 
 
 ```{r}
 set.seed(20)
@@ -107,7 +114,10 @@ fitted.data %>%
   geom_ribbon(aes(ymin = pred_lwr, ymax = pred_upr), fill = 'grey85', alpha = .3)+
   geom_ribbon(aes(ymin = lwr, ymax = upr), fill = 'grey60', alpha = .3)+
   geom_line()+
-  theme_bw()
+  labs(x = "Day of the year", 
+       y = "Stem length (cm)")+
+  theme_classic()+
+  theme(aspect.ratio = 1)
 ```
 
 

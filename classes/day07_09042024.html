@@ -137,11 +137,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 doy           0.5618765   0.7436752</code></pre>
 </div>
 </div>
-<p>The 95% confidence interval for <span class="math inline">\(\beta_1\)</span>, (0.56, 0.74), means that we can say that <strong>the slope</strong> of length vs.&nbsp;doy (i.e., the growth rate) is between those values with 95% confidence.</p>
-<p>What’s with the confidence intervals for <span class="math inline">\(E(y)\)</span> (i.e., stem length) for a given day of the year? What is the confidence interval of <span class="math inline">\(E(\mathbf{y}|\mathbf{x})\)</span>?<br>
+<p>The 95% confidence interval for <span class="math inline">\(\beta_1\)</span>, (0.56, 0.74), means that we can say that <strong>the slope</strong> of length vs.&nbsp;doy (i.e., the elongation rate) is between those values with 95% confidence.</p>
+<p>What’s with the confidence intervals for <span class="math inline">\(E(y_{new})\)</span> (i.e., stem length) for a given day of the year? That is, what is the confidence interval of <span class="math inline">\(E(y_{new}|\mathbf{x})\)</span>?<br>
 We are looking at<br>
-<span class="math display">\[\hat{\beta_0}+\hat{\beta_1}x \pm t_{dfe, 1-\alpha/2}s.e. (\hat{\beta_0}+\hat{\beta_1}x),\]</span> where <span class="math inline">\(s.e.(\hat{\beta_0}+\hat{\beta_1}x) = \hat{\sigma}\sqrt{\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}\)</span>.</p>
-<p><strong>Note</strong>: Remember that <span class="math inline">\(E(y)\)</span> is the mean of all potentially observable values of <span class="math inline">\(y\)</span>. That is why this interval is somewhat smaller than the prediction interval.</p>
+<span class="math display">\[\hat{\beta_0}+\hat{\beta_1}x_{new} \pm t_{dfe, 1-\alpha/2}s.e. (\hat{\beta_0}+\hat{\beta_1}x_{new}),\]</span> where <span class="math inline">\(s.e.(\hat{\beta_0}+\hat{\beta_1}x_{new}) = \hat{\sigma}\sqrt{\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}\)</span>.</p>
+<p><strong>Note</strong>: Remember that <span class="math inline">\(E(y)\)</span> is the <strong>mean</strong> of all potentially observable values of <span class="math inline">\(y\)</span>. That is why this interval is somewhat smaller than the prediction interval.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>doy <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fu">min</span>(data<span class="sc">$</span>doy), <span class="fu">max</span>(data<span class="sc">$</span>doy), <span class="at">by =</span> <span class="dv">1</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>estim <span class="ot">&lt;-</span> <span class="fu">predict</span>(m, <span class="fu">data.frame</span>(doy), <span class="at">interval=</span><span class="st">"confidence"</span>)</span>
@@ -153,7 +153,10 @@ We are looking at<br>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> doy, <span class="at">y =</span> stm.length_cm), <span class="at">data =</span> data, <span class="at">color =</span> <span class="st">'grey30'</span>)<span class="sc">+</span></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr), <span class="at">fill =</span> <span class="st">'grey60'</span>, <span class="at">alpha =</span> .<span class="dv">3</span>)<span class="sc">+</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day of the year"</span>, </span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Stem length (cm)"</span>)<span class="sc">+</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day07_09042024_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -177,7 +180,10 @@ Previously, we only had <span class="math inline">\(\text{Var}(\hat\beta)\)</spa
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> pred_lwr, <span class="at">ymax =</span> pred_upr), <span class="at">fill =</span> <span class="st">'grey85'</span>, <span class="at">alpha =</span> .<span class="dv">3</span>)<span class="sc">+</span></span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr), <span class="at">fill =</span> <span class="st">'grey60'</span>, <span class="at">alpha =</span> .<span class="dv">3</span>)<span class="sc">+</span></span>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day of the year"</span>, </span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Stem length (cm)"</span>)<span class="sc">+</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day07_09042024_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -188,7 +194,9 @@ Previously, we only had <span class="math inline">\(\text{Var}(\hat\beta)\)</spa
 <section id="uncertainty-as-affected-by-the-amount-of-data" class="level2">
 <h2 class="anchored" data-anchor-id="uncertainty-as-affected-by-the-amount-of-data">Uncertainty as affected by the amount of data</h2>
 <ul>
-<li>Thought experiment: what happens to both uncertainties when <span class="math inline">\(n\)</span> is infinite? (what happens to <span class="math inline">\(\text{Var}(\hat\beta)\)</span> when <span class="math inline">\(n\)</span> is infinite?)</li>
+<li>Thought experiment: what happens to both uncertainties when <span class="math inline">\(n\)</span> is infinite? (what happens to <span class="math inline">\(\text{Var}(\hat\beta)\)</span> when <span class="math inline">\(n\)</span> is infinite?)<br>
+</li>
+<li>Whiteboard: analyze <span class="math inline">\(\text{Var}(\hat\beta) = \frac{\sigma^2}{(n-1)s^2_x}\)</span> when <span class="math inline">\(n\)</span> is infinity.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20</span>)</span>
@@ -210,7 +218,10 @@ Previously, we only had <span class="math inline">\(\text{Var}(\hat\beta)\)</spa
 <span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> pred_lwr, <span class="at">ymax =</span> pred_upr), <span class="at">fill =</span> <span class="st">'grey85'</span>, <span class="at">alpha =</span> .<span class="dv">3</span>)<span class="sc">+</span></span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr), <span class="at">fill =</span> <span class="st">'grey60'</span>, <span class="at">alpha =</span> .<span class="dv">3</span>)<span class="sc">+</span></span>
 <span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day of the year"</span>, </span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Stem length (cm)"</span>)<span class="sc">+</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day07_09042024_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>

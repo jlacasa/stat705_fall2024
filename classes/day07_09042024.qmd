@@ -13,7 +13,7 @@ editor: visual
 
 - The importance of reporting uncertainty estimates.  
 - A funny example about reporting point estimates without uncertainty estimates.  
-- Who has heard about meta-analyses? [[link]()]  
+- Who has heard about meta-analyses? [[book example](https://link.springer.com/book/10.1007/978-94-024-1696-1)]  
 
 ### Estimation uncertainty versus prediction uncertainty  
 

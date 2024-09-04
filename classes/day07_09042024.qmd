@@ -120,6 +120,7 @@ fitted.data %>%
   theme(aspect.ratio = 1)
 ```
 
+[In-class R code](https://github.com/jlacasa/stat705_fall2024/tree/main/classes/in_class_code)
 
 ## For next class/later today  
 

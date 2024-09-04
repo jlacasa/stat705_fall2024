@@ -12,7 +12,7 @@ Sep 04
 
 Sep 06
 : Uncertainty II 
-  : [](#)
+  : [](https://jlacasa.github.io/stat705_fall2024/classes/day08_09062024)
 : []()
   : **[New Assignment](https://jlacasa.github.io/stat705_fall2024/assignments/hw2)**{: .label .label-green } Due 09/13  
 

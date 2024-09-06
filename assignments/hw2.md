@@ -1,6 +1,6 @@
 ---
 layout: page
-title: HW01  Intro Stat Modeling
+title: HW02 Estimation, Uncertainty
 permalink: /assignments/hw2
 parent: Assignments
 nav_order: 2

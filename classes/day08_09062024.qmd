@@ -120,7 +120,7 @@ covariance
 
 ```{r}
 opd_se_hat <- msm::deltamethod(g = ~ -x2/x3, mean = coef(m), cov = covariance)
-opd_hat - 1.96*opd_se_hat
+opd_hat - 1.96*opd_se_hat ## 1.96 is typically used for approximate confidence intervals
 opd_hat + 1.96*opd_se_hat
 ```
 

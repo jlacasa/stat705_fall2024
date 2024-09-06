@@ -246,7 +246,7 @@ I(plant_density^2)  0.02374698  -0.006240083       0.0003466713</code></pre>
 <h4 class="anchored" data-anchor-id="the-delta-method">The delta method</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>opd_se_hat <span class="ot">&lt;-</span> msm<span class="sc">::</span><span class="fu">deltamethod</span>(<span class="at">g =</span> <span class="sc">~</span> <span class="sc">-</span>x2<span class="sc">/</span>x3, <span class="at">mean =</span> <span class="fu">coef</span>(m), <span class="at">cov =</span> covariance)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>opd_hat <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>opd_se_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>opd_hat <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>opd_se_hat <span class="do">## 1.96 is typically used for approximate confidence intervals</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>plant_density 
      8.653369 </code></pre>

@@ -44,14 +44,32 @@ summary(m)
 
 ### Estimation uncertainty  
 
+
 ```{r}
 data_new <- data.frame(plant_density = 10)
+```
 
+Let's look at 
+$$E(y_i) = E(\beta_0 + \beta_1 x_i + \beta_2 x_i^2).$$
+```{r}
 predict(m, data_new, type = "response")
+```
+
+
+Let's look at the 95% CI for 
+$$E(y_i) = E(\beta_0 + \beta_1 x_i + \beta_2 x_i^2).$$
+
+```{r}
 predict(m, data_new, interval = "confidence")
 ```
 
 ### Prediction uncertainty  
+
+Let's look at the 95% CI for 
+$$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i,$$
+where $\varepsilon_i = y_i- \mu_i$
+
+
 ```{r}
 predict(m, data_new, interval = "prediction")
 ```
@@ -80,8 +98,9 @@ coef(m)
 (opd_hat <- -coef(m)[2]/(2*coef(m)[3]))
 ```
 
-What would be a reasonable confidence interval for this derived quantity?  
+What would be a reasonable confidence interval for this derived quantity?   
 
+Can we use the 95% CI?  
 ```{r}
 confint(m)
 ```
@@ -106,7 +125,7 @@ opd_hat + 1.96*opd_se_hat
 
 ## For next week  
 
-- [Assignment 2]() is up.  
+- [Assignment 2](https://jlacasa.github.io/stat705_fall2024/assignments/hw2) is up.  
 - Semester project proposals are due next Friday.
-- [An example proposal](). 
+- [An example proposal](https://github.com/jlacasa/stat705_fall2024/blob/main/homeworks/finalproj.pdf). 
 

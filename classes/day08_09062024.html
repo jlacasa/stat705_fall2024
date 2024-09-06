@@ -157,14 +157,19 @@ F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
 <section id="estimation-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="estimation-uncertainty">Estimation uncertainty</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">plant_density =</span> <span class="dv">10</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m, data_new, <span class="at">type =</span> <span class="st">"response"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>data_new <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">plant_density =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s look at <span class="math display">\[E(y_i) = E(\beta_0 + \beta_1 x_i + \beta_2 x_i^2).\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m, data_new, <span class="at">type =</span> <span class="st">"response"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       1 
 13.46458 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m, data_new, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s look at the 95% CI for <span class="math display">\[E(y_i) = E(\beta_0 + \beta_1 x_i + \beta_2 x_i^2).\]</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m, data_new, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 13.46458 12.85359 14.07558</code></pre>
@@ -173,8 +178,9 @@ F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
 </section>
 <section id="prediction-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="prediction-uncertainty">Prediction uncertainty</h3>
+<p>Let’s look at the 95% CI for <span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i,\]</span> where <span class="math inline">\(\varepsilon_i = y_i- \mu_i\)</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m, data_new, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m, data_new, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       fit      lwr      upr
 1 13.46458 11.35501 15.57416</code></pre>
@@ -192,8 +198,62 @@ F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
 </li>
 <li>Check out <a href="https://link.springer.com/article/10.1186/s13007-024-01261-9">this paper</a>.</li>
 </ul>
+<section id="the-optimum-planting-rate" class="level4">
+<h4 class="anchored" data-anchor-id="the-optimum-planting-rate">The ‘optimum planting rate’</h4>
+<p>The first derivative of <span class="math inline">\(\beta_0 + \beta_1 x_i + \beta_2 x_i^2\)</span> is <span class="math inline">\(\beta_1 + 2x_i \beta_2\)</span>. If we set that to zero,</p>
+<p><span class="math display">\[\beta_1 + 2x_i \beta_2 = 0, \]</span></p>
+<p>and</p>
+<p><span class="math display">\[OPR = x_i  = - \frac{\beta_1}{2 \beta_2}.\]</span></p>
+<p>Using the invariance property of MLE, we can obtain the MLE for this derived quantity.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       (Intercept)      plant_density I(plant_density^2) 
+        4.30878773         1.74562330        -0.08300439 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>(opd_hat <span class="ot">&lt;-</span> <span class="sc">-</span><span class="fu">coef</span>(m)[<span class="dv">2</span>]<span class="sc">/</span>(<span class="dv">2</span><span class="sc">*</span><span class="fu">coef</span>(m)[<span class="dv">3</span>]))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>plant_density 
+     10.51525 </code></pre>
+</div>
+</div>
+<p>What would be a reasonable confidence interval for this derived quantity?</p>
+<p>Can we use the 95% CI?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                        2.5 %      97.5 %
+(Intercept)         1.4424214  7.17515407
+plant_density       1.0412544  2.44999217
+I(plant_density^2) -0.1216181 -0.04439072</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>covariance <span class="ot">&lt;-</span> <span class="fu">vcov</span>(m)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>covariance</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   (Intercept) plant_density I(plant_density^2)
+(Intercept)         1.91028888  -0.454746081       0.0237469842
+plant_density      -0.45474608   0.115354876      -0.0062400834
+I(plant_density^2)  0.02374698  -0.006240083       0.0003466713</code></pre>
+</div>
+</div>
+</section>
 <section id="the-delta-method" class="level4">
 <h4 class="anchored" data-anchor-id="the-delta-method">The delta method</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>opd_se_hat <span class="ot">&lt;-</span> msm<span class="sc">::</span><span class="fu">deltamethod</span>(<span class="at">g =</span> <span class="sc">~</span> <span class="sc">-</span>x2<span class="sc">/</span>x3, <span class="at">mean =</span> <span class="fu">coef</span>(m), <span class="at">cov =</span> covariance)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>opd_hat <span class="sc">-</span> <span class="fl">1.96</span><span class="sc">*</span>opd_se_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>plant_density 
+     8.653369 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>opd_hat <span class="sc">+</span> <span class="fl">1.96</span><span class="sc">*</span>opd_se_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>plant_density 
+     12.37712 </code></pre>
+</div>
+</div>
 </section>
 </section>
 </section>
@@ -203,10 +263,10 @@ F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
 <section id="for-next-week" class="level2">
 <h2 class="anchored" data-anchor-id="for-next-week">For next week</h2>
 <ul>
-<li><a href="">Assignment 2</a> is up.<br>
+<li><a href="https://jlacasa.github.io/stat705_fall2024/assignments/hw2">Assignment 2</a> is up.<br>
 </li>
 <li>Semester project proposals are due next Friday.</li>
-<li><a href="">An example proposal</a>.</li>
+<li><a href="https://github.com/jlacasa/stat705_fall2024/blob/main/homeworks/finalproj.pdf">An example proposal</a>.</li>
 </ul>
 </section>
 

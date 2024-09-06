@@ -128,7 +128,8 @@ opd_hat + 1.96*opd_se_hat
 
 - Why are uncertainty estimates important?  
 - What are uncertainty estimates telling us?  
-- 
+- Which variables have uncertainty? Which ones don't?  
+- Where does uncertainty come from?  
 
 ## For next week  
 

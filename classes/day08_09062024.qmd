@@ -67,7 +67,7 @@ predict(m, data_new, interval = "confidence")
 
 Let's look at the 95% CI for 
 $$y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i,$$
-where $\varepsilon_i = y_i- \mu_i$
+where $\varepsilon_i = y_i- \mu_i$.
 
 
 ```{r}
@@ -100,7 +100,9 @@ coef(m)
 
 What would be a reasonable confidence interval for this derived quantity?   
 
-Can we use the 95% CI?  
+#### Can we apply the invariance propert and use the 95% CI from the $\beta$s to estimate the 95CI for the derived quantity?  
+
+
 ```{r}
 confint(m)
 ```
@@ -109,6 +111,8 @@ confint(m)
 covariance <- vcov(m)
 covariance
 ```
+
+[Remember the simulation?](https://jlacasa.github.io/stat705_fall2024/classes/in_class_code/day8_simulation_ _example) [[R code](https://github.com/jlacasa/stat705_fall2024/tree/main/classes/in_class_code/day8_simulation_ _example.qmd)]
 
 
 #### The delta method  
@@ -120,8 +124,11 @@ opd_hat - 1.96*opd_se_hat
 opd_hat + 1.96*opd_se_hat
 ```
 
-## Where is all this uncertainty coming from?  
+## Summary    
 
+- Why are uncertainty estimates important?  
+- What are uncertainty estimates telling us?  
+- 
 
 ## For next week  
 

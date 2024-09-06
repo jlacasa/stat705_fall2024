@@ -178,7 +178,7 @@ F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
 </section>
 <section id="prediction-uncertainty" class="level3">
 <h3 class="anchored" data-anchor-id="prediction-uncertainty">Prediction uncertainty</h3>
-<p>Let’s look at the 95% CI for <span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i,\]</span> where <span class="math inline">\(\varepsilon_i = y_i- \mu_i\)</span></p>
+<p>Let’s look at the 95% CI for <span class="math display">\[y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \varepsilon_i,\]</span> where <span class="math inline">\(\varepsilon_i = y_i- \mu_i\)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m, data_new, <span class="at">interval =</span> <span class="st">"prediction"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -218,7 +218,9 @@ F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
 </div>
 </div>
 <p>What would be a reasonable confidence interval for this derived quantity?</p>
-<p>Can we use the 95% CI?</p>
+</section>
+<section id="can-we-apply-the-invariance-propert-and-use-the-95-ci-from-the-betas-to-estimate-the-95ci-for-the-derived-quantity" class="level4">
+<h4 class="anchored" data-anchor-id="can-we-apply-the-invariance-propert-and-use-the-95-ci-from-the-betas-to-estimate-the-95ci-for-the-derived-quantity">Can we apply the invariance propert and use the 95% CI from the <span class="math inline">\(\beta\)</span>s to estimate the 95CI for the derived quantity?</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -238,6 +240,7 @@ plant_density      -0.45474608   0.115354876      -0.0062400834
 I(plant_density^2)  0.02374698  -0.006240083       0.0003466713</code></pre>
 </div>
 </div>
+<p><a href="https://jlacasa.github.io/stat705_fall2024/classes/in_class_code/day8_simulation_%20_example">Remember the simulation?</a> [<a href="https://github.com/jlacasa/stat705_fall2024/tree/main/classes/in_class_code/day8_simulation_%20_example.qmd">R code</a>]</p>
 </section>
 <section id="the-delta-method" class="level4">
 <h4 class="anchored" data-anchor-id="the-delta-method">The delta method</h4>
@@ -257,8 +260,15 @@ I(plant_density^2)  0.02374698  -0.006240083       0.0003466713</code></pre>
 </section>
 </section>
 </section>
-<section id="where-is-all-this-uncertainty-coming-from" class="level2">
-<h2 class="anchored" data-anchor-id="where-is-all-this-uncertainty-coming-from">Where is all this uncertainty coming from?</h2>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<ul>
+<li>Why are uncertainty estimates important?<br>
+</li>
+<li>What are uncertainty estimates telling us?<br>
+</li>
+<li></li>
+</ul>
 </section>
 <section id="for-next-week" class="level2">
 <h2 class="anchored" data-anchor-id="for-next-week">For next week</h2>

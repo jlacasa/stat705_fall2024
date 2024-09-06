@@ -112,14 +112,14 @@ covariance <- vcov(m)
 covariance
 ```
 
-[Remember the simulation?](https://jlacasa.github.io/stat705_fall2024/classes/in_class_code/day8_simulation_ _example) [[R code](https://github.com/jlacasa/stat705_fall2024/tree/main/classes/in_class_code/day8_simulation_ _example.qmd)]
+[Remember the simulation?](https://jlacasa.github.io/stat705_fall2024/classes/in_class_code/day8_simulation_example) [[R code](https://github.com/jlacasa/stat705_fall2024/tree/main/classes/in_class_code/day8_simulation_example.qmd)]
 
 
 #### The delta method  
 
 
 ```{r}
-opd_se_hat <- msm::deltamethod(g = ~ -x2/x3, mean = coef(m), cov = covariance)
+opd_se_hat <- msm::deltamethod(g = ~ -x2/(2*x3), mean = coef(m), cov = covariance)
 opd_hat - 1.96*opd_se_hat ## 1.96 is typically used for approximate confidence intervals
 opd_hat + 1.96*opd_se_hat
 ```

@@ -64,6 +64,10 @@ $$ \hat{\theta} \pm t_{dfe, 1 - \alpha/2} \ s.e.(\theta).$$
 
 - Let's analyze these.  
 
+- And recall that derived quantities, like the optimum plant density (see [class 8](https://jlacasa.github.io/stat705_fall2024/classes/day08_09062024)) have their own standard errors that make their own CI.
+  - Delta method  
+  - Bootstrap  
+
 ### What is coming next in this course, connection with uncertainty  
 
 - Hypothesis tests  

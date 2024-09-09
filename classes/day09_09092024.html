@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="estimation-uncertainty-estimation---a-summary" class="level2">
 <h2 class="anchored" data-anchor-id="estimation-uncertainty-estimation---a-summary">Estimation, uncertainty estimation - a summary</h2>
 <ul>
-<li>Why do we need statistics?<br>
+<li>Why do we need statistics? [<a href="misc_plots/Del_rigor_en_la_ciencia.pdf">Interesting read</a>]<br>
 </li>
 <li>What is a statistical model?<br>
 </li>
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Normal distribution of the data (of the residuals).<br>
 </li>
-<li>iid residuals<br>
+<li>independent, identically distributed (iid) residuals<br>
 </li>
 <li>homoscedasticity<br>
 </li>
@@ -139,26 +139,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 For example, we have <span class="math display">\[\hat{\boldsymbol{\beta}} \sim N(\boldsymbol{\beta}, \frac{\sigma^2}{(n-1)s^2_x}),\]</span></p>
 <p><span class="math display">\[y_{new} \sim N(\mu_{new}, \sigma^2),\]</span> and</p>
 <p><span class="math display">\[\hat{y}_{new} \sim N(\hat{\mu}_{new}, \hat{\sigma}^2).\]</span></p>
-<p>That is why, when reporting a point estimate (of <span class="math inline">\(\beta\)</span>, <span class="math inline">\(y\)</span> or <span class="math inline">\(y_{new}\)</span>), there is some unceratinty associated. For example, for any estimate <span class="math inline">\(\hat\theta\)</span>, we know that the 95%CI is <span class="math display">\[ \hat{\theta} \pm t_{dfe, 1 - \alpha/2} \ s.e._{\theta}.\]</span></p>
+<p>That is why, when reporting a point estimate (of <span class="math inline">\(\beta\)</span>, <span class="math inline">\(y\)</span>, or <span class="math inline">\(y_{new}\)</span>), there is some unceratinty associated. For example, for any estimate <span class="math inline">\(\hat\theta\)</span>, we know that the 95%CI is <span class="math display">\[ \hat{\theta} \pm t_{dfe, 1 - \alpha/2} \ s.e.(\theta).\]</span></p>
 <ul>
 <li><p>For <span class="math inline">\(\hat\beta\)</span>, <span class="math inline">\(s.e.(\hat\beta) = \frac{\hat\sigma}{s_x\sqrt{n-1}}\)</span>.</p></li>
-<li><p>For <span class="math inline">\(E(y_{new}|x_{new})\)</span>, <span class="math inline">\(s.e.(\hat{\beta_0}+\hat{\beta_1}x_{new}) = \hat{\sigma}\sqrt{\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}\)</span>.</p></li>
-<li><p>For <span class="math inline">\(y_{new}|x_{new}\)</span>, <span class="math inline">\(s.e.(y_{new})=\hat\sigma \sqrt{1+\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}\)</span>.</p></li>
+<li><p>For <span class="math inline">\(E(y_{new}|x_{new}) = \hat{\beta_0}+\hat{\beta_1}x_{new}\)</span>, <span class="math inline">\(s.e.(\hat{\beta_0}+\hat{\beta_1}x_{new}) = \hat{\sigma}\sqrt{\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}\)</span>.</p></li>
+<li><p>For <span class="math inline">\(y_{new}|x_{new}\)</span>, we use <span class="math inline">\(s.e.(\hat\varepsilon)=\hat\sigma \sqrt{1+\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}\)</span>.</p></li>
 <li><p>Let’s analyze these.</p></li>
 </ul>
 </section>
-<section id="what-is-coming-next-and-the-connection-with-uncertainty" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-coming-next-and-the-connection-with-uncertainty">What is coming next and the connection with uncertainty</h3>
+<section id="what-is-coming-next-in-this-course-connection-with-uncertainty" class="level3">
+<h3 class="anchored" data-anchor-id="what-is-coming-next-in-this-course-connection-with-uncertainty">What is coming next in this course, connection with uncertainty</h3>
 <ul>
+<li>Hypothesis tests<br>
+</li>
 <li>Mean comparison<br>
 </li>
-<li>The connection between 95%CI and an hypothesis test with <span class="math inline">\(\alpha = 0.05\)</span></li>
-</ul>
-</section>
-<section id="what-is-coming-after-that" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-coming-after-that">What is coming after that</h3>
-<ul>
-<li>A temptative roadmap</li>
+<li>The connection between 95%CI and an hypothesis test with <span class="math inline">\(\alpha\)</span> = 0.05</li>
 </ul>
 </section>
 <section id="announcements" class="level3">

@@ -6,7 +6,7 @@ editor: visual
 
 ## Estimation, uncertainty estimation - a summary  
 
-- Why do we need statistics?   
+- Why do we need statistics? [[Interesting read](misc_plots/Del_rigor_en_la_ciencia.pdf)]   
 - What is a statistical model?  
 - Research/curious question, statistical model, R program.  
 - Advice: start simple and add complexity gradually.  
@@ -27,7 +27,7 @@ $$\boldsymbol{\varepsilon} \overset{\mathrm{iid}}{\sim} N(0,\sigma^2 \mathbf{I})
 A few big assumptions we are making:  
 
 - Normal distribution of the data (of the residuals).    
-- iid residuals  
+- independent, identically distributed (iid) residuals  
 - homoscedasticity  
 - linearity  
 
@@ -53,25 +53,22 @@ and
 
 $$\hat{y}_{new} \sim N(\hat{\mu}_{new}, \hat{\sigma}^2).$$
 
-That is why, when reporting a point estimate (of $\beta$, $y$ or $y_{new}$), there is some unceratinty associated. For example, for any estimate $\hat\theta$, we know that the 95%CI is 
-$$ \hat{\theta} \pm t_{dfe, 1 - \alpha/2} \ s.e._{\theta}.$$
+That is why, when reporting a point estimate (of $\beta$, $y$, or $y_{new}$), there is some unceratinty associated. For example, for any estimate $\hat\theta$, we know that the 95%CI is 
+$$ \hat{\theta} \pm t_{dfe, 1 - \alpha/2} \ s.e.(\theta).$$
 
 - For $\hat\beta$, $s.e.(\hat\beta) = \frac{\hat\sigma}{s_x\sqrt{n-1}}$.
 
-- For $E(y_{new}|x_{new})$, $s.e.(\hat{\beta_0}+\hat{\beta_1}x_{new}) = \hat{\sigma}\sqrt{\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}$.
+- For $E(y_{new}|x_{new}) = \hat{\beta_0}+\hat{\beta_1}x_{new}$, $s.e.(\hat{\beta_0}+\hat{\beta_1}x_{new}) = \hat{\sigma}\sqrt{\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}$.
 
-- For $y_{new}|x_{new}$, $s.e.(y_{new})=\hat\sigma \sqrt{1+\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}$. 
+- For $y_{new}|x_{new}$, we use $s.e.(\hat\varepsilon)=\hat\sigma \sqrt{1+\frac{1}{n}+ \frac{(x-\hat\mu_x)^2}{(n-1)s_x^2}}$. 
 
 - Let's analyze these.  
 
-### What is coming next and the connection with uncertainty  
+### What is coming next in this course, connection with uncertainty  
 
+- Hypothesis tests  
 - Mean comparison  
-- The connection between 95%CI and an hypothesis test with $\alpha = 0.05$  
-
-### What is coming after that   
-
-- A temptative roadmap  
+- The connection between 95%CI and an hypothesis test with $\alpha$ = 0.05  
 
 ### Announcements 
 

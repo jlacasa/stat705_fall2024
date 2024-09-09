@@ -18,4 +18,4 @@ Sep 06
 
 Sep 09
 : Uncertainty III 
-  : [](#)
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day09_09092024)

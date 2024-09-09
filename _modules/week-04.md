@@ -1,10 +1,10 @@
 ---
-title: Linear Models - Inference
+title: Linear Models - Inference, Hypothesis Tests
 ---
 
 Sep 11
 : Inference
-  : 
+  : []()
 
 Sep 13
 : Inference 

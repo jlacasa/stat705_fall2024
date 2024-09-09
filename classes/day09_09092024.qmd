@@ -76,5 +76,5 @@ $$ \hat{\theta} \pm t_{dfe, 1 - \alpha/2} \ s.e.(\theta).$$
 
 ### Announcements 
 
-- Office hours today are 2-3pm.  
+- Office hours today are 1-2pm.  
 

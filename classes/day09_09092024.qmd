@@ -54,7 +54,7 @@ and
 $$\hat{y}_{new} \sim N(\hat{\mu}_{new}, \hat{\sigma}^2).$$
 
 That is why, when reporting a point estimate (of $\beta$, $y$, or $y_{new}$), there is some unceratinty associated. For example, for any estimate $\hat\theta$, we know that the 95%CI is 
-$$ \hat{\theta} \pm t_{dfe, 1 - \alpha/2} \ s.e.(\theta).$$
+$$ \hat{\theta} \pm t_{dfe, 1 - \alpha/2} \ s.e.(\hat\theta).$$
 
 - For $\hat\beta$, $s.e.(\hat\beta) = \frac{\hat\sigma}{s_x\sqrt{n-1}}$.
 

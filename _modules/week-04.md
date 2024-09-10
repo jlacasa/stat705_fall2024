@@ -3,8 +3,8 @@ title: Linear Models - Inference, Hypothesis Tests
 ---
 
 Sep 11
-: Inference
-  : []()
+: Inference I 
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day10_09112024)
 
 Sep 13
 : Inference 

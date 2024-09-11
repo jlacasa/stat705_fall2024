@@ -72,7 +72,9 @@ dfe <- (nrow(data)-3)
 The t statistic 
 $$T = \frac{\hat\theta}{s.e.(\hat\theta)}$$
 
-is used to compute the p value in hypothesis tests. The p value is the probability of observing the t statistic under the conditions of the null hypothesis.  
+is used to compute the p value in hypothesis tests. The p value is the probability of observing the t statistic under the conditions of the null hypothesis. In this formula, $\hat\theta$ is an estimator of an operation of the parameters, e.g., $\theta = \beta_1 - 0$ or $\theta = \beta_1-\beta_2$.
+
+The t distribution is similar to a normal distribution, but with heavier tails.  
 
 ```{r }
 x <- seq(-5, 5, by = .1)
@@ -94,7 +96,7 @@ data.frame(x, dt) %>%
 ```
 
 
-In the `summary` output, we have $\theta = \beta-0$, i.e., we are testing if a given $\beta$ is different to zero.  
+In the `summary` output, we have $\theta = \beta_j-0$, i.e., we are testing if a given $\beta_j$ is different to zero.  
 
 ```{r}
 t_A <- (beta_hat[1] - 0)/se[1]
@@ -111,6 +113,80 @@ dt(t_C, dfe)
 dt(t_D, dfe)
 ```
 
+
+### The General linear F-test  
+
+Compare the "full" model (our proposed model) to the "reduced" (intercept only) model.  
+
+```{r message=FALSE, warning=FALSE}
+library(ggpubr)
+data2 <- read.csv("https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_hw1.csv")
+m2_full <- lm(stm.length_cm ~ doy , data = data2)
+m2_red <- lm(stm.length_cm ~ 1 , data = data2)
+
+ggarrange(data2 %>% 
+            ggplot(aes(doy, stm.length_cm))+
+            geom_point()+
+            stat_function(fun = function(x){
+              coef(m2_full)[1]+x*coef(m2_full)[2]
+            })+
+            labs(x = "Day of the Year", 
+                 y = "Stem length (cm)")+
+            theme_classic()+
+            theme(aspect.ratio = 1),
+          data2 %>% 
+            ggplot(aes(doy, stm.length_cm))+
+            geom_point()+
+            stat_function(fun = function(x){
+              coef(m2_red)[1]
+            })+
+            labs(x = "Day of the Year", 
+                 y = "Stem length (cm)")+
+            theme_classic()+
+            theme(aspect.ratio = 1),
+          ncol = 2)
+```
+
+
+```{r message=FALSE, warning=FALSE}
+m_full <- lm(agb_g ~ species , data = data)
+m_red <- lm(agb_g ~ 1 , data = data)
+ggarrange(data %>% 
+            mutate(pred = predict(m_full, type = "response")) %>% 
+            ggplot(aes(species, agb_g))+
+            geom_point()+
+            geom_point(aes(y = pred), size =4, shape = 21,  fill = "magenta")+
+            labs(x = "Species", 
+                 y = "Aboveground biomass (g)")+
+            theme_classic()+
+            theme(aspect.ratio = 1),
+          data %>% 
+            mutate(pred = predict(m_red, type = "response")) %>% 
+            ggplot(aes(species, agb_g))+
+            geom_point()+
+            geom_hline(aes(yintercept = pred), size =2, color = "magenta")+
+            labs(x = "Species", 
+                 y = "Aboveground biomass (g)")+
+            theme_classic()+
+            theme(aspect.ratio = 1),
+          ncol = 2)
+```
+
+```{r}
+SSE_full <- sum(m_full$residuals^2)
+SSE_red <- sum(m_red$residuals^2)
+
+df_full <- m_full$df.residual
+df_red <- m_red$df.residual
+
+n <- nrow(data)
+F_star <- ((SSE_red-SSE_full)/(df_red-df_full)) / (SSE_full/df_full)
+(p_value <- df(F_star, df1 = 1, df2 = dfe))
+
+summary(m_full)
+```
+
+### Summary  
 
 Now we know where (almost) everything in the `summary` output comes from!   
 

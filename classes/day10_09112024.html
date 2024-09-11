@@ -172,7 +172,8 @@ speciesD 1.895419 2.391086</code></pre>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dfe <span class="ot">&lt;-</span> (<span class="fu">nrow</span>(data)<span class="sc">-</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The t statistic <span class="math display">\[T = \frac{\hat\theta}{s.e.(\hat\theta)}\]</span></p>
-<p>is used to compute the p value in hypothesis tests. The p value is the probability of observing the t statistic under the conditions of the null hypothesis.</p>
+<p>is used to compute the p value in hypothesis tests. The p value is the probability of observing the t statistic under the conditions of the null hypothesis. In this formula, <span class="math inline">\(\hat\theta\)</span> is an estimator of an operation of the parameters, e.g., <span class="math inline">\(\theta = \beta_1 - 0\)</span> or <span class="math inline">\(\theta = \beta_1-\beta_2\)</span>.</p>
+<p>The t distribution is similar to a normal distribution, but with heavier tails.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">5</span>, <span class="at">by =</span> .<span class="dv">1</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>dt <span class="ot">&lt;-</span> <span class="fu">dt</span>(x, dfe)</span>
@@ -194,7 +195,7 @@ speciesD 1.895419 2.391086</code></pre>
 <p><img src="day10_09112024_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>In the <code>summary</code> output, we have <span class="math inline">\(\theta = \beta-0\)</span>, i.e., we are testing if a given <span class="math inline">\(\beta\)</span> is different to zero.</p>
+<p>In the <code>summary</code> output, we have <span class="math inline">\(\theta = \beta_j-0\)</span>, i.e., we are testing if a given <span class="math inline">\(\beta_j\)</span> is different to zero.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>t_A <span class="ot">&lt;-</span> (beta_hat[<span class="dv">1</span>] <span class="sc">-</span> <span class="dv">0</span>)<span class="sc">/</span>se[<span class="dv">1</span>]</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>t_A</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -232,9 +233,109 @@ speciesD 1.895419 2.391086</code></pre>
 1.624738e-26 </code></pre>
 </div>
 </div>
+</section>
+<section id="the-general-linear-f-test" class="level3">
+<h3 class="anchored" data-anchor-id="the-general-linear-f-test">The General linear F-test</h3>
+<p>Compare the “full” model (our proposed model) to the “reduced” (intercept only) model.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>data2 <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_hw1.csv"</span>)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>m2_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(stm.length_cm <span class="sc">~</span> doy , <span class="at">data =</span> data2)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>m2_red <span class="ot">&lt;-</span> <span class="fu">lm</span>(stm.length_cm <span class="sc">~</span> <span class="dv">1</span> , <span class="at">data =</span> data2)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(data2 <span class="sc">%&gt;%</span> </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ggplot</span>(<span class="fu">aes</span>(doy, stm.length_cm))<span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>            <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x){</span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>              <span class="fu">coef</span>(m2_full)[<span class="dv">1</span>]<span class="sc">+</span>x<span class="sc">*</span><span class="fu">coef</span>(m2_full)[<span class="dv">2</span>]</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>            })<span class="sc">+</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day of the Year"</span>, </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="st">"Stem length (cm)"</span>)<span class="sc">+</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>),</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>          data2 <span class="sc">%&gt;%</span> </span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ggplot</span>(<span class="fu">aes</span>(doy, stm.length_cm))<span class="sc">+</span></span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>            <span class="fu">stat_function</span>(<span class="at">fun =</span> <span class="cf">function</span>(x){</span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>              <span class="fu">coef</span>(m2_red)[<span class="dv">1</span>]</span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>            })<span class="sc">+</span></span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Day of the Year"</span>, </span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="st">"Stem length (cm)"</span>)<span class="sc">+</span></span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>),</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>          <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day10_09112024_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>m_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(agb_g <span class="sc">~</span> species , <span class="at">data =</span> data)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>m_red <span class="ot">&lt;-</span> <span class="fu">lm</span>(agb_g <span class="sc">~</span> <span class="dv">1</span> , <span class="at">data =</span> data)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggarrange</span>(data <span class="sc">%&gt;%</span> </span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">pred =</span> <span class="fu">predict</span>(m_full, <span class="at">type =</span> <span class="st">"response"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ggplot</span>(<span class="fu">aes</span>(species, agb_g))<span class="sc">+</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> pred), <span class="at">size =</span><span class="dv">4</span>, <span class="at">shape =</span> <span class="dv">21</span>,  <span class="at">fill =</span> <span class="st">"magenta"</span>)<span class="sc">+</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Species"</span>, </span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="st">"Aboveground biomass (g)"</span>)<span class="sc">+</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>),</span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>          data <span class="sc">%&gt;%</span> </span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>            <span class="fu">mutate</span>(<span class="at">pred =</span> <span class="fu">predict</span>(m_red, <span class="at">type =</span> <span class="st">"response"</span>)) <span class="sc">%&gt;%</span> </span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>            <span class="fu">ggplot</span>(<span class="fu">aes</span>(species, agb_g))<span class="sc">+</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>            <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> pred), <span class="at">size =</span><span class="dv">2</span>, <span class="at">color =</span> <span class="st">"magenta"</span>)<span class="sc">+</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>            <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Species"</span>, </span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>                 <span class="at">y =</span> <span class="st">"Aboveground biomass (g)"</span>)<span class="sc">+</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>            <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>),</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>          <span class="at">ncol =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day10_09112024_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>SSE_full <span class="ot">&lt;-</span> <span class="fu">sum</span>(m_full<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>SSE_red <span class="ot">&lt;-</span> <span class="fu">sum</span>(m_red<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>df_full <span class="ot">&lt;-</span> m_full<span class="sc">$</span>df.residual</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>df_red <span class="ot">&lt;-</span> m_red<span class="sc">$</span>df.residual</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(data)</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>F_star <span class="ot">&lt;-</span> ((SSE_red<span class="sc">-</span>SSE_full)<span class="sc">/</span>(df_red<span class="sc">-</span>df_full)) <span class="sc">/</span> (SSE_full<span class="sc">/</span>df_full)</span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>(p_value <span class="ot">&lt;-</span> <span class="fu">df</span>(F_star, <span class="at">df1 =</span> <span class="dv">1</span>, <span class="at">df2 =</span> dfe))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.0008061968</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = agb_g ~ species, data = data)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1.04136 -0.46186  0.03253  0.44846  1.41732 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   2.9366     0.1242  23.638  &lt; 2e-16 ***
+speciesC     -0.5399     0.1757  -3.073  0.00303 ** 
+speciesD     -0.7933     0.1757  -4.515 2.54e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.6086 on 69 degrees of freedom
+Multiple R-squared:  0.2357,    Adjusted R-squared:  0.2135 
+F-statistic: 10.64 on 2 and 69 DF,  p-value: 9.399e-05</code></pre>
+</div>
+</div>
+</section>
+<section id="summary" class="level3">
+<h3 class="anchored" data-anchor-id="summary">Summary</h3>
 <p>Now we know where (almost) everything in the <code>summary</code> output comes from!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><img src="misc_plots/summary_comments.png" class="img-fluid"></p>
 </section>
@@ -243,20 +344,20 @@ speciesD 1.895419 2.391086</code></pre>
 <p>Recall that the t statistic <span class="math inline">\(T = \frac{\hat\theta}{s.e.(\hat\theta)}\)</span> is used to compute the p value in hypothesis tests. We tested <span class="math inline">\(\beta_1 = 0\)</span> before, but what about <span class="math inline">\(\beta_1 = \beta_2\)</span>? In other words, we want to test if the difference between <span class="math inline">\(\beta_1\)</span> and <span class="math inline">\(\beta_2\)</span> is different to zero.<br>
 In this case, <span class="math inline">\(s.e.(\hat\beta_1 - \hat\beta_2) = \sqrt{s.e.(\hat\beta_1)^2+ s.e.(\hat\beta_2)^2 -2\text{cov}(\hat\beta_1, \hat\beta_2)}\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>c_1 <span class="ot">&lt;-</span> (beta_hat[<span class="dv">1</span>]<span class="sc">-</span>beta_hat[<span class="dv">2</span>])<span class="sc">/</span><span class="fu">sqrt</span>(se[<span class="dv">1</span>]<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> se[<span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dt</span>(c_1, dfe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>c_1 <span class="ot">&lt;-</span> (beta_hat[<span class="dv">1</span>]<span class="sc">-</span>beta_hat[<span class="dv">2</span>])<span class="sc">/</span><span class="fu">sqrt</span>(se[<span class="dv">1</span>]<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> se[<span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dt</span>(c_1, dfe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   speciesA 
 0.004463487 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>c_2 <span class="ot">&lt;-</span> (beta_hat[<span class="dv">1</span>]<span class="sc">-</span>beta_hat[<span class="dv">3</span>])<span class="sc">/</span><span class="fu">sqrt</span>(se[<span class="dv">1</span>]<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> se[<span class="dv">3</span>]<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dt</span>(c_2, dfe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>c_2 <span class="ot">&lt;-</span> (beta_hat[<span class="dv">1</span>]<span class="sc">-</span>beta_hat[<span class="dv">3</span>])<span class="sc">/</span><span class="fu">sqrt</span>(se[<span class="dv">1</span>]<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> se[<span class="dv">3</span>]<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dt</span>(c_2, dfe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    speciesA 
 4.613109e-05 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>c_3 <span class="ot">&lt;-</span> (beta_hat[<span class="dv">2</span>]<span class="sc">-</span>beta_hat[<span class="dv">3</span>])<span class="sc">/</span><span class="fu">sqrt</span>(se[<span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> se[<span class="dv">3</span>]<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dt</span>(c_3, dfe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>c_3 <span class="ot">&lt;-</span> (beta_hat[<span class="dv">2</span>]<span class="sc">-</span>beta_hat[<span class="dv">3</span>])<span class="sc">/</span><span class="fu">sqrt</span>(se[<span class="dv">2</span>]<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> se[<span class="dv">3</span>]<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dt</span>(c_3, dfe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> speciesC 
 0.1405026 </code></pre>
@@ -266,7 +367,7 @@ In this case, <span class="math inline">\(s.e.(\hat\beta_1 - \hat\beta_2) = \sqr
 <h4 class="anchored" data-anchor-id="an-interpretation-of-95-ci-using-t-tests">An interpretation of 95% CI using t-tests</h4>
 <p>Recall the 95% CI of <span class="math inline">\(\hat\beta_1\)</span>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">confint</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            2.5 %   97.5 %
 speciesA 2.688742 3.184410
@@ -275,40 +376,40 @@ speciesD 1.895419 2.391086</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dt</span>((beta_hat[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">2.67</span>)<span class="sc">/</span>( se[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span>)), dfe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dt</span>((beta_hat[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">2.67</span>)<span class="sc">/</span>( se[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span>)), dfe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  speciesA 
 0.04143843 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dt</span>((beta_hat[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">2.68</span>)<span class="sc">/</span>( se[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span>)), dfe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dt</span>((beta_hat[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">2.68</span>)<span class="sc">/</span>( se[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span>)), dfe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  speciesA 
 0.04870437 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dt</span>((beta_hat[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">2.7</span>)<span class="sc">/</span>( se[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span>)), dfe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">dt</span>((beta_hat[<span class="dv">1</span>] <span class="sc">-</span> <span class="fl">2.7</span>)<span class="sc">/</span>( se[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span>)), dfe)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  speciesA 
 0.06618161 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>comp <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="at">by =</span> .<span class="dv">01</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>p.save <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(comp))</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(comp)) {</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  p.save[i] <span class="ot">&lt;-</span> <span class="fu">dt</span>((beta_hat[<span class="dv">1</span>] <span class="sc">-</span> comp[i])<span class="sc">/</span>( se[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span>)), dfe)</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(comp, p.save) <span class="sc">%&gt;%</span> </span>
-<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(comp, p.save))<span class="sc">+</span></span>
-<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
-<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"p value"</span>, </span>
-<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"comparing the mean with ..."</span>)<span class="sc">+</span></span>
-<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> .<span class="dv">05</span>, <span class="at">linetype =</span><span class="dv">2</span>, <span class="at">color =</span> <span class="st">'red'</span>)<span class="sc">+</span></span>
-<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">confint</span>(m)[<span class="dv">1</span>], <span class="at">linetype=</span> <span class="dv">2</span>)<span class="sc">+</span></span>
-<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>comp <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="at">by =</span> .<span class="dv">01</span>)</span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>p.save <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(comp))</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(comp)) {</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>  p.save[i] <span class="ot">&lt;-</span> <span class="fu">dt</span>((beta_hat[<span class="dv">1</span>] <span class="sc">-</span> comp[i])<span class="sc">/</span>( se[<span class="dv">1</span>]<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">1</span>)), dfe)</span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a><span class="fu">data.frame</span>(comp, p.save) <span class="sc">%&gt;%</span> </span>
+<span id="cb43-9"><a href="#cb43-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(comp, p.save))<span class="sc">+</span></span>
+<span id="cb43-10"><a href="#cb43-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>()<span class="sc">+</span></span>
+<span id="cb43-11"><a href="#cb43-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">"p value"</span>, </span>
+<span id="cb43-12"><a href="#cb43-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"comparing the mean with ..."</span>)<span class="sc">+</span></span>
+<span id="cb43-13"><a href="#cb43-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> .<span class="dv">05</span>, <span class="at">linetype =</span><span class="dv">2</span>, <span class="at">color =</span> <span class="st">'red'</span>)<span class="sc">+</span></span>
+<span id="cb43-14"><a href="#cb43-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">confint</span>(m)[<span class="dv">1</span>], <span class="at">linetype=</span> <span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb43-15"><a href="#cb43-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day10_09112024_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<p><img src="day10_09112024_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -317,9 +418,9 @@ speciesD 1.895419 2.391086</code></pre>
 <section id="multiple-comparisons" class="level2">
 <h2 class="anchored" data-anchor-id="multiple-comparisons">Multiple comparisons</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>(lsmeans <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m, <span class="sc">~</span>species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(emmeans)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(multcomp)</span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>(lsmeans <span class="ot">&lt;-</span> <span class="fu">emmeans</span>(m, <span class="sc">~</span>species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> species emmean    SE df lower.CL upper.CL
  A         2.94 0.124 69     2.69     3.18
@@ -328,9 +429,9 @@ speciesD 1.895419 2.391086</code></pre>
 
 Confidence level used: 0.95 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cld</span>(lsmeans, </span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> <span class="st">'sidak'</span>,</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Letters =</span> letters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cld</span>(lsmeans, </span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    <span class="at">adjust =</span> <span class="st">'sidak'</span>,</span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Letters =</span> letters)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> species emmean    SE df lower.CL upper.CL .group
  D         2.14 0.124 69     1.84     2.45  a    

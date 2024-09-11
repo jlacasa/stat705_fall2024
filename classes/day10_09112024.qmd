@@ -264,5 +264,13 @@ cld(lsmeans,
   - is this difference meaningful?  
   - what is the noise in these estimations?  
 - Why are we learning about p-values then?  
+  [ASA statement on p-values](https://www.tandfonline.com/doi/full/10.1080/00031305.2016.1154108#d1e167).  
+  
+## For next class  
+
+- Homework 2 due.  
+- Project proposals due.  
+
+
 
 

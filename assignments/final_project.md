@@ -20,7 +20,8 @@ Projects consist of a manuscript and a tutorial that describes all the steps of 
 
 ## Partial deadlines  
 ### Project proposal **Due Friday September 13 at 2pm CT**{: .label .label-red }
-Write a page-long project proposal that states the problem, the objective of the project, and explains the data that will be used. 
+Write a page-long project proposal that states the problem, the objective of the project, and explains the data that will be used.  
+An example of an appropriate project proposal can be found [here](../homeworks/finalproj.pdf).
 
 ### Written report **Due Friday November 22 at 2pm CT**{: .label .label-red }
 Submit a report containing: 

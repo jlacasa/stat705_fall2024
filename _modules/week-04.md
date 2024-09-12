@@ -8,7 +8,7 @@ Sep 11
 
 Sep 13
 : Inference 
-  : [](https://jlacasa.github.io/stat705_fall2024/classes/day07_09042024)
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day11_09132024)
 : [](#) 
   : **Assignment 2 due 11.59 pm**{: .label .label-red }
 : [](#) 

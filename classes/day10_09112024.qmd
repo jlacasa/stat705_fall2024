@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-## Statistical Inference  
+## Statistical Inference
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -21,29 +21,25 @@ data %>%
   theme(aspect.ratio = 1)
 ```
 
-Let's take a simple statistical model:  
+Let's take a simple statistical model:
 
-The aboveground biomass from the $i$th observation, $y_i$, can be described as 
-$$y_i \sim N(\mu_i , \sigma^2),$$
+The aboveground biomass from the $i$th observation, $y_i$, can be described as $$y_i \sim N(\mu_i , \sigma^2),$$
 
-$$\mu_i = \beta_1 x_{1i} + \beta_2 x_{2i} + \beta_3 x_{3i},$$
-$$x_{1 i} \left \{
+$$\mu_i = \beta_1 x_{1i} + \beta_2 x_{2i} + \beta_3 x_{3i},$$ $$x_{1 i} \left \{
   \begin{aligned}
     & 1 && \text{if species A} \\
     & 0 && \text{else}
-  \end{aligned} \right.,$$
-$$x_{2 i} \left \{
+  \end{aligned} \right.,$$ $$x_{2 i} \left \{
   \begin{aligned}
     & 1 && \text{if species C} \\
     & 0 && \text{else}
-  \end{aligned} \right.,$$
-$$x_{3 i} \left \{
+  \end{aligned} \right.,$$ $$x_{3 i} \left \{
   \begin{aligned}
     & 1 && \text{if species D} \\
     & 0 && \text{else}
   \end{aligned} \right.,$$
 
-for $i =1, 2, ..., n$, where $n$ is the total number of observations, $\mu_i$ is the mean of the $i$th observation, $x_{1i}$, $x_{2i}$, and $x_{3i}$ are indicator variables that identify the species as A, C, or D, and thus $\beta_1$, $\beta_2$, and $\beta_3$ are the means of genotypes A, C, and D, respectively, and $\sigma^2$ is the variance of the data.  
+for $i =1, 2, ..., n$, where $n$ is the total number of observations, $\mu_i$ is the mean of the $i$th observation, $x_{1i}$, $x_{2i}$, and $x_{3i}$ are indicator variables that identify the species as A, C, or D, and thus $\beta_1$, $\beta_2$, and $\beta_3$ are the means of genotypes A, C, and D, respectively, and $\sigma^2$ is the variance of the data.
 
 ```{r}
 m <- lm(agb_g ~ 0 + species , data = data)
@@ -52,14 +48,13 @@ beta_hat <- coef(m)
 m
 ```
 
-
-### 95% Confidence intervals  
+### 95% Confidence intervals
 
 ```{r}
 confint(m)
 ```
 
-### T-test  
+### T-test
 
 ```{r}
 X <- model.matrix(m)
@@ -69,12 +64,11 @@ unscaled_covariance <- solve(t(X)%*%X)
 dfe <- (nrow(data)-3)
 ```
 
-The t statistic 
-$$T = \frac{\hat\theta}{s.e.(\hat\theta)}$$
+The t statistic $$T = \frac{\hat\theta}{s.e.(\hat\theta)}$$
 
 is used to compute the p value in hypothesis tests. The p value is the probability of observing the t statistic under the conditions of the null hypothesis. In this formula, $\hat\theta$ is an estimator of an operation of the parameters, e.g., $\theta = \beta_1 - 0$ or $\theta = \beta_1-\beta_2$.
 
-The t distribution is similar to a normal distribution, but with heavier tails.  
+The t distribution is similar to a normal distribution, but with heavier tails.
 
 ```{r }
 x <- seq(-5, 5, by = .1)
@@ -95,8 +89,7 @@ data.frame(x, dt) %>%
   theme_classic()
 ```
 
-
-In the `summary` output, we have $\theta = \beta_j-0$, i.e., we are testing if a given $\beta_j$ is different to zero.  
+In the `summary` output, we have $\theta = \beta_j-0$, i.e., we are testing if a given $\beta_j$ is different to zero.
 
 ```{r}
 t_A <- (beta_hat[1] - 0)/se[1]
@@ -117,12 +110,7 @@ dt(t_D, dfe)
 summary(m)
 ```
 
+## For next class
 
-## For next class  
-
-- Homework 2 due.  
-- Project proposals due.  
-
-
-
-
+-   Homework 2 due.\
+-   Project proposals due.

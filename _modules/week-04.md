@@ -17,6 +17,8 @@ Sep 13
 Sep 16
 : Inference III
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day12_09162024)
+: [](#) 
+  : **Kahoot!**{: .label .label-green }
   
 Sep 18
 : Inference 

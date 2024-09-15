@@ -7,7 +7,7 @@ Sep 11
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day10_09112024)
 
 Sep 13
-: Inference 
+: Inference II
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day11_09132024)
 : [](#) 
   : **Assignment 2 due 11.59 pm**{: .label .label-red }
@@ -15,8 +15,8 @@ Sep 13
   : **Project Proposal due 11.59 pm**{: .label .label-red }
 
 Sep 16
-: Inference 
-  : [](#)
+: Inference III
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day12_09162024)
   
 Sep 18
 : Inference 

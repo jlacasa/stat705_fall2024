@@ -48,10 +48,11 @@ confint(m1)
 ```
 
 ```{r}
+#setting nr of simulations
 n_sims <- 1000
+# creating the pace to store
 slope <- numeric(length = n_sims)
 sigma <- numeric(length = n_sims)
-calibration <- numeric(length = n_sims)
 
 for (i in 1:n_sims){
   e <- rnorm(n, 0, sqrt(sigma2_truth))
@@ -60,8 +61,6 @@ for (i in 1:n_sims){
   m1 <- lm(y ~ 1 + x, data = simulated_data)
   slope[i] <- coef(m1)[2]
   sigma[i] <- summary(m1)$sigma
-  calibration[i] <- between(coef(m1)[2], 
-                            confint(m1)[2], confint(m1)[4])
 }
 ```
 
@@ -90,7 +89,4 @@ beta1_truth
 mean(slope)
 sigma2_truth
 mean(sigma^2)
-mean(calibration)
 ```
-
-

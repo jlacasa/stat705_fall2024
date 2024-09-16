@@ -38,10 +38,10 @@ m <- lm(crown_g ~ trt + doy, data = dd)
 summary(m)
 ```
 
-
 ```{r}
 m <- lm(crown_g ~ trt * doy, data = dd)
 summary(m)
 ```
+
 
 

@@ -45,8 +45,3 @@ summary(m)
 ```
 
 
-## For next class  
-```{r}
-
-```
-

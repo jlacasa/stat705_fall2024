@@ -4,9 +4,6 @@ format: html
 editor: visual
 ---
 
-## About the 
-
-
 ## Interactions, effects \& other interpretations  
 
 ```{r message=FALSE, warning=FALSE}

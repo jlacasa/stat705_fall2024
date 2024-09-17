@@ -22,6 +22,6 @@ Sep 16
   
 Sep 18
 : Inference 
-  : [](#)
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day13_09182024)
 
   

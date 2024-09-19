@@ -20,8 +20,12 @@ Sep 16
 : [](#) 
   : **Kahoot!**{: .label .label-green }
   
-Sep 18
-: Inference 
+Sep 18 
+: Inference IV
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day13_09182024)
+
+Sep 20 
+: Inference IV
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day14_09202024)
 
   

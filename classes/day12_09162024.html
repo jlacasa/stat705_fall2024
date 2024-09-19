@@ -128,10 +128,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="day12_09162024_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(dd)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>'data.frame':   84 obs. of  13 variables:
+ $ species      : chr  "A" "A" "A" "A" ...
+ $ trt          : chr  "ctrl" "ctrl" "ctrl" "ctrl" ...
+ $ doy          : int  155 155 155 155 155 155 155 155 155 155 ...
+ $ stm.length_cm: num  31.6 30.7 25.2 20.8 27.1 ...
+ $ flowers_g    : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ gr.leaves_g  : num  0.442 0.364 0.337 0.196 0.324 ...
+ $ dead.leaves_g: num  0 0 0 0 0 0 0 0 0 0 ...
+ $ stm_g        : num  0.666 0.605 0.587 0.222 0.45 ...
+ $ crown_g      : num  0.0935 0.1625 0.1145 0.0472 0.0959 ...
+ $ agb_g        : num  1.108 0.968 0.924 0.417 0.774 ...
+ $ main.roots_g : num  0.256 0.269 0.258 0.182 0.273 ...
+ $ adv.roots_g  : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ moment       : chr  "pre-flooding" "pre-flooding" "pre-flooding" "pre-flooding" ...</code></pre>
+</div>
+</div>
 <p>Possible models?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(crown_g <span class="sc">~</span> trt <span class="sc">+</span> doy, <span class="at">data =</span> dd)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(crown_g <span class="sc">~</span> trt <span class="sc">+</span> doy, <span class="at">data =</span> dd)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -155,8 +174,8 @@ F-statistic: 88.53 on 2 and 81 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(crown_g <span class="sc">~</span> trt <span class="sc">*</span> doy, <span class="at">data =</span> dd)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(crown_g <span class="sc">~</span> trt <span class="sc">*</span> doy, <span class="at">data =</span> dd)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:

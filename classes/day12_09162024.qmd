@@ -31,6 +31,10 @@ dd %>%
   theme(aspect.ratio = 1)
 ```
 
+```{r}
+str(dd)
+```
+
 Possible models?  
 
 ```{r}

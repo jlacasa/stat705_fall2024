@@ -6,7 +6,7 @@ editor: visual
 
 ## From last class  
 
-- Resources on the statistical models we're fitting  
+- [Resources on the statistical models we're fitting](https://jlacasa.github.io/stat705_fall2024/classes/complementary_model_notation)  
 - Rmd resources:  
   - Rmd cookbook [[link](https://bookdown.org/yihui/rmarkdown-cookbook/)]
   - Rmd cheatsheet [[link](https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*ianen8*_ga*OTc0NDYwNTUxLjE3MjQ2MDI3Nzk.*_ga_2C0WZ1JHG0*MTcyNjc4MjQyNS43LjEuMTcyNjc4MjQ4Ni4wLjAuMA..)]  
@@ -42,6 +42,7 @@ summary(m)
 
 
 ### `car::Anova` versus `anova` in R  
+
 In ANOVA:  
 - $H_0: \mu_1=\mu_2=\mu_3$ (all $\mu$s are the same)  
 - $H_1: $ at least one $\mu$ is different.   

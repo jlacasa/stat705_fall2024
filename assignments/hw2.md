@@ -34,9 +34,9 @@ data %>%
 ### Answer the following questions:  
 
 a. What is the plant density that maximizes grain yield? Provide a point estimate and some measure of uncertainty.  
-b. How much yield do you expect the crop to yield **on average** with 8 plants per $\text{m}^2$? What is a good 95% confidence interval for that value?    
+b. How much yield do you expect the crop to yield **on average** with 8 plants per m^2? What is a good 95% confidence interval for that value?    
 
-c. What is a reasonable 95% confidence interval for observable yields at 8 plants per $\text{m}^2$?    
+c. What is a reasonable 95% confidence interval for observable yields at 8 plants per m^2?    
 
 d. Which confidence interval would be affected most is the sample size was increased twofold?    
 

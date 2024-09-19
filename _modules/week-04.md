@@ -25,7 +25,7 @@ Sep 18
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day13_09182024)
 
 Sep 20 
-: Inference IV
+: Inference V
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day14_09202024)
 
   

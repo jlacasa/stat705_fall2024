@@ -1,0 +1,58 @@
+---
+title: "Day 14 - 09/20/2024"
+format: html
+editor: visual
+---
+
+## From last class  
+
+- Resources on the statistical models we're fitting  
+- Rmd resources:  
+  - Rmd cookbook [[link](https://bookdown.org/yihui/rmarkdown-cookbook/)]
+  - Rmd cheatsheet [[link](https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*ianen8*_ga*OTc0NDYwNTUxLjE3MjQ2MDI3Nzk.*_ga_2C0WZ1JHG0*MTcyNjc4MjQyNS43LjEuMTcyNjc4MjQ4Ni4wLjAuMA..)]  
+  - R (tidyverse) [[link](https://www.youtube.com/playlist?list=PLLxj8fULvXwGOf8uHlL4Tr62oXSB5k_in)]
+
+## Effects, interactions, notation
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_part3.csv"
+dd <- read.csv(url)
+
+dd %>% 
+  ggplot(aes(doy, crown_g))+
+  geom_point(aes(fill = species), shape = 21, size =3.5)+
+  scale_fill_manual(values = c("#DB504A", "#43AA8B", "#FAD4C0"))+
+  labs(x = "Day of the Year", 
+       y = "Crown biomass (g)", 
+       fill = "Species")+
+  theme_classic()+
+  theme(aspect.ratio = 1)
+```
+
+```{r}
+m <- lm(crown_g ~ species * doy, data = dd)
+summary(m)
+```
+
+## Hypothesis tests  
+
+- $H_0: \mu_1 = \mu_2$ 
+- $H_1: \mu_1 = \mu_2$ 
+
+
+### `car::Anova` versus `anova` in R  
+In ANOVA:  
+- $H_0: \mu_1=\mu_2=\mu_3$ (all $\mu$s are the same)  
+- $H_1: $ at least one $\mu$ is different.   
+
+```{r message=FALSE, warning=FALSE}
+library(car)
+anova(m)
+car::Anova(m, type = 3)
+```
+
+## For next week    
+
+- Read chapter 14 from the book (ANOVA)  
+- 

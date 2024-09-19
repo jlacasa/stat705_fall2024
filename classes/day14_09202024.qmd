@@ -10,7 +10,7 @@ editor: visual
 - Rmd resources:  
   - Rmd cookbook [[link](https://bookdown.org/yihui/rmarkdown-cookbook/)]
   - Rmd cheatsheet [[link](https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*ianen8*_ga*OTc0NDYwNTUxLjE3MjQ2MDI3Nzk.*_ga_2C0WZ1JHG0*MTcyNjc4MjQyNS43LjEuMTcyNjc4MjQ4Ni4wLjAuMA..)]  
-  - R (tidyverse) [[link](https://www.youtube.com/playlist?list=PLLxj8fULvXwGOf8uHlL4Tr62oXSB5k_in)]
+  - R (tidyverse) YouTube guide [[link](https://www.youtube.com/playlist?list=PLLxj8fULvXwGOf8uHlL4Tr62oXSB5k_in)]
 
 ## Effects, interactions, notation
 
@@ -35,7 +35,45 @@ m <- lm(crown_g ~ species * doy, data = dd)
 summary(m)
 ```
 
+It's getting much harder to compute the E(y)s by hand!
+
+```{r}
+beta_hat <- coef(m)
+beta_hat
+```
+
+What's $E(y|x=200, \text{Species A})$?  
+
+Compute $\beta_{0A} + 200 \cdot \beta_{1A}$ (or $\beta_{01} + 200 \cdot \beta_{11}$):
+```{r}
+beta_hat[1] + 200*beta_hat[4] 
+```
+
+What's $E(y|x=200, \text{Species C})$?  
+Compute $\beta_{0C} + 200 \cdot \beta_{1C}$ (or $\beta_{02} + 200 \cdot \beta_{12}$):
+```{r}
+(beta_hat[1] + beta_hat[2]) + 200*(beta_hat[4] + beta_hat[5]) 
+```
+
+What's $E(y|x=200, \text{Species D})$?  
+Compute $\beta_{0D} + 200 \cdot \beta_{1D}$ (or $\beta_{02} + 200 \cdot \beta_{12}$):
+```{r}
+(beta_hat[1] + beta_hat[3]) + 200*(beta_hat[4] + beta_hat[6]) 
+```
+
+Can we use the predict function?  
+```{r}
+X_new <- data.frame(species = c("A", "C", "D"),
+                    doy = 200)
+predict(m, X_new, interval = "confidence")
+```
+
 ## Hypothesis tests  
+
+In the summary, we're testing if whatever coefficient $\beta = 0$. That means, the null Hypothesis $H_0 : \beta_0=0$
+```{r}
+summary(m)
+```
 
 - $H_0: \mu_1 = \mu_2$ 
 - $H_1: \mu_1 = \mu_2$ 

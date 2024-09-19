@@ -106,7 +106,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Rmd cookbook [<a href="https://bookdown.org/yihui/rmarkdown-cookbook/">link</a>]</li>
 <li>Rmd cheatsheet [<a href="https://rstudio.github.io/cheatsheets/html/rmarkdown.html?_gl=1*ianen8*_ga*OTc0NDYwNTUxLjE3MjQ2MDI3Nzk.*_ga_2C0WZ1JHG0*MTcyNjc4MjQyNS43LjEuMTcyNjc4MjQ4Ni4wLjAuMA..">link</a>]<br>
 </li>
-<li>R (tidyverse) [<a href="https://www.youtube.com/playlist?list=PLLxj8fULvXwGOf8uHlL4Tr62oXSB5k_in">link</a>]</li>
+<li>R (tidyverse) YouTube guide [<a href="https://www.youtube.com/playlist?list=PLLxj8fULvXwGOf8uHlL4Tr62oXSB5k_in">link</a>]</li>
 </ul></li>
 </ul>
 </section>
@@ -158,9 +158,85 @@ Multiple R-squared:  0.7207,    Adjusted R-squared:  0.7105
 F-statistic: 71.21 on 5 and 138 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
+<p>It’s getting much harder to compute the E(y)s by hand!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>beta_hat <span class="ot">&lt;-</span> <span class="fu">coef</span>(m)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>beta_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept)     speciesC     speciesD          doy speciesC:doy speciesD:doy 
+-1.580906870  0.876486785  0.686410011  0.010332195 -0.005404234 -0.004331957 </code></pre>
+</div>
+</div>
+<p>What’s <span class="math inline">\(E(y|x=200, \text{Species A})\)</span>?</p>
+<p>Compute <span class="math inline">\(\beta_{0A} + 200 \cdot \beta_{1A}\)</span> (or <span class="math inline">\(\beta_{01} + 200 \cdot \beta_{11}\)</span>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>beta_hat[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">200</span><span class="sc">*</span>beta_hat[<span class="dv">4</span>] </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept) 
+  0.4855322 </code></pre>
+</div>
+</div>
+<p>What’s <span class="math inline">\(E(y|x=200, \text{Species C})\)</span>?<br>
+Compute <span class="math inline">\(\beta_{0C} + 200 \cdot \beta_{1C}\)</span> (or <span class="math inline">\(\beta_{02} + 200 \cdot \beta_{12}\)</span>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(beta_hat[<span class="dv">1</span>] <span class="sc">+</span> beta_hat[<span class="dv">2</span>]) <span class="sc">+</span> <span class="dv">200</span><span class="sc">*</span>(beta_hat[<span class="dv">4</span>] <span class="sc">+</span> beta_hat[<span class="dv">5</span>]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept) 
+  0.2811723 </code></pre>
+</div>
+</div>
+<p>What’s <span class="math inline">\(E(y|x=200, \text{Species D})\)</span>?<br>
+Compute <span class="math inline">\(\beta_{0D} + 200 \cdot \beta_{1D}\)</span> (or <span class="math inline">\(\beta_{02} + 200 \cdot \beta_{12}\)</span>):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>(beta_hat[<span class="dv">1</span>] <span class="sc">+</span> beta_hat[<span class="dv">3</span>]) <span class="sc">+</span> <span class="dv">200</span><span class="sc">*</span>(beta_hat[<span class="dv">4</span>] <span class="sc">+</span> beta_hat[<span class="dv">6</span>]) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>(Intercept) 
+  0.3055508 </code></pre>
+</div>
+</div>
+<p>Can we use the predict function?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>X_new <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">species =</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"C"</span>, <span class="st">"D"</span>),</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                    <span class="at">doy =</span> <span class="dv">200</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(m, X_new, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        fit       lwr       upr
+1 0.4855322 0.4430602 0.5280043
+2 0.2811723 0.2387003 0.3236443
+3 0.3055508 0.2630787 0.3480228</code></pre>
+</div>
+</div>
 </section>
 <section id="hypothesis-tests" class="level2">
 <h2 class="anchored" data-anchor-id="hypothesis-tests">Hypothesis tests</h2>
+<p>In the summary, we’re testing if whatever coefficient <span class="math inline">\(\beta = 0\)</span>. That means, the null Hypothesis <span class="math inline">\(H_0 : \beta_0=0\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = crown_g ~ species * doy, data = dd)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.29416 -0.09688 -0.00858  0.06046  0.73550 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)  -1.5809069  0.1438577 -10.989  &lt; 2e-16 ***
+speciesC      0.8764868  0.2034455   4.308 3.11e-05 ***
+speciesD      0.6864100  0.2034455   3.374 0.000962 ***
+doy           0.0103322  0.0007297  14.159  &lt; 2e-16 ***
+speciesC:doy -0.0054042  0.0010320  -5.237 5.96e-07 ***
+speciesD:doy -0.0043320  0.0010320  -4.198 4.80e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1467 on 138 degrees of freedom
+Multiple R-squared:  0.7207,    Adjusted R-squared:  0.7105 
+F-statistic: 71.21 on 5 and 138 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
 <ul>
 <li><span class="math inline">\(H_0: \mu_1 = \mu_2\)</span></li>
 <li><span class="math inline">\(H_1: \mu_1 = \mu_2\)</span></li>
@@ -171,8 +247,8 @@ F-statistic: 71.21 on 5 and 138 DF,  p-value: &lt; 2.2e-16</code></pre>
 - <span class="math inline">\(H_0: \mu_1=\mu_2=\mu_3\)</span> (all <span class="math inline">\(\mu\)</span>s are the same)<br>
 - $H_1: $ at least one <span class="math inline">\(\mu\)</span> is different.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -185,7 +261,7 @@ Residuals   138 2.9680  0.0215
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(m, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(m, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Anova Table (Type III tests)
 

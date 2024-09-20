@@ -37,7 +37,7 @@ Let's fit the model
 $$y_{ij} \sim N(\mu_{ij}, \sigma^2),$$
 
 $$\mu_{ij} = \beta_{0j} + \beta_{1j}x_{ij},$$
-where $y_{ij}$ is the observation of crown biomass for the $i$th observation of the $j$th treatment, $\mu{ij}$is its mean and $\sigma^2$ its variance. The means is described with $\beta_{0j}$, the intercept of the $j$th treatment and $\beta_{1j}$, the slope of the $j$th treatment.  
+where $y_{ij}$ is the observation of crown biomass for the $i$th observation of the $j$th species, $\mu{ij}$ is its mean and $\sigma^2$ its variance. The means is described with $\beta_{0j}$, the intercept of the $j$th species and $\beta_{1j}$, the slope of the $j$th species  
 
 ```{r}
 m <- lm(crown_g ~ species * doy, data = dd)

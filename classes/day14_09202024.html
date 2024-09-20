@@ -99,6 +99,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="from-last-class" class="level2">
 <h2 class="anchored" data-anchor-id="from-last-class">From last class</h2>
 <ul>
+<li>Assignment expectations.
+<ul>
+<li>Model homework.</li>
+<li>Uncertainty estimates.</li>
+</ul></li>
 <li><a href="https://jlacasa.github.io/stat705_fall2024/classes/complementary_model_notation">Resources on the statistical models we’re fitting</a><br>
 </li>
 <li>Rmd resources:
@@ -130,6 +135,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><img src="day14_09202024_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Let’s fit the model <span class="math display">\[y_{ij} \sim N(\mu_{ij}, \sigma^2),\]</span></p>
+<p><span class="math display">\[\mu_{ij} = \beta_{0j} + \beta_{1j}x_{ij},\]</span> where <span class="math inline">\(y_{ij}\)</span> is the observation of crown biomass for the <span class="math inline">\(i\)</span>th observation of the <span class="math inline">\(j\)</span>th treatment, <span class="math inline">\(\mu{ij}\)</span>is its mean and <span class="math inline">\(\sigma^2\)</span> its variance. The means is described with <span class="math inline">\(\beta_{0j}\)</span>, the intercept of the <span class="math inline">\(j\)</span>th treatment and <span class="math inline">\(\beta_{1j}\)</span>, the slope of the <span class="math inline">\(j\)</span>th treatment.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(crown_g <span class="sc">~</span> species <span class="sc">*</span> doy, <span class="at">data =</span> dd)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -209,7 +216,7 @@ Compute <span class="math inline">\(\beta_{0D} + 200 \cdot \beta_{1D}\)</span> (
 </section>
 <section id="hypothesis-tests" class="level2">
 <h2 class="anchored" data-anchor-id="hypothesis-tests">Hypothesis tests</h2>
-<p>In the summary, we’re testing if whatever coefficient <span class="math inline">\(\beta = 0\)</span>. That means, the null Hypothesis <span class="math inline">\(H_0 : \beta_0=0\)</span></p>
+<p>In the summary, we’re testing if whatever coefficient <span class="math inline">\(\beta = 0\)</span>. That means, the null Hypothesis <span class="math inline">\(H_0 : \beta_0=0\)</span>, and the alternative Hypothesis <span class="math inline">\(H_1 : \beta_0\ne0\)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -236,19 +243,172 @@ Residual standard error: 0.1467 on 138 degrees of freedom
 Multiple R-squared:  0.7207,    Adjusted R-squared:  0.7105 
 F-statistic: 71.21 on 5 and 138 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    (Intercept) speciesC speciesD doy speciesC:doy speciesD:doy
+1             1        0        0 155            0            0
+2             1        0        0 155            0            0
+3             1        0        0 155            0            0
+4             1        0        0 155            0            0
+5             1        0        0 155            0            0
+6             1        0        0 155            0            0
+7             1        0        0 155            0            0
+8             1        0        0 155            0            0
+9             1        0        0 155            0            0
+10            1        0        0 155            0            0
+11            1        0        0 155            0            0
+12            1        0        0 155            0            0
+13            1        1        0 155          155            0
+14            1        1        0 155          155            0
+15            1        1        0 155          155            0
+16            1        1        0 155          155            0
+17            1        1        0 155          155            0
+18            1        1        0 155          155            0
+19            1        1        0 155          155            0
+20            1        1        0 155          155            0
+21            1        1        0 155          155            0
+22            1        1        0 155          155            0
+23            1        1        0 155          155            0
+24            1        1        0 155          155            0
+25            1        0        1 155            0          155
+26            1        0        1 155            0          155
+27            1        0        1 155            0          155
+28            1        0        1 155            0          155
+29            1        0        1 155            0          155
+30            1        0        1 155            0          155
+31            1        0        1 155            0          155
+32            1        0        1 155            0          155
+33            1        0        1 155            0          155
+34            1        0        1 155            0          155
+35            1        0        1 155            0          155
+36            1        0        1 155            0          155
+37            1        0        0 194            0            0
+38            1        0        0 194            0            0
+39            1        0        0 194            0            0
+40            1        0        0 194            0            0
+41            1        0        0 194            0            0
+42            1        0        0 194            0            0
+43            1        0        0 194            0            0
+44            1        0        0 194            0            0
+45            1        0        0 194            0            0
+46            1        0        0 194            0            0
+47            1        0        0 194            0            0
+48            1        0        0 194            0            0
+49            1        1        0 194          194            0
+50            1        1        0 194          194            0
+51            1        1        0 194          194            0
+52            1        1        0 194          194            0
+53            1        1        0 194          194            0
+54            1        1        0 194          194            0
+55            1        1        0 194          194            0
+56            1        1        0 194          194            0
+57            1        1        0 194          194            0
+58            1        1        0 194          194            0
+59            1        1        0 194          194            0
+60            1        1        0 194          194            0
+61            1        0        1 194            0          194
+62            1        0        1 194            0          194
+63            1        0        1 194            0          194
+64            1        0        1 194            0          194
+65            1        0        1 194            0          194
+66            1        0        1 194            0          194
+67            1        0        1 194            0          194
+68            1        0        1 194            0          194
+69            1        0        1 194            0          194
+70            1        0        1 194            0          194
+71            1        0        1 194            0          194
+72            1        0        1 194            0          194
+73            1        0        0 194            0            0
+74            1        0        0 194            0            0
+75            1        0        0 194            0            0
+76            1        0        0 194            0            0
+77            1        0        0 194            0            0
+78            1        0        0 194            0            0
+79            1        0        0 194            0            0
+80            1        0        0 194            0            0
+81            1        0        0 194            0            0
+82            1        0        0 194            0            0
+83            1        0        0 194            0            0
+84            1        0        0 194            0            0
+85            1        1        0 194          194            0
+86            1        1        0 194          194            0
+87            1        1        0 194          194            0
+88            1        1        0 194          194            0
+89            1        1        0 194          194            0
+90            1        1        0 194          194            0
+91            1        1        0 194          194            0
+92            1        1        0 194          194            0
+93            1        1        0 194          194            0
+94            1        1        0 194          194            0
+95            1        1        0 194          194            0
+96            1        1        0 194          194            0
+97            1        0        1 194            0          194
+98            1        0        1 194            0          194
+99            1        0        1 194            0          194
+100           1        0        1 194            0          194
+101           1        0        1 194            0          194
+102           1        0        1 194            0          194
+103           1        0        1 194            0          194
+104           1        0        1 194            0          194
+105           1        0        1 194            0          194
+106           1        0        1 194            0          194
+107           1        0        1 194            0          194
+108           1        0        1 194            0          194
+109           1        0        0 237            0            0
+110           1        0        0 237            0            0
+111           1        0        0 237            0            0
+112           1        0        0 237            0            0
+113           1        0        0 237            0            0
+114           1        0        0 237            0            0
+115           1        0        0 237            0            0
+116           1        0        0 237            0            0
+117           1        0        0 237            0            0
+118           1        0        0 237            0            0
+119           1        0        0 237            0            0
+120           1        0        0 237            0            0
+121           1        1        0 237          237            0
+122           1        1        0 237          237            0
+123           1        1        0 237          237            0
+124           1        1        0 237          237            0
+125           1        1        0 237          237            0
+126           1        1        0 237          237            0
+127           1        1        0 237          237            0
+128           1        1        0 237          237            0
+129           1        1        0 237          237            0
+130           1        1        0 237          237            0
+131           1        1        0 237          237            0
+132           1        1        0 237          237            0
+133           1        0        1 237            0          237
+134           1        0        1 237            0          237
+135           1        0        1 237            0          237
+136           1        0        1 237            0          237
+137           1        0        1 237            0          237
+138           1        0        1 237            0          237
+139           1        0        1 237            0          237
+140           1        0        1 237            0          237
+141           1        0        1 237            0          237
+142           1        0        1 237            0          237
+143           1        0        1 237            0          237
+144           1        0        1 237            0          237
+attr(,"assign")
+[1] 0 1 1 2 3 3
+attr(,"contrasts")
+attr(,"contrasts")$species
+[1] "contr.treatment"</code></pre>
 </div>
-<ul>
-<li><span class="math inline">\(H_0: \mu_1 = \mu_2\)</span></li>
-<li><span class="math inline">\(H_1: \mu_1 = \mu_2\)</span></li>
-</ul>
-<section id="caranova-versus-anova-in-r" class="level3">
-<h3 class="anchored" data-anchor-id="caranova-versus-anova-in-r"><code>car::Anova</code> versus <code>anova</code> in R</h3>
+</div>
+<p>We also tested <span class="math inline">\(H_0: \mu_1 = \mu_2\)</span>, <span class="math inline">\(H_1: \mu_1 \ne \mu_2\)</span> using t-tests. What happens when we have more than 2 categories?</p>
+</section>
+<section id="anova" class="level2">
+<h2 class="anchored" data-anchor-id="anova">ANOVA</h2>
 <p>In ANOVA:<br>
 - <span class="math inline">\(H_0: \mu_1=\mu_2=\mu_3\)</span> (all <span class="math inline">\(\mu\)</span>s are the same)<br>
-- $H_1: $ at least one <span class="math inline">\(\mu\)</span> is different.</p>
+- <span class="math inline">\(H_1\)</span>: at least one <span class="math inline">\(\mu\)</span> is different.</p>
+<section id="caranova-versus-anova-in-r" class="level3">
+<h3 class="anchored" data-anchor-id="caranova-versus-anova-in-r"><code>car::Anova</code> versus <code>anova</code> in R</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -261,7 +421,7 @@ Residuals   138 2.9680  0.0215
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(m, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(m, <span class="at">type =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Anova Table (Type III tests)
 

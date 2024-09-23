@@ -6,8 +6,9 @@ editor: visual
 
 ## Analysis of Variance: ANOVA   
 
-Helps us answering questions like "is A different to B or C?", or "do any of these treatments have an effect on the mean?#.
+Helps us answering objectives like finding out "is A different to B or C?", or "do any of these treatments have an effect on the mean?  
 
+Other types of objectives would be "to predict the response of y to given levels of A and B", or to "".
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -45,7 +46,7 @@ What's another way of writing out this statistical model?
 model.matrix(m)[1:15,]
 ```
 
-### Hypotheses tested in ANOVA   
+### One-way ANOVA   
 
 $$H_0: y_{ij} = \mu + \varepsilon_{ij}$$
 ($H_0:$ All means are the same regardless of the predictor variable, indicated in subscript $j$).

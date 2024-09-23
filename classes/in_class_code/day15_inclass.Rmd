@@ -12,6 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ## Libraries
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
+library(car)
 ```
 
 ## Data
@@ -35,6 +36,24 @@ dd_subset %>%
   theme(aspect.ratio = 1)
 ```
 
+```{r}
+m1 <- lm(crown_g ~ 1 + species, data = dd_subset)
+model.matrix(m1)
+```
+
+```{r}
+hat_beta <- data.frame(species = c("A", "C", "D"))
+predict(m1, newdata = hat_beta, interval = "confidence")
+```
+
+```{r}
+summary(m1)
+```
+
+```{r}
+Anova(m1)
+```
+
 ## Two-way ANOVA  
 ```{r}
 dd %>% 
@@ -48,5 +67,22 @@ dd %>%
        color = "Species")+
   theme_classic()+
   theme(aspect.ratio = 1)
+```
+
+```{r}
+lm(crown_g ~ species + trt + species:trt, data = dd)
+m2 <- lm(crown_g ~ species * trt, data = dd)
+```
+
+```{r}
+hat_beta <- expand.grid(species = c("A", "C", "D"), 
+                        trt = c("ctrl", "flood"))
+hat_beta <- hat_beta %>% bind_cols(predict(m2, newdata = hat_beta, interval = "confidence"))
+  
+hat_beta
+```
+
+```{r}
+Anova(m2, type = 3)
 ```
 

@@ -418,14 +418,15 @@ Residual standard error: 0.1467 on 138 degrees of freedom
 Multiple R-squared:  0.7207,    Adjusted R-squared:  0.7105 
 F-statistic: 71.21 on 5 and 138 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(m3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>car<span class="sc">::</span><span class="fu">Anova</span>(m3, <span class="at">type =</span> <span class="st">"III"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Anova Table (Type II tests)
+<pre><code>Anova Table (Type III tests)
 
 Response: crown_g
             Sum Sq  Df F value    Pr(&gt;F)    
-species     0.9100   2  21.156 9.681e-09 ***
-doy         6.0858   1 282.964 &lt; 2.2e-16 ***
+(Intercept) 2.5974   1 120.766 &lt; 2.2e-16 ***
+species     0.4419   2  10.272 6.937e-05 ***
+doy         4.3120   1 200.491 &lt; 2.2e-16 ***
 species:doy 0.6614   2  15.376 9.368e-07 ***
 Residuals   2.9680 138                      
 ---

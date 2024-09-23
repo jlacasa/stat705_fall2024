@@ -156,7 +156,7 @@ m3 <- lm(crown_g ~ species*doy, data = dd2)
 
 summary(m3)
 
-car::Anova(m3)
+car::Anova(m3, type = "III")
 ```
 
 ```{r}

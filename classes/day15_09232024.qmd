@@ -8,7 +8,7 @@ editor: visual
 
 Helps us answering objectives like finding out "is A different to B or C?", or "do any of these treatments have an effect on the mean?  
 
-Other types of objectives (that require other types of modeling tools) would be "to predict y for given levels of A and B" (e.g., predict corn yield with 150 kg N per ha and 20 inches rainfall in the season), or "".
+Another types of objective (that require other types of modeling tools), for example, would be "to predict y for given levels of A and B" (e.g., predict corn yield with 150 kg N per ha and 20 inches rainfall in the season).
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)

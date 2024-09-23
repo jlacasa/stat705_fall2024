@@ -1,0 +1,32 @@
+---
+title: "Day 15 - In Class"
+author: "J Lacasa"
+date: "2024-09-23"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_part3.csv"
+dd <- read.csv(url) %>% 
+  filter(doy == 237)
+
+dd %>% 
+  ggplot(aes(species, crown_g))+
+  geom_boxplot(aes(fill = species))+
+  scale_fill_manual(values = c("#DB504A", "#43AA8B", "#FAD4C0"))+
+  labs(x = "Species", 
+       y = "Crown biomass (g)", 
+       fill = "Species")+
+  theme_classic()+
+  theme(aspect.ratio = 1)
+```
+
+```{r}
+
+```
+

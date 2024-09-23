@@ -1,0 +1,123 @@
+---
+title: "Day 15 - 09/23/2024"
+format: html
+editor: visual
+---
+
+## Analysis of Variance: ANOVA   
+
+Helps us answering questions like "is A different to B or C?", or "do any of these treatments have an effect on the mean?#.
+
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggpubr)
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_part3.csv"
+dd <- read.csv(url) %>% 
+  filter(doy == 237)
+
+dd %>% 
+  ggplot(aes(species, crown_g))+
+  geom_boxplot(aes(fill = species))+
+  scale_fill_manual(values = c("#DB504A", "#43AA8B", "#FAD4C0"))+
+  labs(x = "Species", 
+       y = "Crown biomass (g)", 
+       fill = "Species")+
+  theme_classic()+
+  theme(aspect.ratio = 1)
+```
+
+Let's fit the model $$y_{ij} \sim N(\mu_{ij}, \sigma^2),$$
+
+$$\mu_{ij} = \mu + \beta_{0j},$$ where $y_{ij}$ is the observation of crown biomass for the $i$th observation of the $j$th species, $\mu{ij}$ is its mean and $\sigma^2$ its variance. The means is described with the overall mean $\mu$ and $\beta_{0j}$, the effect of the $j$th species.
+
+```{r}
+m <- lm(crown_g ~ species, data = dd)
+summary(m)
+```
+
+What's another way of writing out this statistical model?  
+
+[Live R coding.](https://github.com/jlacasa/stat705_fall2024/blob/main/classes/in_class_code/day15_inclass.Rmd) 
+
+
+```{r}
+model.matrix(m)[1:15,]
+```
+
+### Hypotheses tested in ANOVA   
+
+$$H_0: y_{ij} = \mu + \varepsilon_{ij}$$
+($H_0:$ All means are the same regardless of the predictor variable, indicated in subscript $j$).
+
+$$H_1: y_{ij} = \mu + \beta_j + \varepsilon_{ij}$$
+($H_1:$ The means are different depending on the predictor variable, indicated in subscript $j$).
+
+```{r}
+car::Anova(m, type = "III")
+```
+
+::: {.alert .alert-info}
+-   <strong>Self-study questions:</strong> 
+  - If the treatment factor has two levels, what is the difference between a t-test and an ANOVA test?   
+  - Can you know which mean is larger based on the ANOVA results?  
+  
+:::
+
+
+## Review types of explanatory data    
+
+```{r}
+dd <- read.csv(url) 
+ggarrange(
+ dd %>% 
+   filter(doy ==237) %>% 
+    ggplot(aes(species, crown_g))+
+    geom_boxplot(aes(fill = species))+
+    scale_fill_manual(values = c("#DB504A", "#43AA8B", "#FAD4C0"))+
+    labs(x = "Species", 
+         y = "Crown biomass (g)", 
+         fill = "Species")+
+    theme_classic()+
+    theme(aspect.ratio = 1), 
+ dd %>% 
+   filter(species== "A") %>% 
+   ggplot(aes(doy, crown_g))+
+    geom_point(aes(fill = species), shape = 21, size =3.5)+
+    scale_fill_manual(values = c("#DB504A", "#43AA8B", "#FAD4C0"))+
+    labs(x = "Day of the Year", 
+         y = "Crown biomass (g)", 
+         fill = "Species")+
+    theme_classic()+
+    theme(aspect.ratio = 1),
+ ncol =2, 
+ labels = c("Categorical", "Continuous"), 
+ label.x = 0.25
+)
+```
+
+## Let's do the same for a combination of both... 
+
+```{r}
+dd %>% 
+  ggplot(aes(doy, crown_g))+
+  geom_point(aes(fill = species), shape = 21, size =3.5)+
+  scale_fill_manual(values = c("#DB504A", "#43AA8B", "#FAD4C0"))+
+  labs(x = "Day of the Year", 
+       y = "Crown biomass (g)", 
+       fill = "Species")+
+  theme_classic()+
+  theme(aspect.ratio = 1)
+```
+
+```{r}
+
+```
+
+
+## Let's put this in context  
+
+[]()
+
+## For next class  
+

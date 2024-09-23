@@ -9,13 +9,22 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+## Libraries
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
-url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_part3.csv"
-dd <- read.csv(url) %>% 
-  filter(doy == 237)
+```
 
-dd %>% 
+## Data
+```{r message=FALSE, warning=FALSE}
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_part4.csv"
+dd <- read.csv(url)
+dd_subset <- dd %>% 
+  filter(trt == "ctrl")
+```
+
+## One-way ANOVA  
+```{r message=FALSE, warning=FALSE}
+dd_subset %>% 
   ggplot(aes(species, crown_g))+
   geom_boxplot(aes(fill = species))+
   scale_fill_manual(values = c("#DB504A", "#43AA8B", "#FAD4C0"))+
@@ -26,7 +35,18 @@ dd %>%
   theme(aspect.ratio = 1)
 ```
 
+## Two-way ANOVA  
 ```{r}
-
+dd %>% 
+  ggplot(aes(species, crown_g))+
+  geom_boxplot(aes(fill = trt, color = species))+
+  scale_fill_manual(values = c("white", "#F7B05B"))+
+  scale_color_manual(values = c("#DB504A", "#43AA8B", "#FAD4C0"))+
+  labs(x = "Species", 
+       y = "Crown biomass (g)", 
+       fill = "Treatment", 
+       color = "Species")+
+  theme_classic()+
+  theme(aspect.ratio = 1)
 ```
 

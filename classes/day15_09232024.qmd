@@ -8,7 +8,7 @@ editor: visual
 
 Helps us answering objectives like finding out "is A different to B or C?", or "do any of these treatments have an effect on the mean?  
 
-Other types of objectives would be "to predict the response of y to given levels of A and B", or to "".
+Other types of objectives (that require other types of modeling tools) would be "to predict y for given levels of A and B" (e.g., predict corn yield with 150 kg N per ha and 20 inches rainfall in the season), or "".
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -48,7 +48,7 @@ What's another way of writing out this statistical model?
 
 
 ```{r}
-model.matrix(m1)[1:15,]
+model.matrix(m1)[1:30,]
 ```
 
 ### One-way ANOVA   
@@ -96,7 +96,7 @@ summary(m2)
 ```
 
 ```{r}
-model.matrix(m2)[1:10,]
+model.matrix(m2)[1:30,]
 ```
 
 ```{r}
@@ -135,7 +135,7 @@ ggarrange(
     theme(aspect.ratio = 1),
  ncol =2, 
  labels = c("Categorical/Indicators", "Continuous"), 
- label.x = 0.25
+ label.x = c(0, 0.2)
 )
 ```
 
@@ -159,12 +159,22 @@ summary(m3)
 car::Anova(m3)
 ```
 
+```{r}
+model.matrix(m3)[1:30,]
+```
+
 
 ## Let's put this in context  
 
--To the whiteboard
+- Don't forget our assumptions:  
+  - residuals are iid $\sim N(0, \sigma^2)$  
+  - parameters enter linearly (linear model)  
+  - homoscedasticity (i.e., constant variance)  
+  
+- Whiteboard. Context in data analysis workflow.
 
 ## For next class  
 
 - Read Chapter 15.  
 - Resubmit Assignment 2.
+- Following: model diagnostics, model selection. 

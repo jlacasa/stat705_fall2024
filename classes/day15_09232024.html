@@ -99,7 +99,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="analysis-of-variance-anova" class="level2">
 <h2 class="anchored" data-anchor-id="analysis-of-variance-anova">Analysis of Variance: ANOVA</h2>
 <p>Helps us answering objectives like finding out “is A different to B or C?”, or “do any of these treatments have an effect on the mean?</p>
-<p>Other types of objectives would be “to predict the response of y to given levels of A and B”, or to ““.</p>
+<p>Other types of objectives (that require other types of modeling tools) would be “to predict y for given levels of A and B” (e.g., predict corn yield with 150 kg N per ha and 20 inches rainfall in the season), or ““.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
@@ -153,7 +153,7 @@ F-statistic: 15.88 on 2 and 33 DF,  p-value: 1.477e-05</code></pre>
 <p>What’s another way of writing out this statistical model?</p>
 <p><a href="https://github.com/jlacasa/stat705_fall2024/blob/main/classes/in_class_code/day15_inclass.Rmd">Live R coding.</a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(m1)[<span class="dv">1</span><span class="sc">:</span><span class="dv">15</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(m1)[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   (Intercept) speciesC speciesD
 1            1        0        0
@@ -170,7 +170,22 @@ F-statistic: 15.88 on 2 and 33 DF,  p-value: 1.477e-05</code></pre>
 12           1        0        0
 13           1        1        0
 14           1        1        0
-15           1        1        0</code></pre>
+15           1        1        0
+16           1        1        0
+17           1        1        0
+18           1        1        0
+19           1        1        0
+20           1        1        0
+21           1        1        0
+22           1        1        0
+23           1        1        0
+24           1        1        0
+25           1        0        1
+26           1        0        1
+27           1        0        1
+28           1        0        1
+29           1        0        1
+30           1        0        1</code></pre>
 </div>
 </div>
 <section id="one-way-anova" class="level3">
@@ -259,7 +274,7 @@ F-statistic: 9.875 on 5 and 66 DF,  p-value: 4.427e-07</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(m2)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(m2)[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   (Intercept) speciesC speciesD trtflood speciesC:trtflood speciesD:trtflood
 1            1        0        0        0                 0                 0
@@ -271,7 +286,27 @@ F-statistic: 9.875 on 5 and 66 DF,  p-value: 4.427e-07</code></pre>
 7            1        0        0        0                 0                 0
 8            1        0        0        0                 0                 0
 9            1        0        0        0                 0                 0
-10           1        0        0        0                 0                 0</code></pre>
+10           1        0        0        0                 0                 0
+11           1        0        0        0                 0                 0
+12           1        0        0        0                 0                 0
+13           1        1        0        0                 0                 0
+14           1        1        0        0                 0                 0
+15           1        1        0        0                 0                 0
+16           1        1        0        0                 0                 0
+17           1        1        0        0                 0                 0
+18           1        1        0        0                 0                 0
+19           1        1        0        0                 0                 0
+20           1        1        0        0                 0                 0
+21           1        1        0        0                 0                 0
+22           1        1        0        0                 0                 0
+23           1        1        0        0                 0                 0
+24           1        1        0        0                 0                 0
+25           1        0        1        0                 0                 0
+26           1        0        1        0                 0                 0
+27           1        0        1        0                 0                 0
+28           1        0        1        0                 0                 0
+29           1        0        1        0                 0                 0
+30           1        0        1        0                 0                 0</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -335,7 +370,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>),</span>
 <span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a> <span class="at">ncol =</span><span class="dv">2</span>, </span>
 <span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a> <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Categorical/Indicators"</span>, <span class="st">"Continuous"</span>), </span>
-<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a> <span class="at">label.x =</span> <span class="fl">0.25</span></span>
+<span id="cb20-26"><a href="#cb20-26" aria-hidden="true" tabindex="-1"></a> <span class="at">label.x =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.2</span>)</span>
 <span id="cb20-27"><a href="#cb20-27" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day15_09232024_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
@@ -397,11 +432,57 @@ Residuals   2.9680 138
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">model.matrix</span>(m3)[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   (Intercept) speciesC speciesD doy speciesC:doy speciesD:doy
+1            1        0        0 155            0            0
+2            1        0        0 155            0            0
+3            1        0        0 155            0            0
+4            1        0        0 155            0            0
+5            1        0        0 155            0            0
+6            1        0        0 155            0            0
+7            1        0        0 155            0            0
+8            1        0        0 155            0            0
+9            1        0        0 155            0            0
+10           1        0        0 155            0            0
+11           1        0        0 155            0            0
+12           1        0        0 155            0            0
+13           1        1        0 155          155            0
+14           1        1        0 155          155            0
+15           1        1        0 155          155            0
+16           1        1        0 155          155            0
+17           1        1        0 155          155            0
+18           1        1        0 155          155            0
+19           1        1        0 155          155            0
+20           1        1        0 155          155            0
+21           1        1        0 155          155            0
+22           1        1        0 155          155            0
+23           1        1        0 155          155            0
+24           1        1        0 155          155            0
+25           1        0        1 155            0          155
+26           1        0        1 155            0          155
+27           1        0        1 155            0          155
+28           1        0        1 155            0          155
+29           1        0        1 155            0          155
+30           1        0        1 155            0          155</code></pre>
+</div>
+</div>
 </section>
 </section>
 <section id="lets-put-this-in-context" class="level2">
 <h2 class="anchored" data-anchor-id="lets-put-this-in-context">Let’s put this in context</h2>
-<p>-To the whiteboard</p>
+<ul>
+<li>Don’t forget our assumptions:
+<ul>
+<li>residuals are iid <span class="math inline">\(\sim N(0, \sigma^2)\)</span><br>
+</li>
+<li>parameters enter linearly (linear model)<br>
+</li>
+<li>homoscedasticity (i.e., constant variance)</li>
+</ul></li>
+<li>Whiteboard. Context in data analysis workflow.</li>
+</ul>
 </section>
 <section id="for-next-class" class="level2">
 <h2 class="anchored" data-anchor-id="for-next-class">For next class</h2>
@@ -409,6 +490,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Read Chapter 15.<br>
 </li>
 <li>Resubmit Assignment 2.</li>
+<li>Following: model diagnostics, model selection.</li>
 </ul>
 </section>
 

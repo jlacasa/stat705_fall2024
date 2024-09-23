@@ -1,5 +1,5 @@
 ---
-title: Linear Models - Inference, Hypothesis Tests
+title: Linear Models - Model Diagnostics
 ---
 
 Sep 25

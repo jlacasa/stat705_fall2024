@@ -1,0 +1,179 @@
+---
+title: "Day 16 - 09/25/2024"
+format: html
+editor: visual
+---
+
+## Model diagnostics, or evaluating assumptions    
+
+Our statistical models are a simplification of reality.  
+
+- What can we do with data alone?  
+- What can we do with data and a statistical model?  
+- What is a statistical model? (a list of assumptions)  
+- Our assumptions should represent the **data generating process** as good as possible.  
+  - Clover data example  
+  - Plant density example  
+- Class poll: Do you really expect our assumptions to be exactly right?  
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+library(ggpubr)
+library(latex2exp)
+library(car)
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_part4.csv"
+dd <- read.csv(url)
+```
+
+```{r message=FALSE, warning=FALSE}
+dd %>% 
+  ggplot(aes(species, crown_g))+
+  geom_boxplot(aes(fill = species))+
+  scale_fill_manual(values = c("#DB504A", "#43AA8B", "#FAD4C0"))+
+  labs(x = "Species", 
+       y = "Crown biomass (g)", 
+       fill = "Species")+
+  theme_classic()+
+  theme(aspect.ratio = 1)
+```
+
+```{r}
+m1 <- lm(crown_g ~ species * trt, data = dd)
+m1_residuals <- m1$residuals
+summary(m1)
+```
+
+#### Recall our Assumptions for all the models we've been fitting so far   
+
+- Linearity  
+- Homoscedasticity (i.e., constant variance)  
+- Residuals are iid $\sim N(0, \sigma^2)$  
+  - Independent  
+  - Normally distributed  
+
+
+#### A few things to keep in mind:  
+
+- "All models are wrong, but some are useful" [George E. P. Box](https://en.wikipedia.org/wiki/George_E._P._Box) [[interview](https://projecteuclid.org/journals/statistical-science/volume-2/issue-3/A-Conversation-with-George-Box/10.1214/ss/1177013223.full)] [[book](https://www.amazon.com/Accidental-Statistician-Life-Memories-George/dp/1118400887)]  
+- We wish to assess the degree of violation of our assumptions.  
+- Possible conclusions of this step:  
+  - assumptions are not badly violated ~ reliable predictions, reliable inference.  
+  - assumptions are badly violated ~ reliable predictions, reliable inference ~ change your model.  
+
+## Tools for model diagnostics  
+
+### Graphical/descriptive methods  
+
+- Pros    
+  - Transparency  
+  
+- Cons  
+  - Need knowledge about statistics, experience, judgement, etc.  
+
+
+#### Linearity  
+
+```{r}
+dd %>% 
+  ggplot(aes(species, crown_g))+
+  geom_point(aes(fill = trt), shape =21, 
+             size =2.5,
+             position = position_dodge(width = 0.9))+
+  scale_fill_manual(values = c("white", "#F7B05B"))+
+  labs(x = "Species", 
+       y = "Crown biomass (g)", 
+       fill = "Treatment")+
+  theme_classic()+
+  theme(aspect.ratio = 1)
+```
+
+#### Homoscedasticity (i.e., constant variance)  
+
+```{r}
+dd$epsilon.hat <- m1_residuals
+
+dd %>% 
+  ggplot(aes(species, epsilon.hat))+
+  geom_hline(yintercept = 0, linetype =2)+
+  geom_point(aes(fill = trt), shape =21, 
+             size =2.5,
+             position = position_dodge(width = 0.9))+
+  scale_fill_manual(values = c("white", "#F7B05B"))+
+  labs(x = "Species", 
+       y = TeX("$\\hat{\\epsilon_i}$"), 
+       fill = "Treatment")+
+  theme_classic()+
+  theme(aspect.ratio = 1)
+
+```
+
+#### Independent Residuals  
+```{r}
+n <- nrow(dd)
+lag_residuals <- c(NA, m1_residuals[1:n-1])
+
+plot(1:n, m1_residuals)
+
+plot(lag_residuals, m1_residuals)
+
+```
+
+#### Residuals are $\sim N(0, \sigma^2)$  
+**IMPORTANT!!!** Each **conditional distribution** $p(y|x)$ (one for each x) is a normal distribution, not the marginal $p(y)$.  
+
+```{r}
+hist(m1_residuals)
+```
+
+```{r}
+qqPlot(m1_residuals)
+```
+
+### Testing methods  
+
+- Pros    
+  - Very common \& popular. Used to be the paradigm a few decades ago (your PI probably loves them!).  
+- Cons  
+  - When is *any* assumption true anyways?  
+  - Sensitive to sample size $n$ 
+    - With lower $n$, it's less likely to reject $H_0$ and say the assumptions are violated, even if the assumptions are badly violated.  
+    - With higher $n$, it's more likely to reject $H_0$ and say the assumptions are violated, even if the assumptions are only slightly violated.  
+  
+> By itself, a p-value does not provide a good measure of evidence regarding a model or hypothesis. [[ASA's statement on p-values](https://www.tandfonline.com/doi/full/10.1080/00031305.2016.1154108#d1e167)]  
+
+
+#### Linearity  
+
+We'll see this in the live R example.  
+
+#### Homoscedasticity (i.e., constant variance)  
+
+```{r}
+leveneTest(m1)
+
+y_hat <- m1$fitted.values
+abs_residuals = abs(m1_residuals)
+glejser <- lm(abs_residuals ~ y_hat)
+summary(glejser)
+```
+
+#### Independent Residuals  
+
+```{r}
+cor.test(m1_residuals, lag_residuals)
+```
+
+#### Residuals are $\sim N(0, \sigma^2)$  
+
+```{r}
+shapiro.test(m1_residuals)
+```
+
+
+## Live R code  
+
+[R code](https://github.com/jlacasa/stat705_fall2024/blob/main/classes/in_class_code/day16_inclass.Rmd)
+
+## For next class  
+- Resubmit Assignment 2.  
+

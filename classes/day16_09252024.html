@@ -108,9 +108,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
 <li>Our assumptions should represent the <strong>data generating process</strong> as good as possible.
 <ul>
-<li>Clover data example<br>
-</li>
 <li>Plant density example<br>
+</li>
+<li>Clover data example<br>
 </li>
 </ul></li>
 <li>Class poll: Do you really expect our assumptions to be exactly right?</li>
@@ -120,50 +120,51 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggpubr)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(latex2exp)</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_part4.csv"</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>url <span class="ot">&lt;-</span> <span class="st">"https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/corn_example2.csv"</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(species, crown_g))<span class="sc">+</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="fu">aes</span>(<span class="at">fill =</span> species))<span class="sc">+</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"#DB504A"</span>, <span class="st">"#43AA8B"</span>, <span class="st">"#FAD4C0"</span>))<span class="sc">+</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Species"</span>, </span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Crown biomass (g)"</span>, </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Species"</span>)<span class="sc">+</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(plant_density, yield_Mgha))<span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(Plant<span class="sc">~</span>Density<span class="sc">~</span>(plants<span class="sc">~</span>m<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>})), </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>Yield<span class="sc">~</span>(Mg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))<span class="sc">+</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">15</span>), </span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">16</span>), </span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">expand =</span> F)<span class="sc">+</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day16_09252024_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p><strong>Given our prior knowledge about the subject</strong>, we can fit the following model:</p>
+<p><span class="math display">\[y_i \sim N(\mu_i, \sigma^2),\]</span> <span class="math display">\[\mu_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2,\]</span> for <span class="math inline">\(i =1, 2, ..., n\)</span> where <span class="math inline">\(n\)</span> is the total number of observations, <span class="math inline">\(y_i\)</span> is the <span class="math inline">\(i\)</span>th observation of grain yield, that arises from a Normal distribution with mean <span class="math inline">\(\mu_i\)</span> and variance <span class="math inline">\(\sigma^2\)</span>. The <span class="math inline">\(mu_i\)</span> is defined as a function of the parameters <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(beta_1\)</span> and <span class="math inline">\(\beta_2\)</span>, and the predictor <span class="math inline">\(x_i\)</span>, plant density.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(crown_g <span class="sc">~</span> species <span class="sc">*</span> trt, <span class="at">data =</span> dd)</span>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(yield_Mgha <span class="sc">~</span> plant_density <span class="sc">+</span> <span class="fu">I</span>(plant_density<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> dd)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>m1_residuals <span class="ot">&lt;-</span> m1<span class="sc">$</span>residuals</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = crown_g ~ species * trt, data = dd)
+lm(formula = yield_Mgha ~ plant_density + I(plant_density^2), 
+    data = dd)
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--0.39578 -0.12946 -0.02559  0.12274  0.63791 
+    Min      1Q  Median      3Q     Max 
+-1.9426 -0.6571 -0.1711  0.9246  1.6917 
 
 Coefficients:
-                  Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)        0.96541    0.06040  15.984  &lt; 2e-16 ***
-speciesC          -0.49310    0.08541  -5.773 2.28e-07 ***
-speciesD          -0.41107    0.08541  -4.813 9.03e-06 ***
-trtflood          -0.18065    0.08541  -2.115   0.0382 *  
-speciesC:trtflood  0.24622    0.12079   2.038   0.0455 *  
-speciesD:trtflood  0.17967    0.12079   1.487   0.1417    
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         4.30879    1.38213   3.117 0.005016 ** 
+plant_density       1.74562    0.33964   5.140 3.76e-05 ***
+I(plant_density^2) -0.08300    0.01862  -4.458 0.000197 ***
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 
-Residual standard error: 0.2092 on 66 degrees of freedom
-Multiple R-squared:  0.4279,    Adjusted R-squared:  0.3846 
-F-statistic: 9.875 on 5 and 66 DF,  p-value: 4.427e-07</code></pre>
+Residual standard error: 0.9736 on 22 degrees of freedom
+Multiple R-squared:  0.6493,    Adjusted R-squared:  0.6174 
+F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
 </div>
 </div>
 <section id="recall-our-assumptions-for-all-the-models-weve-been-fitting-so-far" class="level4">
@@ -186,13 +187,13 @@ F-statistic: 9.875 on 5 and 66 DF,  p-value: 4.427e-07</code></pre>
 <ul>
 <li>“All models are wrong, but some are useful” <a href="https://en.wikipedia.org/wiki/George_E._P._Box">George E. P. Box</a> [<a href="https://projecteuclid.org/journals/statistical-science/volume-2/issue-3/A-Conversation-with-George-Box/10.1214/ss/1177013223.full">interview</a>] [<a href="https://www.amazon.com/Accidental-Statistician-Life-Memories-George/dp/1118400887">book</a>]<br>
 </li>
-<li>We wish to assess the degree of violation of our assumptions.<br>
+<li>If we agree on the fact that no assumption can be right, we wish to assess the degree of violation of our assumptions.<br>
 </li>
-<li>Possible conclusions of this step:
+<li>Possible conclusions of the checking assumptions step:
 <ul>
-<li>assumptions are not badly violated ~ reliable predictions, reliable inference.<br>
+<li>assumptions are not badly violated ~ reliable predictions &amp; inference.<br>
 </li>
-<li>assumptions are badly violated ~ reliable predictions, reliable inference ~ change your model.</li>
+<li>assumptions are badly violated ~ unreliable predictions &amp; inference ~ change your model!</li>
 </ul></li>
 </ul>
 </section>
@@ -208,23 +209,22 @@ F-statistic: 9.875 on 5 and 66 DF,  p-value: 4.427e-07</code></pre>
 </ul></li>
 <li>Cons
 <ul>
-<li>Need knowledge about statistics, experience, judgement, etc.</li>
+<li>Need knowledge about statistics, experience, judgment, etc.</li>
 </ul></li>
 </ul>
-<section id="linearity" class="level4">
-<h4 class="anchored" data-anchor-id="linearity">Linearity</h4>
+<section id="linearitydeterministic-part-of-the-model" class="level4">
+<h4 class="anchored" data-anchor-id="linearitydeterministic-part-of-the-model">Linearity/Deterministic Part of the Model</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(species, crown_g))<span class="sc">+</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">fill =</span> trt), <span class="at">shape =</span><span class="dv">21</span>, </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span><span class="fl">2.5</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>))<span class="sc">+</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"white"</span>, <span class="st">"#F7B05B"</span>))<span class="sc">+</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Species"</span>, </span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Crown biomass (g)"</span>, </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Treatment"</span>)<span class="sc">+</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(plant_density, yield_Mgha))<span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(Plant<span class="sc">~</span>Density<span class="sc">~</span>(plants<span class="sc">~</span>m<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>})), </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>Yield<span class="sc">~</span>(Mg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))<span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">15</span>), </span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">16</span>), </span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>                  <span class="at">expand =</span> F)<span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day16_09252024_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -236,17 +236,12 @@ F-statistic: 9.875 on 5 and 66 DF,  p-value: 4.427e-07</code></pre>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>epsilon.hat <span class="ot">&lt;-</span> m1_residuals</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(species, epsilon.hat))<span class="sc">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span><span class="dv">2</span>)<span class="sc">+</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">fill =</span> trt), <span class="at">shape =</span><span class="dv">21</span>, </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">size =</span><span class="fl">2.5</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>             <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> <span class="fl">0.9</span>))<span class="sc">+</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"white"</span>, <span class="st">"#F7B05B"</span>))<span class="sc">+</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Species"</span>, </span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">TeX</span>(<span class="st">"$</span><span class="sc">\\</span><span class="st">hat{</span><span class="sc">\\</span><span class="st">epsilon_i}$"</span>), </span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Treatment"</span>)<span class="sc">+</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(plant_density, epsilon.hat))<span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(Plant<span class="sc">~</span>Density<span class="sc">~</span>(plants<span class="sc">~</span>m<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>})), </span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>Yield<span class="sc">~</span>(Mg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))<span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day16_09252024_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -283,7 +278,7 @@ F-statistic: 9.875 on 5 and 66 DF,  p-value: 4.427e-07</code></pre>
 <p><img src="day16_09252024_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1]  5 65</code></pre>
+<pre><code>[1] 7 9</code></pre>
 </div>
 </div>
 </section>
@@ -311,22 +306,38 @@ F-statistic: 9.875 on 5 and 66 DF,  p-value: 4.427e-07</code></pre>
 <blockquote class="blockquote">
 <p>By itself, a p-value does not provide a good measure of evidence regarding a model or hypothesis. [<a href="https://www.tandfonline.com/doi/full/10.1080/00031305.2016.1154108#d1e167">ASA’s statement on p-values</a>]</p>
 </blockquote>
-<section id="linearity-1" class="level4">
-<h4 class="anchored" data-anchor-id="linearity-1">Linearity</h4>
-<p>We’ll see this in the live R example.</p>
+<section id="linearitydeterministic-part-of-the-model-1" class="level4">
+<h4 class="anchored" data-anchor-id="linearitydeterministic-part-of-the-model-1">Linearity/Deterministic Part of the Model</h4>
+<p>One available testing method to test linearity is looking at the estimated parameters.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = yield_Mgha ~ plant_density + I(plant_density^2), 
+    data = dd)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-1.9426 -0.6571 -0.1711  0.9246  1.6917 
+
+Coefficients:
+                   Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)         4.30879    1.38213   3.117 0.005016 ** 
+plant_density       1.74562    0.33964   5.140 3.76e-05 ***
+I(plant_density^2) -0.08300    0.01862  -4.458 0.000197 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9736 on 22 degrees of freedom
+Multiple R-squared:  0.6493,    Adjusted R-squared:  0.6174 
+F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
+</div>
+</div>
 </section>
 <section id="homoscedasticity-i.e.-constant-variance-1" class="level4">
 <h4 class="anchored" data-anchor-id="homoscedasticity-i.e.-constant-variance-1">Homoscedasticity (i.e., constant variance)</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">leveneTest</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Levene's Test for Homogeneity of Variance (center = median)
-      Df F value  Pr(&gt;F)  
-group  5  2.4849 0.04012 *
-      66                  
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
-</div>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>y_hat <span class="ot">&lt;-</span> m1<span class="sc">$</span>fitted.values</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>abs_residuals <span class="ot">=</span> <span class="fu">abs</span>(m1_residuals)</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>glejser <span class="ot">&lt;-</span> <span class="fu">lm</span>(abs_residuals <span class="sc">~</span> y_hat)</span>
@@ -337,21 +348,20 @@ Call:
 lm(formula = abs_residuals ~ y_hat)
 
 Residuals:
-     Min       1Q   Median       3Q      Max 
--0.23221 -0.08209 -0.01052  0.05726  0.40853 
+    Min      1Q  Median      3Q     Max 
+-0.7712 -0.3941 -0.1489  0.3004  1.1896 
 
 Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)   
-(Intercept) -0.01840    0.05641  -0.326   0.7452   
-y_hat        0.26394    0.08450   3.123   0.0026 **
----
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+            Estimate Std. Error t value Pr(&gt;|t|)
+(Intercept)  -0.2128     1.0214  -0.208    0.837
+y_hat         0.0795     0.0829   0.959    0.348
 
-Residual standard error: 0.1242 on 70 degrees of freedom
-Multiple R-squared:  0.1223,    Adjusted R-squared:  0.1098 
-F-statistic: 9.756 on 1 and 70 DF,  p-value: 0.002599</code></pre>
+Residual standard error: 0.5151 on 23 degrees of freedom
+Multiple R-squared:  0.03845,   Adjusted R-squared:  -0.003356 
+F-statistic: 0.9197 on 1 and 23 DF,  p-value: 0.3475</code></pre>
 </div>
 </div>
+<p>For categorical predictors, you can also apply the Levene test, using the <code>leveneTest()</code> function.</p>
 </section>
 <section id="independent-residuals-1" class="level4">
 <h4 class="anchored" data-anchor-id="independent-residuals-1">Independent Residuals</h4>
@@ -362,13 +372,13 @@ F-statistic: 9.756 on 1 and 70 DF,  p-value: 0.002599</code></pre>
     Pearson's product-moment correlation
 
 data:  m1_residuals and lag_residuals
-t = -2.3959, df = 69, p-value = 0.0193
+t = 0.37029, df = 22, p-value = 0.7147
 alternative hypothesis: true correlation is not equal to 0
 95 percent confidence interval:
- -0.47943574 -0.04685593
+ -0.3353425  0.4672628
 sample estimates:
-       cor 
--0.2771302 </code></pre>
+      cor 
+0.0787005 </code></pre>
 </div>
 </div>
 </section>
@@ -381,7 +391,7 @@ sample estimates:
     Shapiro-Wilk normality test
 
 data:  m1_residuals
-W = 0.96647, p-value = 0.05172</code></pre>
+W = 0.97238, p-value = 0.7059</code></pre>
 </div>
 </div>
 </section>

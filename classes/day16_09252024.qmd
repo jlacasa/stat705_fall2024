@@ -12,8 +12,8 @@ Our statistical models are a simplification of reality.
 - What can we do with data and a statistical model?  
 - What is a statistical model? (a list of assumptions)  
 - Our assumptions should represent the **data generating process** as good as possible.  
-  - Clover data example  
   - Plant density example  
+  - Clover data example  
 - Class poll: Do you really expect our assumptions to be exactly right?  
 
 ```{r message=FALSE, warning=FALSE}
@@ -21,24 +21,31 @@ library(tidyverse)
 library(ggpubr)
 library(latex2exp)
 library(car)
-url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_part4.csv"
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/corn_example2.csv"
 dd <- read.csv(url)
 ```
 
 ```{r message=FALSE, warning=FALSE}
 dd %>% 
-  ggplot(aes(species, crown_g))+
-  geom_boxplot(aes(fill = species))+
-  scale_fill_manual(values = c("#DB504A", "#43AA8B", "#FAD4C0"))+
-  labs(x = "Species", 
-       y = "Crown biomass (g)", 
-       fill = "Species")+
+  ggplot(aes(plant_density, yield_Mgha))+
+  geom_point()+
+  labs(x = expression(Plant~Density~(plants~m^{-2})), 
+       y = expression(Grain~Yield~(Mg~ha^{-1})))+
   theme_classic()+
+  coord_cartesian(xlim = c(0, 15), 
+                  ylim = c(0, 16), 
+                  expand = F)+
   theme(aspect.ratio = 1)
 ```
 
+**Given our prior knowledge about the subject**, we can fit the following model:  
+
+$$y_i \sim N(\mu_i, \sigma^2),$$
+$$\mu_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2,$$
+for $i =1, 2, ..., n$ where $n$ is the total number of observations, $y_i$ is the $i$th observation of grain yield, that arises from a Normal distribution with mean $\mu_i$ and variance $\sigma^2$. The $mu_i$ is defined as a function of the parameters $\beta_0$, $beta_1$ and $\beta_2$, and the predictor $x_i$, plant density.
+
 ```{r}
-m1 <- lm(crown_g ~ species * trt, data = dd)
+m1 <- lm(yield_Mgha ~ plant_density + I(plant_density^2), data = dd)
 m1_residuals <- m1$residuals
 summary(m1)
 ```
@@ -55,10 +62,10 @@ summary(m1)
 #### A few things to keep in mind:  
 
 - "All models are wrong, but some are useful" [George E. P. Box](https://en.wikipedia.org/wiki/George_E._P._Box) [[interview](https://projecteuclid.org/journals/statistical-science/volume-2/issue-3/A-Conversation-with-George-Box/10.1214/ss/1177013223.full)] [[book](https://www.amazon.com/Accidental-Statistician-Life-Memories-George/dp/1118400887)]  
-- We wish to assess the degree of violation of our assumptions.  
-- Possible conclusions of this step:  
-  - assumptions are not badly violated ~ reliable predictions, reliable inference.  
-  - assumptions are badly violated ~ reliable predictions, reliable inference ~ change your model.  
+- If we agree on the fact that no assumption can be right, we wish to assess the degree of violation of our assumptions.  
+- Possible conclusions of the checking assumptions step:  
+  - assumptions are not badly violated ~ reliable predictions \& inference.  
+  - assumptions are badly violated ~ unreliable predictions \& inference ~ change your model!  
 
 ## Tools for model diagnostics  
 
@@ -68,24 +75,24 @@ summary(m1)
   - Transparency  
   
 - Cons  
-  - Need knowledge about statistics, experience, judgement, etc.  
+  - Need knowledge about statistics, experience, judgment, etc.  
 
 
-#### Linearity  
+#### Linearity/Deterministic Part of the Model  
 
 ```{r}
 dd %>% 
-  ggplot(aes(species, crown_g))+
-  geom_point(aes(fill = trt), shape =21, 
-             size =2.5,
-             position = position_dodge(width = 0.9))+
-  scale_fill_manual(values = c("white", "#F7B05B"))+
-  labs(x = "Species", 
-       y = "Crown biomass (g)", 
-       fill = "Treatment")+
+  ggplot(aes(plant_density, yield_Mgha))+
+  geom_point()+
+  labs(x = expression(Plant~Density~(plants~m^{-2})), 
+       y = expression(Grain~Yield~(Mg~ha^{-1})))+
   theme_classic()+
+  coord_cartesian(xlim = c(0, 15), 
+                  ylim = c(0, 16), 
+                  expand = F)+
   theme(aspect.ratio = 1)
 ```
+ 
 
 #### Homoscedasticity (i.e., constant variance)  
 
@@ -93,18 +100,12 @@ dd %>%
 dd$epsilon.hat <- m1_residuals
 
 dd %>% 
-  ggplot(aes(species, epsilon.hat))+
-  geom_hline(yintercept = 0, linetype =2)+
-  geom_point(aes(fill = trt), shape =21, 
-             size =2.5,
-             position = position_dodge(width = 0.9))+
-  scale_fill_manual(values = c("white", "#F7B05B"))+
-  labs(x = "Species", 
-       y = TeX("$\\hat{\\epsilon_i}$"), 
-       fill = "Treatment")+
+  ggplot(aes(plant_density, epsilon.hat))+
+  geom_point()+
+  labs(x = expression(Plant~Density~(plants~m^{-2})), 
+       y = expression(Grain~Yield~(Mg~ha^{-1})))+
   theme_classic()+
   theme(aspect.ratio = 1)
-
 ```
 
 #### Independent Residuals  
@@ -142,20 +143,23 @@ qqPlot(m1_residuals)
 > By itself, a p-value does not provide a good measure of evidence regarding a model or hypothesis. [[ASA's statement on p-values](https://www.tandfonline.com/doi/full/10.1080/00031305.2016.1154108#d1e167)]  
 
 
-#### Linearity  
+#### Linearity/Deterministic Part of the Model  
 
-We'll see this in the live R example.  
+One available testing method to test linearity is looking at the estimated parameters.   
+```{r}
+summary(m1)
+```
 
 #### Homoscedasticity (i.e., constant variance)  
 
 ```{r}
-leveneTest(m1)
-
 y_hat <- m1$fitted.values
 abs_residuals = abs(m1_residuals)
 glejser <- lm(abs_residuals ~ y_hat)
 summary(glejser)
 ```
+
+For categorical predictors, you can also apply the Levene test, using the `leveneTest()` function. 
 
 #### Independent Residuals  
 

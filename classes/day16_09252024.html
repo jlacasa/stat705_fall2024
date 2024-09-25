@@ -214,6 +214,7 @@ F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
 </ul>
 <section id="linearitydeterministic-part-of-the-model" class="level4">
 <h4 class="anchored" data-anchor-id="linearitydeterministic-part-of-the-model">Linearity/Deterministic Part of the Model</h4>
+<p>We aim to check whether the deterministic part of the model truly represents the data generating process. This should make sense with our knowledge about the topic.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(plant_density, yield_Mgha))<span class="sc">+</span></span>
@@ -229,38 +230,49 @@ F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
 <p><img src="day16_09252024_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</section>
-<section id="homoscedasticity-i.e.-constant-variance" class="level4">
-<h4 class="anchored" data-anchor-id="homoscedasticity-i.e.-constant-variance">Homoscedasticity (i.e., constant variance)</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>epsilon.hat <span class="ot">&lt;-</span> m1_residuals</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(plant_density, epsilon.hat))<span class="sc">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(Plant<span class="sc">~</span>Density<span class="sc">~</span>(plants<span class="sc">~</span>m<span class="sc">^</span>{<span class="sc">-</span><span class="dv">2</span>})), </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>Yield<span class="sc">~</span>(Mg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))<span class="sc">+</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>y.hat <span class="ot">&lt;-</span> m1<span class="sc">$</span>fitted.values</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(y.hat, epsilon.hat))<span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">linetype =</span><span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">TeX</span>(<span class="st">"$</span><span class="sc">\\</span><span class="st">hat{y}_i$"</span>), </span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">TeX</span>(<span class="st">"$</span><span class="sc">\\</span><span class="st">hat{</span><span class="sc">\\</span><span class="st">epsilon}_i$"</span>))<span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day16_09252024_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
-<section id="independent-residuals" class="level4">
-<h4 class="anchored" data-anchor-id="independent-residuals">Independent Residuals</h4>
+<section id="homoscedasticity-i.e.-constant-variance" class="level4">
+<h4 class="anchored" data-anchor-id="homoscedasticity-i.e.-constant-variance">Homoscedasticity (i.e., constant variance)</h4>
+<p>We aim to check whether the variance is approximately homogeneous across the different levels of the predictor variable. And especially, whether the heteroscedasticity is <strong>so bad</strong> that we need to change our model.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dd)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>lag_residuals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, m1_residuals[<span class="dv">1</span><span class="sc">:</span>n<span class="dv">-1</span>])</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span>n, m1_residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(y.hat, <span class="fu">abs</span>(epsilon.hat)))<span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">TeX</span>(<span class="st">"$</span><span class="sc">\\</span><span class="st">hat{y}_i$"</span>), </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">TeX</span>(<span class="st">"$|</span><span class="sc">\\</span><span class="st">hat{</span><span class="sc">\\</span><span class="st">epsilon}_i|$"</span>))<span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">aspect.ratio =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day16_09252024_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lag_residuals, m1_residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="day16_09252024_files/figure-html/unnamed-chunk-6-2.png" class="img-fluid" width="672"></p>
 </div>
+</section>
+<section id="independent-residuals" class="level4">
+<h4 class="anchored" data-anchor-id="independent-residuals">Independent Residuals</h4>
+<p>For time series:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dd)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>lag_residuals <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="cn">NA</span>, m1_residuals[<span class="dv">1</span><span class="sc">:</span>n<span class="dv">-1</span>])</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="dv">1</span><span class="sc">:</span>n, m1_residuals)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(lag_residuals, m1_residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="residuals-are-sim-n0-sigma2" class="level4">
@@ -269,13 +281,13 @@ F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(m1_residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day16_09252024_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="day16_09252024_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">qqPlot</span>(m1_residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day16_09252024_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="day16_09252024_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 7 9</code></pre>
@@ -308,7 +320,7 @@ F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
 </blockquote>
 <section id="linearitydeterministic-part-of-the-model-1" class="level4">
 <h4 class="anchored" data-anchor-id="linearitydeterministic-part-of-the-model-1">Linearity/Deterministic Part of the Model</h4>
-<p>One available testing method to test linearity is looking at the estimated parameters.</p>
+<p>One available testing method to test linearity is looking at the estimated parameters for the curvature.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -337,15 +349,14 @@ F-statistic: 20.37 on 2 and 22 DF,  p-value: 9.866e-06</code></pre>
 </section>
 <section id="homoscedasticity-i.e.-constant-variance-1" class="level4">
 <h4 class="anchored" data-anchor-id="homoscedasticity-i.e.-constant-variance-1">Homoscedasticity (i.e., constant variance)</h4>
+<p>We use the Glejser test,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>y_hat <span class="ot">&lt;-</span> m1<span class="sc">$</span>fitted.values</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>abs_residuals <span class="ot">=</span> <span class="fu">abs</span>(m1_residuals)</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>glejser <span class="ot">&lt;-</span> <span class="fu">lm</span>(abs_residuals <span class="sc">~</span> y_hat)</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glejser)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>glejser <span class="ot">&lt;-</span> <span class="fu">lm</span>(<span class="fu">abs</span>(m1_residuals) <span class="sc">~</span> y.hat, <span class="at">data =</span> dd)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(glejser)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = abs_residuals ~ y_hat)
+lm(formula = abs(m1_residuals) ~ y.hat, data = dd)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
@@ -354,7 +365,7 @@ Residuals:
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)
 (Intercept)  -0.2128     1.0214  -0.208    0.837
-y_hat         0.0795     0.0829   0.959    0.348
+y.hat         0.0795     0.0829   0.959    0.348
 
 Residual standard error: 0.5151 on 23 degrees of freedom
 Multiple R-squared:  0.03845,   Adjusted R-squared:  -0.003356 
@@ -367,25 +378,13 @@ F-statistic: 0.9197 on 1 and 23 DF,  p-value: 0.3475</code></pre>
 <h4 class="anchored" data-anchor-id="independent-residuals-1">Independent Residuals</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(m1_residuals, lag_residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    Pearson's product-moment correlation
-
-data:  m1_residuals and lag_residuals
-t = 0.37029, df = 22, p-value = 0.7147
-alternative hypothesis: true correlation is not equal to 0
-95 percent confidence interval:
- -0.3353425  0.4672628
-sample estimates:
-      cor 
-0.0787005 </code></pre>
-</div>
 </div>
 </section>
 <section id="residuals-are-sim-n0-sigma2-1" class="level4">
 <h4 class="anchored" data-anchor-id="residuals-are-sim-n0-sigma2-1">Residuals are <span class="math inline">\(\sim N(0, \sigma^2)\)</span></h4>
+<p>In the Shapiro test, the <span class="math inline">\(H_0\)</span> is that the residuals are <span class="math inline">\(\sim N(0, \sigma^2)\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(m1_residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(m1_residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test

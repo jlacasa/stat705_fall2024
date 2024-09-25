@@ -80,6 +80,8 @@ summary(m1)
 
 #### Linearity/Deterministic Part of the Model  
 
+We aim to check whether the deterministic part of the model truly represents the data generating process. This should make sense with our knowledge about the topic. 
+
 ```{r}
 dd %>% 
   ggplot(aes(plant_density, yield_Mgha))+
@@ -93,30 +95,44 @@ dd %>%
   theme(aspect.ratio = 1)
 ```
  
+```{r}
+dd$epsilon.hat <- m1_residuals
+dd$y.hat <- m1$fitted.values
+
+dd %>% 
+  ggplot(aes(y.hat, epsilon.hat))+
+  geom_hline(yintercept = 0, linetype =2)+
+  geom_point()+
+  labs(x = TeX("$\\hat{y}_i$"), 
+       y = TeX("$\\hat{\\epsilon}_i$"))+
+  theme_classic()+
+  theme(aspect.ratio = 1)
+```
 
 #### Homoscedasticity (i.e., constant variance)  
 
-```{r}
-dd$epsilon.hat <- m1_residuals
+We aim to check whether the variance is approximately homogeneous across the different levels of the predictor variable. And especially, whether the heteroscedasticity is **so bad** that we need to change our model.    
 
+```{r}
 dd %>% 
-  ggplot(aes(plant_density, epsilon.hat))+
+  ggplot(aes(y.hat, abs(epsilon.hat)))+
   geom_point()+
-  labs(x = expression(Plant~Density~(plants~m^{-2})), 
-       y = expression(Grain~Yield~(Mg~ha^{-1})))+
+  labs(x = TeX("$\\hat{y}_i$"), 
+       y = TeX("$|\\hat{\\epsilon}_i|$"))+
   theme_classic()+
   theme(aspect.ratio = 1)
 ```
 
 #### Independent Residuals  
-```{r}
+
+For time series:     
+```{r eval=FALSE}
 n <- nrow(dd)
 lag_residuals <- c(NA, m1_residuals[1:n-1])
 
 plot(1:n, m1_residuals)
 
 plot(lag_residuals, m1_residuals)
-
 ```
 
 #### Residuals are $\sim N(0, \sigma^2)$  
@@ -145,17 +161,15 @@ qqPlot(m1_residuals)
 
 #### Linearity/Deterministic Part of the Model  
 
-One available testing method to test linearity is looking at the estimated parameters.   
+One available testing method to test linearity is looking at the estimated parameters for the curvature.   
 ```{r}
 summary(m1)
 ```
 
 #### Homoscedasticity (i.e., constant variance)  
-
+We use the Glejser test, 
 ```{r}
-y_hat <- m1$fitted.values
-abs_residuals = abs(m1_residuals)
-glejser <- lm(abs_residuals ~ y_hat)
+glejser <- lm(abs(m1_residuals) ~ y.hat, data = dd)
 summary(glejser)
 ```
 
@@ -163,11 +177,13 @@ For categorical predictors, you can also apply the Levene test, using the `leven
 
 #### Independent Residuals  
 
-```{r}
+```{r eval=FALSE}
 cor.test(m1_residuals, lag_residuals)
 ```
 
 #### Residuals are $\sim N(0, \sigma^2)$  
+
+In the Shapiro test, the $H_0$ is that the residuals are $\sim N(0, \sigma^2)$.  
 
 ```{r}
 shapiro.test(m1_residuals)

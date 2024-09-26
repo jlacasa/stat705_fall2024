@@ -8,7 +8,7 @@ Sep 25
 
 Sep 27
 : Model diagnostics II
-  : []()
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day17_09272024)
 
 Sep 30
 : Model selection I

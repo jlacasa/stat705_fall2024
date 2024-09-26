@@ -19,13 +19,11 @@ library(car)
 ```{r message=FALSE, warning=FALSE}
 url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_part4.csv"
 dd <- read.csv(url)
-dd_subset <- dd %>% 
-  filter(trt == "ctrl")
 ```
 
-## One-way ANOVA  
+## Two-way ANOVA  
 ```{r message=FALSE, warning=FALSE}
-dd_subset %>% 
+dd %>% 
   ggplot(aes(species, crown_g))+
   geom_boxplot(aes(fill = species))+
   scale_fill_manual(values = c("#DB504A", "#43AA8B", "#FAD4C0"))+

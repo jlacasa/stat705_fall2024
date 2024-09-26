@@ -21,8 +21,6 @@ $$\boldsymbol{\mu} = \mathbf{X}\boldsymbol{\beta}.$$
 -   Residuals are iid $\sim N(0, \sigma^2)$
     -   Independent\
     -   Normally distributed
-
-
 :::
 
 ## Live R code. A not-so-obvious example  

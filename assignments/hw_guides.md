@@ -12,7 +12,7 @@ The following guides are solved homeworks, indicating what was expected from eac
 
 | Homework  | Link 1  |Link 2       |
 | --------- | ------- | ----------- |
-| HW2       | [PDF]() |[R script.]()|
+| HW2       | [PDF]() |[R script]() |
 | HW2       |         |             |
 |           |         |             |
 |           |         |             |

@@ -11,10 +11,13 @@ Sep 27
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day17_09272024)
 
 Sep 30
-: Model selection I
+: Bootstrapping  
   : []()
   
 Oct 02 
 : Model selection I
   : []()
 
+Oct 04 
+: Model selection II
+  : []()

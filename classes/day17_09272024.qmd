@@ -10,17 +10,20 @@ editor: visual
 - We are working on assessing the degree of violation of our assumptions.  
 - Graphical/descriptive methods // Test methods  
 
+![model checking](misc_plots/model_checking.jpg)
+
 ::: {.alert .alert-info}
 **ASSUMPTIONS BEHIND**
 
 $$\mathbf{y} \sim \text{N}(\boldsymbol{\mu}, \sigma^2\mathbf{I}),$$
 
 $$\boldsymbol{\mu} = \mathbf{X}\boldsymbol{\beta}.$$
--   Linearity\
+  
+- Linearity\
 -   Homoscedasticity (i.e., constant variance)\
--   Residuals are iid $\sim N(0, \sigma^2)$
-    -   Independent\
-    -   Normally distributed
+-   Residuals are iid $\sim N(0, \sigma^2)$  
+    - Independent\  
+    - Normally distributed  
 :::
 
 ## Live R code. A not-so-obvious example  

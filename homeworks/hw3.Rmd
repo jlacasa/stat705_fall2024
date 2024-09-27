@@ -1,0 +1,36 @@
+---
+title: "Homework 3"
+author: ""
+date: "2024-09-27"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Exercise 1
+
+Read the data in the chunk below. Propose a statistical model (using mathematical notation) to describe the relationship between crown biomass and legume species, and fit that model to the data.
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+```{r }
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/lotus_part4.csv"
+dd <- read.csv(url)
+```
+
+```{r}
+dd %>% 
+  ggplot(aes(species, crown_g))+
+  geom_boxplot(aes(fill = trt))+
+  scale_fill_manual(values = c("#43AA8B", "#DB504A"))+
+  labs(x = "Species", 
+       y = "Crown biomass (g)", 
+       fill = "Species")+
+  theme_classic()+
+  theme(aspect.ratio = 1)
+```
+

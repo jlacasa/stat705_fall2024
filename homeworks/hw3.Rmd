@@ -28,7 +28,7 @@ dd %>%
   geom_boxplot(aes(fill = trt))+
   scale_fill_manual(values = c("#43AA8B", "#DB504A"))+
   labs(x = "Species", 
-       y = "Crown biomass (g)", 
+       y = "Aboveground biomass (g)", 
        fill = "Species")+
   theme_classic()+
   theme(aspect.ratio = 1)

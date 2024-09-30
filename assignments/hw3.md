@@ -1,0 +1,16 @@
+---
+layout: page
+title: HW02 Estimation, Uncertainty
+permalink: /assignments/hw2
+parent: Assignments
+nav_order: 2
+---
+  
+# Homework 3 **Due Monday October 10 at 11:59pm CT**{: .label .label-red }
+  
+In an Rmd file, complete the exercises below and knit to pdf or html. Submit the (pdf or html) file to canvas. Please name your file "Assignment3_YourLastName" (e.g., Assignment3_Smith.pdf).
+Download template .Rmd [here](https://github.com/jlacasa/stat705_fall2024/blob/main/homeworks/hw3.Rmd).
+
+![](../homeworks/hw3.pdf){width=90%}  
+
+

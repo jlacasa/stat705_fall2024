@@ -11,7 +11,6 @@ nav_order: 2
 In an Rmd file, complete the exercises below and knit to pdf or html. Submit the (pdf or html) file to canvas. Please name your file "Assignment2_YourLastName" (e.g., Assignment2_Smith.pdf).
 Download template .Rmd [here](https://github.com/jlacasa/stat705_fall2024/blob/main/homeworks/hw2.qmd).
 
-
 ## Exercise 1  
 Read the data in the chunk below. Propose a statistical model (using mathematical notation) to describe the relationship between corn yield and plant density, and fit that model to the data.  
 

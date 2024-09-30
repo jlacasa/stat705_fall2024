@@ -9,9 +9,8 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Exercise 1
-
-Read the data in the chunk below. Propose a statistical model (using mathematical notation) to describe the relationship between crown biomass and legume species, and fit that model to the data.
+Read the data in the chunk below. The data come from of a study that investigated the flood tolerance of three different clover species.  
+The data can be interpreted as arising from an experiment with a 3 $\times$ 2 factorial treatment structure in a completely randomized design with 24 repetitions. The experimental units were pots in the greenhouse. The researchers measured the crown biomass, which represents the amount of storage carbohidrates in a plant and can indicate plant stress (i.e., lower biomass is associated to more stress).    
 
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
@@ -34,3 +33,6 @@ dd %>%
   theme(aspect.ratio = 1)
 ```
 
+### a. Propose a statistical model (using mathematical notation) to describe the relationship between crown biomass, legume species, and fit that model to the data.  
+
+### b. Mention the assumptions in your model and check them. 

@@ -11,6 +11,9 @@ nav_order: 3
 In an Rmd file, complete the exercises below and knit to pdf or html. Submit the (pdf or html) file to canvas. Please name your file "Assignment3_YourLastName" (e.g., Assignment3_Smith.pdf).
 Download template .Rmd [here](https://github.com/jlacasa/stat705_fall2024/blob/main/homeworks/hw3.Rmd).
 
-![ ](../homeworks/hw3.pdf){width=90%}  
+See [pdf](../homeworks/hw3.pdf)  
+
+
+![ ](../homeworks/hw3.pdf){width=90%}    
 
 

@@ -1,9 +1,9 @@
 ---
 layout: page
-title: HW02 Estimation, Uncertainty
-permalink: /assignments/hw2
+title: HW03 Estimation, Checking Assumptions
+permalink: /assignments/hw3
 parent: Assignments
-nav_order: 2
+nav_order: 3
 ---
   
 # Homework 3 **Due Monday October 10 at 11:59pm CT**{: .label .label-red }

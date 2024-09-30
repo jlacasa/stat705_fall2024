@@ -36,7 +36,7 @@ dd %>%
 
 ### a. Propose a statistical model (using mathematical notation) to describe the relationship between aboveground biomass, legume species and treatment. Fit that model to the data.  
 
-### b. Mention the assumptions in your model and check them. (Note: only check if you think they are approximately appropriate or not.)   
+### b. Mention the assumptions in your model and check them. If you believe one of the assuptions is badly wrong and should be changed, name a possible alternative. (Note: you only have to state if you think they are approximately appropriate or not, and name a possible alternative. You do not need to **do it**!)   
 
 ### c. Provide point estimates and 95\% confidence intervals of the different species under both treated and control conditions.  
 

@@ -14,6 +14,3 @@ Download template .Rmd [here](https://github.com/jlacasa/stat705_fall2024/blob/m
 See [pdf](../homeworks/hw3.pdf)  
 
 
-![ ](../homeworks/hw3.pdf){width=90%}    
-
-

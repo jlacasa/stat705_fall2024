@@ -1,0 +1,54 @@
+---
+title: "Day 19 - 10/02/2024"
+format: html
+editor: visual
+---
+
+## From last class  
+
+- [link to presentation pdf](day18_09302024_bootstrap_pres.pdf)  
+
+## Model selection  
+
+- Why do we fit statistical models?  
+- How do we know our model is the best?  
+  - What defines the "goodness" of a model?  
+
+![](misc_plots/model_selection_hooten2015.png){width=85%}  
+Figure 2 in [Hooten et al. (2015)](https://esajournals.onlinelibrary.wiley.com/doi/full/10.1890/14-0661.1).  
+
+
+### Standard portfolio of model selection criteria  
+
+#### The coefficient of determination R^2^  
+
+- Usually explained as the proportion of the variation in y that is explained with variation in x.  
+
+The R^2^ of a given model (and observed data) is calculated as 
+$$R^2 = \frac{MSS}{TSS}= 1 - \frac{RSS}{TSS},$$
+where $RSS$ is the residual sum of squares and $TSS$ is the total sum o squares.  
+
+
+#### Akaike Information Criterion (AIC)  
+
+The AIC of a given model $M$ and observed data $\mathbf{y}$ is calculated as 
+$$AIC_M = 2k - 2\log(\hat{L}),$$
+where $k$ is the number of parameters in the model and $\hat{L}$ is the maximized value of the likelihood function for the model (i.e., $\hat{L}=p(\mathbf{y}|\hat{\boldsymbol\beta}, M)$).  
+
+#### Bayesian Information Criterion (BIC)  
+
+The BIC of a given model (and observed data) is calculated as 
+$$BIC = k\log(n) - 2\log(\hat{L}),$$
+where $k$ is the number of parameters in the model, $n$ is the number of observations, and $\hat{L}$ is the maximized value of the likelihood function for the model (i.e., $\hat{L}=p(\mathbf{y}|\hat{\boldsymbol\beta}, M)$).  
+
+### A few questions  
+- How many times can we use the data?  
+- Are more parameters always good?  
+- Bias variance trade-off  
+
+## For next class  
+
+- Read Chapter 8 (Variable selection)  
+- Assignment 3.  
+- [Mid-semester survey](https://forms.gle/5W3AWhzrEtoysn3P6).  
+

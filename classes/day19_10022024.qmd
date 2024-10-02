@@ -7,6 +7,7 @@ editor: visual
 ## From last class  
 
 - [link to presentation pdf](day18_09302024_bootstrap_pres.pdf)  
+- Kahoot  
 
 ## Model selection  
 
@@ -16,8 +17,6 @@ editor: visual
 
 ![](misc_plots/model_selection_hooten2015.png){width=85%}  
 Figure 2 in [Hooten et al. (2015)](https://esajournals.onlinelibrary.wiley.com/doi/full/10.1890/14-0661.1).  
-
-[Live R example](https://github.com/jlacasa/stat705_fall2024/blob/main/classes/in_class_code/day19_inclass.Rmd).
 
 ### Popular model selection criteria  
 
@@ -60,10 +59,11 @@ where $k$ is the number of parameters in the model, $n$ is the number of observa
 
 ### A few thoughts  
 - We are using the data twice!  
+- Other techniques, also depending on modeling objective.   
 
 ## For next class  
 
 - Read Chapter 8 (Variable selection)  
 - Assignment 3.  
-- [Mid-semester survey](https://forms.gle/5W3AWhzrEtoysn3P6).  
+- [Mid-semester feedback survey](https://forms.gle/5W3AWhzrEtoysn3P6).  
 

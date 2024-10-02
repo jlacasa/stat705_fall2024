@@ -18,7 +18,15 @@ editor: visual
 ![](misc_plots/model_selection_hooten2015.png){width=85%}  
 Figure 2 in [Hooten et al. (2015)](https://esajournals.onlinelibrary.wiley.com/doi/full/10.1890/14-0661.1).  
 
-### Popular model selection criteria  
+### A few important metrics     
+
+#### The F test  
+
+- Tests the "global null hypothesis" (i.e., none of the predictor variables are related to the response).  
+
+F is calculated as  
+$$F=\frac{(TSS-RSS)/p}{RSS/(n-p-1)},$$  
+where $TSS$ and $RSS$ are the total and residual sums of squares, respectively, $p$ is the number of parameters, and $n$ is the total number of observations.
 
 #### The coefficient of determination R^2^  
 

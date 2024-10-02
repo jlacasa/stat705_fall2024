@@ -82,8 +82,17 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p><img src="misc_plots/model_selection_hooten2015.png" class="img-fluid" style="width:85.0%"><br>
 Figure 2 in <a href="https://esajournals.onlinelibrary.wiley.com/doi/full/10.1890/14-0661.1">Hooten et al.&nbsp;(2015)</a>.</p>
-<section id="popular-model-selection-criteria" class="level3">
-<h3 class="anchored" data-anchor-id="popular-model-selection-criteria">Popular model selection criteria</h3>
+<section id="a-few-important-metrics" class="level3">
+<h3 class="anchored" data-anchor-id="a-few-important-metrics">A few important metrics</h3>
+<section id="the-f-test" class="level4">
+<h4 class="anchored" data-anchor-id="the-f-test">The F test</h4>
+<ul>
+<li>Tests the “global null hypothesis” (i.e., none of the predictor variables are related to the response).</li>
+</ul>
+<p>F is calculated as<br>
+<span class="math display">\[F=\frac{(TSS-RSS)/p}{RSS/(n-p-1)},\]</span><br>
+where <span class="math inline">\(TSS\)</span> and <span class="math inline">\(RSS\)</span> are the total and residual sums of squares, respectively, <span class="math inline">\(p\)</span> is the number of parameters, and <span class="math inline">\(n\)</span> is the total number of observations.</p>
+</section>
 <section id="the-coefficient-of-determination-r2" class="level4">
 <h4 class="anchored" data-anchor-id="the-coefficient-of-determination-r2">The coefficient of determination R<sup>2</sup></h4>
 <ul>

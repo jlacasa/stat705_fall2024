@@ -80,17 +80,37 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 <p><img src="misc_plots/model_selection_hooten2015.png" class="img-fluid" style="width:85.0%"><br>
 Figure 2 in <a href="https://esajournals.onlinelibrary.wiley.com/doi/full/10.1890/14-0661.1">Hooten et al.&nbsp;(2015)</a>.</p>
-<section id="standard-portfolio-of-model-selection-criteria" class="level3">
-<h3 class="anchored" data-anchor-id="standard-portfolio-of-model-selection-criteria">Standard portfolio of model selection criteria</h3>
+<p><a href="https://github.com/jlacasa/stat705_fall2024/blob/main/classes/in_class_code/day19_inclass.Rmd">Live R example</a>.</p>
+<section id="popular-model-selection-criteria" class="level3">
+<h3 class="anchored" data-anchor-id="popular-model-selection-criteria">Popular model selection criteria</h3>
 <section id="the-coefficient-of-determination-r2" class="level4">
 <h4 class="anchored" data-anchor-id="the-coefficient-of-determination-r2">The coefficient of determination R<sup>2</sup></h4>
 <ul>
-<li>Usually explained as the proportion of the variation in y that is explained with variation in x.</li>
+<li>Usually interpreted as the proportion of the variation in y that is explained with the variation in x.<br>
+</li>
+<li>Used as a metric for predictive ability and model fit.<br>
+</li>
+<li>Can increase when adding more predictors.</li>
 </ul>
 <p>The R<sup>2</sup> of a given model (and observed data) is calculated as <span class="math display">\[R^2 = \frac{MSS}{TSS}= 1 - \frac{RSS}{TSS},\]</span> where <span class="math inline">\(RSS\)</span> is the residual sum of squares and <span class="math inline">\(TSS\)</span> is the total sum o squares.</p>
+<ul>
+<li>Write out formula on whiteboard.</li>
+</ul>
+<section id="adjusted-r2" class="level5">
+<h5 class="anchored" data-anchor-id="adjusted-r2">Adjusted R<sup>2</sup></h5>
+<p>The adjusted R<sup>2</sup> also penalizes the addition of extra parameters<br>
+<span class="math display">\[R^2_{adj} = R^2 - (1 - R^2) \frac{p-1}{n-p},\]</span> where <span class="math inline">\(R^2\)</span> is the one defined above, <span class="math inline">\(p\)</span> is the number of parameters and <span class="math inline">\(n\)</span> is the total number of observations.</p>
+</section>
 </section>
 <section id="akaike-information-criterion-aic" class="level4">
 <h4 class="anchored" data-anchor-id="akaike-information-criterion-aic">Akaike Information Criterion (AIC)</h4>
+<ul>
+<li>Used as a metric for predictive ability and model fit.<br>
+</li>
+<li>Lower value is better.<br>
+</li>
+<li>Values are always compared to other models (i.e., there are no general rules about reasonable AIC values).</li>
+</ul>
 <p>The AIC of a given model <span class="math inline">\(M\)</span> and observed data <span class="math inline">\(\mathbf{y}\)</span> is calculated as <span class="math display">\[AIC_M = 2k - 2\log(\hat{L}),\]</span> where <span class="math inline">\(k\)</span> is the number of parameters in the model and <span class="math inline">\(\hat{L}\)</span> is the maximized value of the likelihood function for the model (i.e., <span class="math inline">\(\hat{L}=p(\mathbf{y}|\hat{\boldsymbol\beta}, M)\)</span>).</p>
 </section>
 <section id="bayesian-information-criterion-bic" class="level4">
@@ -98,14 +118,10 @@ Figure 2 in <a href="https://esajournals.onlinelibrary.wiley.com/doi/full/10.189
 <p>The BIC of a given model (and observed data) is calculated as <span class="math display">\[BIC = k\log(n) - 2\log(\hat{L}),\]</span> where <span class="math inline">\(k\)</span> is the number of parameters in the model, <span class="math inline">\(n\)</span> is the number of observations, and <span class="math inline">\(\hat{L}\)</span> is the maximized value of the likelihood function for the model (i.e., <span class="math inline">\(\hat{L}=p(\mathbf{y}|\hat{\boldsymbol\beta}, M)\)</span>).</p>
 </section>
 </section>
-<section id="a-few-questions" class="level3">
-<h3 class="anchored" data-anchor-id="a-few-questions">A few questions</h3>
+<section id="a-few-thoughts" class="level3">
+<h3 class="anchored" data-anchor-id="a-few-thoughts">A few thoughts</h3>
 <ul>
-<li>How many times can we use the data?<br>
-</li>
-<li>Are more parameters always good?<br>
-</li>
-<li>Bias variance trade-off</li>
+<li>We are using the data twice!</li>
 </ul>
 </section>
 </section>

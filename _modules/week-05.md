@@ -22,4 +22,13 @@ Oct 02
 
 Oct 04 
 : Model selection II
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day20_10042024)
+
+Oct 04 
+: Model selection III
   : []()
+
+Oct 04 
+: Model selection IV
+  : []()
+

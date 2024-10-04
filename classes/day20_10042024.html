@@ -68,6 +68,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="day20_10042024_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="day20_10042024_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -107,6 +109,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="load-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="load-the-data">Load the data:</h3>
+<p>The data shown here can be found at <a href="https://doi.org/10.1002/agj2.20812">https://doi.org/10.1002/agj2.20812</a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dd_yield <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"data/8.Yield_Plant_Measurements.xlsx"</span>, <span class="at">sheet =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Year <span class="sc">==</span> <span class="dv">2014</span>, </span>
@@ -131,38 +134,34 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dd_complete <span class="ot">&lt;-</span> dd_yield <span class="sc">%&gt;%</span> </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dd_soil) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dd_N)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Joining with `by = join_by(Year, State, Site, Block)`
-Joining with `by = join_by(Year, State, Site, Site_Prod, Plot_ID, Block, N_Trt,
-Plant_N, Side_N, Plant_N_SI, Side_N_SI)`</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dd_complete <span class="ot">&lt;-</span> dd_complete <span class="sc">%&gt;%</span> </span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gyield_14 =</span> GYdry<span class="sc">/</span>.<span class="dv">94</span>, </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">N_total =</span> Plant_N_SI <span class="sc">+</span> Side_N_SI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(dd_N)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>dd_complete <span class="ot">&lt;-</span> dd_complete <span class="sc">%&gt;%</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">gyield_14 =</span> GYdry<span class="sc">/</span>.<span class="dv">94</span>, </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">N_total =</span> Plant_N_SI <span class="sc">+</span> Side_N_SI)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dd_complete <span class="sc">%&gt;%</span> </span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(N_total, gyield_14))<span class="sc">+</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(Total<span class="sc">~</span>N<span class="sc">~</span>Applied<span class="sc">~</span>(kg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>Yield<span class="sc">~</span>(kg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dd_complete <span class="sc">%&gt;%</span> </span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(N_total, gyield_14))<span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(Total<span class="sc">~</span>N<span class="sc">~</span>Applied<span class="sc">~</span>(kg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})),</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>Yield<span class="sc">~</span>(kg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day20_10042024_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total, <span class="at">data =</span> dd_complete)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> dd_complete)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block , <span class="at">data =</span> dd_complete)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> PMPM, <span class="at">data =</span> dd_complete)</span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>m4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> PMPM <span class="sc">+</span> Clay, <span class="at">data =</span> dd_complete)   </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> PMPM <span class="sc">+</span> Clay <span class="sc">+</span> Sand, <span class="at">data =</span> dd_complete)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>m6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> PMPM <span class="sc">+</span> Clay <span class="sc">+</span> Sand <span class="sc">+</span> Silt, <span class="at">data =</span> dd_complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>m0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total, <span class="at">data =</span> dd_complete)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> dd_complete)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block , <span class="at">data =</span> dd_complete)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> PMPM, <span class="at">data =</span> dd_complete)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>m4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> PMPM <span class="sc">+</span> Clay, <span class="at">data =</span> dd_complete)   </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> PMPM <span class="sc">+</span> Clay <span class="sc">+</span> Sand, <span class="at">data =</span> dd_complete)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>m6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> PMPM <span class="sc">+</span> Clay <span class="sc">+</span> Sand <span class="sc">+</span> Silt, <span class="at">data =</span> dd_complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -184,7 +183,95 @@ Residual standard error: 564.3 on 61 degrees of freedom
 Multiple R-squared:  0.8734,    Adjusted R-squared:  0.8692 
 F-statistic: 210.4 on 2 and 61 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m_full <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> dd_complete)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>m_red <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> dd_complete)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>SSE_full <span class="ot">&lt;-</span> <span class="fu">sum</span>(m_full<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>SSE_red <span class="ot">&lt;-</span> <span class="fu">sum</span>(m_red<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>df_full <span class="ot">&lt;-</span> m_full<span class="sc">$</span>df.residual</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>df_red <span class="ot">&lt;-</span> m_red<span class="sc">$</span>df.residual</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="fu">nrow</span>(dd_complete)</span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">coef</span>(m_full))<span class="sc">-</span><span class="fu">length</span>(<span class="fu">coef</span>(m_red))</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>F_star <span class="ot">&lt;-</span> ((SSE_red<span class="sc">-</span>SSE_full)<span class="sc">/</span>p) <span class="sc">/</span> (SSE_full<span class="sc">/</span>(n<span class="sc">-</span>p<span class="dv">-1</span>))</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>(p_value <span class="ot">&lt;-</span> <span class="fu">df</span>(F_star, <span class="at">df1 =</span> <span class="dv">1</span>, <span class="at">df2 =</span> df_full))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2.190036e-22</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m_full)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = gyield_14 ~ N_total + I(N_total^2), data = dd_complete)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-1402.83  -327.26   -14.24   417.76  1351.67 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   8.087e+03  2.265e+02   35.70   &lt;2e-16 ***
+N_total       4.550e+01  2.886e+00   15.77   &lt;2e-16 ***
+I(N_total^2) -9.652e-02  8.239e-03  -11.71   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 564.3 on 61 degrees of freedom
+Multiple R-squared:  0.8734,    Adjusted R-squared:  0.8692 
+F-statistic: 210.4 on 2 and 61 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>R2 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> SSE_full<span class="sc">/</span>SSE_red <span class="co">#R2</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>R2_adj <span class="ot">&lt;-</span> R2 <span class="sc">-</span> (<span class="dv">1</span><span class="sc">-</span>R2)<span class="sc">*</span>((p<span class="dv">-1</span>)<span class="sc">/</span>(n<span class="sc">-</span>p)) <span class="co">#R2_adj</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>R2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8733964</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>R2_adj</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8713544</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 997.5004</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1006.136</code></pre>
+</div>
+</div>
+<p><span class="math display">\[AIC_M = 2p - 2\log(\hat{L}),\]</span><br>
+</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fu">length</span>(<span class="fu">coef</span>(m1))<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>log_lik <span class="ot">&lt;-</span> <span class="sc">-</span>n <span class="sc">/</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="fu">log</span>(<span class="dv">2</span> <span class="sc">*</span> pi) <span class="sc">+</span> <span class="fu">log</span>(<span class="fu">sum</span>(m1<span class="sc">$</span>residuals<span class="sc">^</span><span class="dv">2</span>) <span class="sc">/</span> n) <span class="sc">+</span> <span class="dv">1</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>p <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>log_lik</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 997.5004</code></pre>
+</div>
+</div>
+<p><span class="math display">\[BIC_M = p \cdot log(n) - 2\log(\hat{L}),\]</span><br>
+</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># for BIC, k is log(nobs(m1))</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">log</span>(<span class="fu">nobs</span>(m1))<span class="sc">*</span>p <span class="sc">-</span> <span class="dv">2</span><span class="sc">*</span>log_lik</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1006.136</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m1, <span class="at">k =</span> <span class="fu">log</span>(<span class="fu">nobs</span>(m1)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1006.136</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m5)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -211,7 +298,7 @@ Residual standard error: 554.9 on 57 degrees of freedom
 Multiple R-squared:  0.8856,    Adjusted R-squared:  0.8736 
 F-statistic: 73.55 on 6 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m6)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -241,21 +328,21 @@ F-statistic: 73.55 on 6 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">model =</span> <span class="fu">c</span>(<span class="st">"N_total + I(N_total^2)"</span>,</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block"</span>,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM"</span>, </span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM + Clay"</span>, </span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM + Clay + Sand"</span>, </span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM + Clay + Sand + Silt"</span>),</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">R2 =</span> <span class="fu">c</span>(<span class="fu">summary</span>(m1)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m2)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m3)<span class="sc">$</span>r.squared,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">summary</span>(m4)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m5)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m6)<span class="sc">$</span>r.squared),</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">R2_adj =</span> <span class="fu">c</span>(<span class="fu">summary</span>(m1)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m2)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m3)<span class="sc">$</span>adj.r.squared,</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">summary</span>(m4)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m5)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m6)<span class="sc">$</span>adj.r.squared),</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">AIC =</span> <span class="fu">AIC</span>(m1, m2, m3, m4, m5, m6)<span class="sc">$</span>AIC,</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">BIC =</span> <span class="fu">BIC</span>(m1, m2, m3, m4, m5, m6)<span class="sc">$</span>BIC) <span class="sc">%&gt;%</span> </span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(R2<span class="sc">:</span>BIC, <span class="sc">~</span><span class="fu">round</span>(., <span class="dv">3</span>)))</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(metrics, <span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">model =</span> <span class="fu">c</span>(<span class="st">"N_total + I(N_total^2)"</span>,</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block"</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM"</span>, </span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM + Clay"</span>, </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM + Clay + Sand"</span>, </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM + Clay + Sand + Silt"</span>),</span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">R2 =</span> <span class="fu">c</span>(<span class="fu">summary</span>(m1)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m2)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m3)<span class="sc">$</span>r.squared,</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">summary</span>(m4)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m5)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m6)<span class="sc">$</span>r.squared),</span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">R2_adj =</span> <span class="fu">c</span>(<span class="fu">summary</span>(m1)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m2)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m3)<span class="sc">$</span>adj.r.squared,</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">summary</span>(m4)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m5)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m6)<span class="sc">$</span>adj.r.squared),</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">AIC =</span> <span class="fu">AIC</span>(m1, m2, m3, m4, m5, m6)<span class="sc">$</span>AIC,</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">BIC =</span> <span class="fu">BIC</span>(m1, m2, m3, m4, m5, m6)<span class="sc">$</span>BIC) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(R2<span class="sc">:</span>BIC, <span class="sc">~</span><span class="fu">round</span>(., <span class="dv">3</span>)))</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(metrics, <span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
@@ -317,21 +404,21 @@ F-statistic: 73.55 on 6 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>data_plot <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">N_total =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">300</span>, <span class="at">by =</span> <span class="dv">5</span>), </span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Block =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>data_plot <span class="ot">&lt;-</span> data_plot <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(<span class="fu">predict</span>(m2, <span class="at">newdata =</span> data_plot, <span class="at">interval =</span> <span class="st">"confidence"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>data_plot <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">N_total =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">300</span>, <span class="at">by =</span> <span class="dv">5</span>), </span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>                         <span class="at">Block =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>data_plot <span class="ot">&lt;-</span> data_plot <span class="sc">%&gt;%</span> <span class="fu">bind_cols</span>(<span class="fu">predict</span>(m2, <span class="at">newdata =</span> data_plot, <span class="at">interval =</span> <span class="st">"confidence"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dd_complete <span class="sc">%&gt;%</span> </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(N_total, gyield_14))<span class="sc">+</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">y =</span> fit, <span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr, <span class="at">group =</span> Block), <span class="at">data =</span> data_plot, <span class="at">alpha =</span> .<span class="dv">15</span>)<span class="sc">+</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fit, <span class="at">group =</span> Block), <span class="at">data =</span> data_plot)<span class="sc">+</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(Total<span class="sc">~</span>N<span class="sc">~</span>Applied<span class="sc">~</span>(kg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})),</span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>Yield<span class="sc">~</span>(kg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>dd_complete <span class="sc">%&gt;%</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(N_total, gyield_14))<span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>()<span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_ribbon</span>(<span class="fu">aes</span>(<span class="at">y =</span> fit, <span class="at">ymin =</span> lwr, <span class="at">ymax =</span> upr, <span class="at">group =</span> Block), <span class="at">data =</span> data_plot, <span class="at">alpha =</span> .<span class="dv">15</span>)<span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> fit, <span class="at">group =</span> Block), <span class="at">data =</span> data_plot)<span class="sc">+</span></span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="fu">expression</span>(Total<span class="sc">~</span>N<span class="sc">~</span>Applied<span class="sc">~</span>(kg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})),</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="fu">expression</span>(Grain<span class="sc">~</span>Yield<span class="sc">~</span>(kg<span class="sc">~</span>ha<span class="sc">^</span>{<span class="sc">-</span><span class="dv">1</span>})))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day20_10042024_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+<p><img src="day20_10042024_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="alert alert-info">
@@ -339,6 +426,7 @@ F-statistic: 73.55 on 6 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
 <ul>
 <li>Collinearity<br>
 </li>
+<li></li>
 <li>Aim for simple models</li>
 </ul>
 </div>

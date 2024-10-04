@@ -15,6 +15,9 @@ library(tidyverse)
 ```
 
 ### Load the data:  
+
+The data shown here can be found at [https://doi.org/10.1002/agj2.20812](https://doi.org/10.1002/agj2.20812).  
+
 ```{r warning=FALSE}
 dd_yield <- readxl::read_xlsx("data/8.Yield_Plant_Measurements.xlsx", sheet = 2) %>%
   filter(Year == 2014, 
@@ -38,7 +41,7 @@ dd_N <- readxl::read_xlsx("data/4.SoilN.xlsx", sheet = 2) %>%
 ```
 
 
-```{r}
+```{r message=FALSE}
 dd_complete <- dd_yield %>% 
   left_join(dd_soil) %>% 
   left_join(dd_N)
@@ -69,6 +72,58 @@ m6 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + PMPM + Clay + Sand + Silt,
 
 ```{r}
 summary(m1)
+```
+
+```{r}
+m_full <- lm(gyield_14 ~ N_total + I(N_total^2), data = dd_complete)
+m_red <- lm(gyield_14 ~ 1, data = dd_complete)
+
+SSE_full <- sum(m_full$residuals^2)
+SSE_red <- sum(m_red$residuals^2)
+
+df_full <- m_full$df.residual
+df_red <- m_red$df.residual
+
+n <- nrow(dd_complete)
+p <- length(coef(m_full))-length(coef(m_red))
+
+F_star <- ((SSE_red-SSE_full)/p) / (SSE_full/(n-p-1))
+(p_value <- df(F_star, df1 = 1, df2 = df_full))
+
+summary(m_full)
+```
+
+```{r}
+R2 <- 1 - SSE_full/SSE_red #R2
+R2_adj <- R2 - (1-R2)*((p-1)/(n-p)) #R2_adj
+R2
+R2_adj
+```
+
+```{r}
+AIC(m1)
+BIC(m1)
+```
+
+$$AIC_M = 2p - 2\log(\hat{L}),$$\
+
+```{r}
+p <- length(coef(m1))+1
+log_lik <- -n / 2 * (log(2 * pi) + log(sum(m1$residuals^2) / n) + 1)
+2*p - 2*log_lik
+```
+
+$$BIC_M = p \cdot log(n) - 2\log(\hat{L}),$$\
+
+
+```{r}
+# for BIC, k is log(nobs(m1))
+log(nobs(m1))*p - 2*log_lik
+
+AIC(m1, k = log(nobs(m1)))
+```
+
+```{r}
 summary(m5)
 summary(m6)
 ```
@@ -112,6 +167,7 @@ dd_complete %>%
 <strong>Important concepts</strong>  
 
 - Collinearity   
+- 
 - Aim for simple models  
 
 :::

@@ -25,11 +25,12 @@ Oct 04
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day20_10042024)
 : []()
   : **Complete [survey](https://forms.gle/5W3AWhzrEtoysn3P6)**{: .label .label-yellow } 
-Oct 04 
+
+Oct 07 
 : Model selection III
   : []()
 
-Oct 04 
+Oct 09 
 : Model selection IV
   : []()
 

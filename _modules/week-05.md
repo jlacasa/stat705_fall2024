@@ -23,7 +23,8 @@ Oct 02
 Oct 04 
 : Model selection II
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day20_10042024)
-
+: []()
+  : **Complete [survey](https://forms.gle/5W3AWhzrEtoysn3P6)**{: .label .label-yellow } 
 Oct 04 
 : Model selection III
   : []()

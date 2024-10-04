@@ -129,18 +129,20 @@ summary(m6)
 ```
 
 ```{r}
-metrics <- data.frame(model = c("N_total + I(N_total^2)",
+metrics <- data.frame(model = c("N_total", 
+                                "N_total + I(N_total^2)",
                                 "N_total + I(N_total^2) + Block",
                                 "N_total + I(N_total^2) + Block + PMPM", 
                                 "N_total + I(N_total^2) + Block + PMPM + Clay", 
                                 "N_total + I(N_total^2) + Block + PMPM + Clay + Sand", 
                                 "N_total + I(N_total^2) + Block + PMPM + Clay + Sand + Silt"),
-                      R2 = c(summary(m1)$r.squared, summary(m2)$r.squared, summary(m3)$r.squared,
-                             summary(m4)$r.squared, summary(m5)$r.squared, summary(m6)$r.squared),
-                      R2_adj = c(summary(m1)$adj.r.squared, summary(m2)$adj.r.squared, summary(m3)$adj.r.squared,
-                                 summary(m4)$adj.r.squared, summary(m5)$adj.r.squared, summary(m6)$adj.r.squared),
-                      AIC = AIC(m1, m2, m3, m4, m5, m6)$AIC,
-                      BIC = BIC(m1, m2, m3, m4, m5, m6)$BIC) %>% 
+                      R2 = c(summary(m0)$r.squared, summary(m1)$r.squared, summary(m2)$r.squared, 
+                             summary(m3)$r.squared, summary(m4)$r.squared, summary(m5)$r.squared, summary(m6)$r.squared),
+                      R2_adj = c(summary(m0)$adj.r.squared, summary(m1)$adj.r.squared, summary(m2)$adj.r.squared,
+                                 summary(m3)$adj.r.squared, summary(m4)$adj.r.squared, summary(m5)$adj.r.squared,
+                                 summary(m6)$adj.r.squared),
+                      AIC = AIC(m0, m1, m2, m3, m4, m5, m6)$AIC,
+                      BIC = BIC(m0, m1, m2, m3, m4, m5, m6)$BIC) %>% 
   mutate(across(R2:BIC, ~round(., 3)))
 
 knitr::kable(metrics, format = "html")
@@ -167,9 +169,8 @@ dd_complete %>%
 <strong>Important concepts</strong>  
 
 - Collinearity   
-- 
-- Aim for simple models  
-
+- Penalized fit statistics are still using the same data used to fit the models...  
+- There are other strategies for model selection (e.g., RMSE - out-of-sample prediction accuracy)   
 :::
 
 

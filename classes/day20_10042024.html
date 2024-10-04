@@ -328,21 +328,23 @@ F-statistic: 73.55 on 6 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">model =</span> <span class="fu">c</span>(<span class="st">"N_total + I(N_total^2)"</span>,</span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block"</span>,</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM"</span>, </span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM + Clay"</span>, </span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM + Clay + Sand"</span>, </span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM + Clay + Sand + Silt"</span>),</span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>                      <span class="at">R2 =</span> <span class="fu">c</span>(<span class="fu">summary</span>(m1)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m2)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m3)<span class="sc">$</span>r.squared,</span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">summary</span>(m4)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m5)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m6)<span class="sc">$</span>r.squared),</span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">R2_adj =</span> <span class="fu">c</span>(<span class="fu">summary</span>(m1)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m2)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m3)<span class="sc">$</span>adj.r.squared,</span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">summary</span>(m4)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m5)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m6)<span class="sc">$</span>adj.r.squared),</span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>                      <span class="at">AIC =</span> <span class="fu">AIC</span>(m1, m2, m3, m4, m5, m6)<span class="sc">$</span>AIC,</span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>                      <span class="at">BIC =</span> <span class="fu">BIC</span>(m1, m2, m3, m4, m5, m6)<span class="sc">$</span>BIC) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(R2<span class="sc">:</span>BIC, <span class="sc">~</span><span class="fu">round</span>(., <span class="dv">3</span>)))</span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(metrics, <span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>metrics <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">model =</span> <span class="fu">c</span>(<span class="st">"N_total"</span>, </span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2)"</span>,</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block"</span>,</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM"</span>, </span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM + Clay"</span>, </span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM + Clay + Sand"</span>, </span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"N_total + I(N_total^2) + Block + PMPM + Clay + Sand + Silt"</span>),</span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">R2 =</span> <span class="fu">c</span>(<span class="fu">summary</span>(m0)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m1)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m2)<span class="sc">$</span>r.squared, </span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a>                             <span class="fu">summary</span>(m3)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m4)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m5)<span class="sc">$</span>r.squared, <span class="fu">summary</span>(m6)<span class="sc">$</span>r.squared),</span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a>                      <span class="at">R2_adj =</span> <span class="fu">c</span>(<span class="fu">summary</span>(m0)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m1)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m2)<span class="sc">$</span>adj.r.squared,</span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">summary</span>(m3)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m4)<span class="sc">$</span>adj.r.squared, <span class="fu">summary</span>(m5)<span class="sc">$</span>adj.r.squared,</span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a>                                 <span class="fu">summary</span>(m6)<span class="sc">$</span>adj.r.squared),</span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a>                      <span class="at">AIC =</span> <span class="fu">AIC</span>(m0, m1, m2, m3, m4, m5, m6)<span class="sc">$</span>AIC,</span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a>                      <span class="at">BIC =</span> <span class="fu">BIC</span>(m0, m1, m2, m3, m4, m5, m6)<span class="sc">$</span>BIC) <span class="sc">%&gt;%</span> </span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(R2<span class="sc">:</span>BIC, <span class="sc">~</span><span class="fu">round</span>(., <span class="dv">3</span>)))</span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(metrics, <span class="at">format =</span> <span class="st">"html"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table data-quarto-postprocess="true" class="table table-sm table-striped small">
 <thead>
@@ -356,41 +358,48 @@ F-statistic: 73.55 on 6 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
+<td style="text-align: left;">N_total</td>
+<td style="text-align: right;">0.589</td>
+<td style="text-align: right;">0.582</td>
+<td style="text-align: right;">1070.935</td>
+<td style="text-align: right;">1077.412</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">N_total + I(N_total^2)</td>
 <td style="text-align: right;">0.873</td>
 <td style="text-align: right;">0.869</td>
 <td style="text-align: right;">997.500</td>
 <td style="text-align: right;">1006.136</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">N_total + I(N_total^2) + Block</td>
 <td style="text-align: right;">0.878</td>
 <td style="text-align: right;">0.872</td>
 <td style="text-align: right;">997.147</td>
 <td style="text-align: right;">1007.941</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">N_total + I(N_total^2) + Block + PMPM</td>
 <td style="text-align: right;">0.882</td>
 <td style="text-align: right;">0.874</td>
 <td style="text-align: right;">996.822</td>
 <td style="text-align: right;">1009.775</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">N_total + I(N_total^2) + Block + PMPM + Clay</td>
 <td style="text-align: right;">0.883</td>
 <td style="text-align: right;">0.873</td>
 <td style="text-align: right;">998.453</td>
 <td style="text-align: right;">1013.566</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">N_total + I(N_total^2) + Block + PMPM + Clay + Sand</td>
 <td style="text-align: right;">0.886</td>
 <td style="text-align: right;">0.874</td>
 <td style="text-align: right;">999.008</td>
 <td style="text-align: right;">1016.279</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">N_total + I(N_total^2) + Block + PMPM + Clay + Sand + Silt</td>
 <td style="text-align: right;">0.886</td>
 <td style="text-align: right;">0.874</td>
@@ -426,8 +435,10 @@ F-statistic: 73.55 on 6 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
 <ul>
 <li>Collinearity<br>
 </li>
-<li></li>
-<li>Aim for simple models</li>
+<li>Penalized fit statistics are still using the same data used to fit the models…<br>
+</li>
+<li>There are other strategies for model selection (e.g., RMSE - out-of-sample prediction accuracy)<br>
+</li>
 </ul>
 </div>
 </section>

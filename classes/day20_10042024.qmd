@@ -95,6 +95,7 @@ summary(m_full)
 
 ```{r}
 R2 <- 1 - SSE_full/SSE_red #R2
+p <- length(m_full)
 R2_adj <- R2 - (1-R2)*((p-1)/(n-p)) #R2_adj
 R2
 R2_adj

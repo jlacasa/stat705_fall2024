@@ -173,5 +173,8 @@ dd_complete %>%
 - There are other strategies for model selection (e.g., RMSE - out-of-sample prediction accuracy)   
 :::
 
+## For next week  
 
-
+- Please complete the [mid-semester feedback survey](https://forms.gle/5W3AWhzrEtoysn3P6) (please and thank you!)  
+- Reach out to me regarding your projects.   
+- Please read Chapter 10 (3.5 pages long!)  

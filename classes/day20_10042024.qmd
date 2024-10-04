@@ -101,34 +101,6 @@ R2_adj
 ```
 
 ```{r}
-AIC(m1)
-BIC(m1)
-```
-
-$$AIC_M = 2p - 2\log(\hat{L}),$$\
-
-```{r}
-p <- length(coef(m1))+1
-log_lik <- -n / 2 * (log(2 * pi) + log(sum(m1$residuals^2) / n) + 1)
-2*p - 2*log_lik
-```
-
-$$BIC_M = p \cdot log(n) - 2\log(\hat{L}),$$\
-
-
-```{r}
-# for BIC, k is log(nobs(m1))
-log(nobs(m1))*p - 2*log_lik
-
-AIC(m1, k = log(nobs(m1)))
-```
-
-```{r}
-summary(m5)
-summary(m6)
-```
-
-```{r}
 metrics <- data.frame(model = c("N_total", 
                                 "N_total + I(N_total^2)",
                                 "N_total + I(N_total^2) + Block",
@@ -151,14 +123,14 @@ knitr::kable(metrics, format = "html")
 ```{r}
 data_plot <- expand.grid(N_total = seq(0, 300, by = 5), 
                          Block = 1:4)
-data_plot <- data_plot %>% bind_cols(predict(m2, newdata = data_plot, interval = "confidence"))
+data_plot <- data_plot %>% bind_cols(predict(m1, newdata = data_plot, interval = "confidence"))
 ```
 
 ```{r}
 dd_complete %>% 
   ggplot(aes(N_total, gyield_14))+
   theme_classic()+
-  geom_ribbon(aes(y = fit, ymin = lwr, ymax = upr, group = Block), data = data_plot, alpha = .15)+
+  geom_ribbon(aes(y = fit, ymin = lwr, ymax = upr), data = data_plot, alpha = .15)+
   geom_line(aes(y = fit, group = Block), data = data_plot)+
   geom_point()+
   labs(x = expression(Total~N~Applied~(kg~ha^{-1})),
@@ -173,11 +145,10 @@ Variable selection
 - What is the data generation process?  
 - What is the cost of including certain predictors?  
 
-Watch out  
+Watch out:  
 
-- Collinearity   
+- Collinearity (next week)    
 - Penalized fit statistics are still using the same data used to fit the models...  
-
 - There are other strategies for model selection (e.g., RMSE - out-of-sample prediction accuracy)   
 
 :::

@@ -121,11 +121,15 @@ where <span class="math inline">\(TSS\)</span> and <span class="math inline">\(R
 </li>
 <li>Values are always compared to other models (i.e., there are no general rules about reasonable AIC values).</li>
 </ul>
-<p>The AIC of a given model <span class="math inline">\(M\)</span> and observed data <span class="math inline">\(\mathbf{y}\)</span> is calculated as <span class="math display">\[AIC_M = 2k - 2\log(\hat{L}),\]</span> where <span class="math inline">\(k\)</span> is the penalty per parameter (defaults to 2 in <code>R</code>), <span class="math inline">\(p\)</span> is the number of parameters in the model and <span class="math inline">\(\hat{L}\)</span> is the maximized value of the likelihood function for the model (i.e., <span class="math inline">\(\hat{L}=p(\mathbf{y}|\hat{\boldsymbol\beta}, M)\)</span>).</p>
+<p>The AIC of a given model <span class="math inline">\(M\)</span> and observed data <span class="math inline">\(\mathbf{y}\)</span> is calculated as<br>
+<span class="math display">\[AIC_M = 2p - 2\log(\hat{L}),\]</span><br>
+<span class="math inline">\(p\)</span> is the number of parameters estimated in the model and <span class="math inline">\(\hat{L}\)</span> is the maximized value of the likelihood function for the model (i.e., <span class="math inline">\(\hat{L}=p(\mathbf{y}|\hat{\boldsymbol\beta}, M)\)</span>).</p>
 </section>
 <section id="bayesian-information-criterion-bic" class="level4">
 <h4 class="anchored" data-anchor-id="bayesian-information-criterion-bic">Bayesian Information Criterion (BIC)</h4>
-<p>The BIC of a given model (and observed data) is calculated as <span class="math display">\[BIC = k\log(p) - 2\log(\hat{L}),\]</span> where <span class="math inline">\(k\)</span> is the penalty per parameter (defaults to 2 in <code>R</code>), <span class="math inline">\(p\)</span> is the number of parameters in the model, and <span class="math inline">\(\hat{L}\)</span> is the maximized value of the likelihood function for the model (i.e., <span class="math inline">\(\hat{L}=p(\mathbf{y}|\hat{\boldsymbol\beta}, M)\)</span>).</p>
+<p>The BIC of a given model (and observed data) is a variant of AIC and is calculated as<br>
+<span class="math display">\[BIC = p\log(n) - 2\log(\hat{L}),\]</span><br>
+where <span class="math inline">\(p\)</span> is the number of parameters estimated in the model, <span class="math inline">\(n\)</span> is the number of observations, and <span class="math inline">\(\hat{L}\)</span> is the maximized value of the likelihood function for the model (i.e., <span class="math inline">\(\hat{L}=p(\mathbf{y}|\hat{\boldsymbol\beta}, M)\)</span>).</p>
 </section>
 </section>
 <section id="a-few-thoughts" class="level3">

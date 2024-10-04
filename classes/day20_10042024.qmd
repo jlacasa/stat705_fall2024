@@ -166,11 +166,20 @@ dd_complete %>%
 ```
 
 ::: {.alert .alert-info}
-<strong>Important concepts</strong>  
+<strong>Important questions/concepts</strong>  
+
+Variable selection  
+
+- What is the data generation process?  
+- What is the cost of including certain predictors?  
+
+Watch out  
 
 - Collinearity   
 - Penalized fit statistics are still using the same data used to fit the models...  
+
 - There are other strategies for model selection (e.g., RMSE - out-of-sample prediction accuracy)   
+
 :::
 
 ## For next week  

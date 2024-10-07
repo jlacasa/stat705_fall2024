@@ -142,7 +142,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul></li>
 <li>Out-of-sample prediction accuracy
 <ul>
-<li>RMSE (root mean squared error)<br>
+<li>RMSEP (prediction root mean squared error)<br>
 </li>
 </ul></li>
 <li><a href="https://www.sciencedirect.com/science/article/pii/S0308521X21001475">A paper on how to evaluate predictions versus observed values</a>.</li>
@@ -253,6 +253,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code>[1] 1006.136</code></pre>
 </div>
 </div>
+</section>
+<section id="r2-and-r2adj" class="level4">
+<h4 class="anchored" data-anchor-id="r2-and-r2adj">R<sup>2</sup> and R<sup>2</sup><sub>adj</sub></h4>
+<p>Recall that<br>
+<span class="math display">\[R^2 = 1-\frac{SSE}{SST}\]</span> is considered the proportion of variation in y explained by variation in x (or in my model, if I have more than one predictor).<br>
+R<sup>2</sup>, however, does not penalize for adding more predictors (i.e., more parameters) and can only increase. We solve this by calculating</p>
+<p><span class="math display">\[R^2_{adj} = R^2 - (1 - R^2) \frac{p-1}{n-p},\]</span> where <span class="math inline">\(n\)</span> is the number of observations and <span class="math inline">\(p\)</span> is the number of parameters.</p>
+<section id="downfalls-of-using-r2-for-model-selection" class="level5">
+<h5 class="anchored" data-anchor-id="downfalls-of-using-r2-for-model-selection">Downfalls of using R<sup>2</sup> for model selection</h5>
+<ul>
+<li>Uncertainty (precision is tricky with small sample size)<br>
+</li>
+<li>Using the same data twice (once to fit the models, then to judge the models!)<br>
+</li>
+<li><a href="https://en.wikipedia.org/wiki/Anscombe%27s_quartet">Anscombe’s quartet</a></li>
+</ul>
+</section>
 </section>
 <section id="a-summary" class="level4">
 <h4 class="anchored" data-anchor-id="a-summary">A summary</h4>
@@ -416,22 +433,33 @@ F-statistic: 73.55 on 6 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
 <p><img src="day21_10072024_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+</section>
+<section id="a-question-for-the-class" class="level3">
+<h3 class="anchored" data-anchor-id="a-question-for-the-class">A question for the class</h3>
+<p>How do you expect the variable selection to change if we add more…</p>
+<ul>
+<li>sites<br>
+</li>
+<li>years</li>
+</ul>
 <div class="alert alert-info">
 <p><strong>Important questions/concepts</strong></p>
-<p>Variable selection</p>
+<p>Variable selection - checkpoints</p>
 <ul>
-<li>What is the data generation process?<br>
+<li>How do the predictions compare?<br>
 </li>
-<li>What is the cost of including certain predictors?</li>
+<li>Is the data generation process well represented?<br>
+</li>
+<li>What is the cost/benefit relationship of including certain predictors?</li>
 </ul>
-<p>Watch out</p>
+<p>Watch out with</p>
 <ul>
 <li>Collinearity<br>
 </li>
-<li>Penalized fit statistics are still using the same data used to fit the models…</li>
+<li>Using the same data twice (once to fit the models, then to judge the models!)</li>
 </ul>
 </div>
-</section>
 </section>
 </section>
 <section id="for-next-class" class="level2">

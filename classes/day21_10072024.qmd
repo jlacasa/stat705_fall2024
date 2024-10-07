@@ -21,21 +21,22 @@ editor: visual
   7. Inference  
   8. Communicating results  
   
-- Sometimes, there exists a group of models that could possibly answer our question in **(1)** and make relatively reasonable assumptions. So, we have to select between this group of models which one is the best.  
+- Sometimes, there exists a group of models that could possibly answer our question in **(1)** and make relatively reasonable assumptions (i.e., they pass the test in **(2)**). So, we have to select between this group of models which one is the best.  
 - How many variables should we include?  
-  - Bias-variance tradeoff  
+  - Bias-variance trade off  
 
 - We have to define what "good" means!
   - Penalized fit (i.e., penalty for including too many parameters)  
     - Information Criteria (e.g., AIC, BIC)   
     - R^2^~adj~  
-  - Out-of-sample prediction accuracy
+  - Out-of-sample prediction accuracy  
     - RMSE (root mean squared error)  
+  - [A paper on how to evaluate predictions versus observed values](https://www.sciencedirect.com/science/article/pii/S0308521X21001475).
 
 ### Applications  
 
 Using the data from [Ransom et al. (2021)](https://doi.org/10.1002/agj2.20812), we wish to create a function that describes the relationship between Nitrogen supply and corn yield. 
-For that
+Firstly, we will focus on a single site and year (Ames, IA, 2014).  
 
 #### Load the data  
 ```{r message=FALSE, warning=FALSE}
@@ -179,7 +180,7 @@ Watch out
 
 -   Collinearity  
 -   Penalized fit statistics are still using the same data used to fit the models...  
--   There are other strategies for model selection (e.g., RMSE - out-of-sample prediction accuracy)
+
 :::
 
 

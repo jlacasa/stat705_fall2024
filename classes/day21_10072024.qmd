@@ -30,6 +30,7 @@ editor: visual
     - Information Criteria (e.g., AIC, BIC)   
     - R^2^~adj~  
   - Out-of-sample prediction accuracy  
+    - Cross-validation  
     - RMSEP (prediction root mean squared error)  
   - [A paper on how to evaluate predictions versus observed values](https://www.sciencedirect.com/science/article/pii/S0308521X21001475).
 
@@ -188,7 +189,7 @@ dd_complete %>%
 
 ### A question for the class  
 
-How do you expect the variable selection to change if we add more...  
+How do you expect the variable selection to change if we add more...   
 
 - sites  
 - years  

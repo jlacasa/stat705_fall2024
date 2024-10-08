@@ -33,6 +33,13 @@ $$\hat{\mu}_{new} = \mathbf{x}_{new}'\hat{\boldsymbol{\beta}}$$
 
 Under the out-of-sample prediction accuracy criterion, we evaluate how the models estimate $\mu_{new}$ by checking how far the $\hat{\mu}_{new}$ estimate is from the observed (yet not used to fit the model) $y_{new}$.
 
+#### Cross-validation  
+
+- $k$-fold cross validation  
+- $n$-fold cross validation  
+
+#### Load the data  
+
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
 
@@ -102,6 +109,7 @@ m5 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay + Sand, data = dd_com
 m6 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay + Sand + Silt, data = dd_complete_fit)
 ```
 
+
 ```{r}
 dd_complete_test$pred_m1 <- predict(m1, newdata = dd_complete_test)
 dd_complete_test$pred_m2 <- predict(m2, newdata = dd_complete_test)
@@ -129,7 +137,7 @@ dd_complete_test %>%
   theme_classic()
 ```
 
-### Broader Inference  
+#### Data example 2   
 
 ```{r message=FALSE, warning=FALSE}
 dd_yield <- readxl::read_xlsx("data/8.Yield_Plant_Measurements.xlsx", sheet = 2) %>%

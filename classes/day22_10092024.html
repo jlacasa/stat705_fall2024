@@ -136,6 +136,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><span class="math display">\[\mu = \mathbf{x}'\boldsymbol{\beta}\]</span></p>
 <p><span class="math display">\[\hat{\mu}_{new} = \mathbf{x}_{new}'\hat{\boldsymbol{\beta}}\]</span></p>
 <p>Under the out-of-sample prediction accuracy criterion, we evaluate how the models estimate <span class="math inline">\(\mu_{new}\)</span> by checking how far the <span class="math inline">\(\hat{\mu}_{new}\)</span> estimate is from the observed (yet not used to fit the model) <span class="math inline">\(y_{new}\)</span>.</p>
+<section id="cross-validation" class="level4">
+<h4 class="anchored" data-anchor-id="cross-validation">Cross-validation</h4>
+<ul>
+<li><span class="math inline">\(k\)</span>-fold cross validation<br>
+</li>
+<li><span class="math inline">\(n\)</span>-fold cross validation</li>
+</ul>
+</section>
+<section id="load-the-data" class="level4">
+<h4 class="anchored" data-anchor-id="load-the-data">Load the data</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -239,8 +249,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="broader-inference" class="level3">
-<h3 class="anchored" data-anchor-id="broader-inference">Broader Inference</h3>
+<section id="data-example-2" class="level4">
+<h4 class="anchored" data-anchor-id="data-example-2">Data example 2</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>dd_yield <span class="ot">&lt;-</span> readxl<span class="sc">::</span><span class="fu">read_xlsx</span>(<span class="st">"data/8.Yield_Plant_Measurements.xlsx"</span>, <span class="at">sheet =</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"IA"</span>,) <span class="sc">%&gt;%</span> </span>
@@ -310,6 +320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 1   1538.   1535.   1737.   1439.   1540.   1540.</code></pre>
 </div>
 </div>
+</section>
 <section id="section" class="level4">
 <h4 class="anchored" data-anchor-id="section"></h4>
 </section>

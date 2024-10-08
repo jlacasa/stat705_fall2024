@@ -32,5 +32,9 @@ Oct 07
 
 Oct 09 
 : Model selection IV
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day22_10092024)
+
+Oct 11 
+: No class - Fall pause day 
   : []()
 

@@ -165,6 +165,14 @@ dd_complete <- dd_complete %>%
          sy = paste0(Site," (", Year, ")"), 
          sy_f = as.numeric(factor(sy)), 
          id = as.numeric(id)) 
+dd_complete %>% 
+  ggplot(aes(N_total, gyield_14))+
+  geom_point()+
+  facet_wrap(~sy)+
+  coord_cartesian(ylim = c(0, 15000))+
+  theme_classic()+
+  labs(x = expression(Total~N~Applied~(kg~ha^{-1})),
+       y = expression(Grain~Yield~(kg~ha^{-1})))
 ```
 
 

@@ -1,0 +1,216 @@
+---
+title: "Day 22 - 10/09/2024"
+format: html
+editor: visual
+---
+
+## Announcements  
+
+- A really quick Kahoot  
+- Today's office hours are 1-2pm.  
+
+## Model selection  
+
+- How many variables should we include in our model?  
+  - Bias-variance trade off (show on whiteboard)  
+
+- What defines the "goodness" of a model?  
+  - Penalized fit (i.e., penalty for including too many parameters)  
+    - Information Criteria (e.g., AIC, BIC)   
+    - R^2^~adj~  
+  - Out-of-sample prediction accuracy  
+    - Cross-validation  
+    - RMSEP (prediction root mean squared error)  
+  - [A paper on how to evaluate predictions versus observed values](https://www.sciencedirect.com/science/article/pii/S0308521X21001475).
+
+### Variable selection based on out-of-sample prediction accuracy  
+
+$$y\sim N(\mu, \sigma^2)$$
+
+$$\mu = \mathbf{x}'\boldsymbol{\beta}$$
+
+$$\hat{\mu}_{new} = \mathbf{x}_{new}'\hat{\boldsymbol{\beta}}$$
+
+Under the out-of-sample prediction accuracy criterion, we evaluate how the models estimate $\mu_{new}$ by checking how far the $\hat{\mu}_{new}$ estimate is from the observed (yet not used to fit the model) $y_{new}$.
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+
+# find data at https://doi.org/10.1002/agj2.20812
+dd_yield <- readxl::read_xlsx("data/8.Yield_Plant_Measurements.xlsx", sheet = 2) %>%
+  filter(Year == 2014, 
+         State == "IA",
+         Site == "Ames") %>% 
+  mutate(across(VT_TissN:R4N, ~ as.numeric(.)))
+dd_soil <- readxl::read_xlsx("data/1.Site_Characterization.xlsx", sheet = 2) %>% 
+  filter(Year == 2014, 
+         State == "IA", 
+         Site == "Ames",
+         Horizon == "Ap") %>% 
+  mutate(Block = as.numeric(Block), 
+         across(Clay:WC, ~as.numeric(.)))
+dd_N <- readxl::read_xlsx("data/4.SoilN.xlsx", sheet = 2) %>% 
+  filter(Year == 2014, 
+         State == "IA", 
+         Site == "Ames",
+         Plot_ID %in% dd_yield$Plot_ID, 
+         Sam_Time == "Post") %>% 
+  mutate(across(c(Plot_ID, N_Trt, Plant_N, Side_N, Plant_N_SI, Side_N_SI), ~as.numeric(.)))
+
+dd_complete <- dd_yield %>% 
+  left_join(dd_soil) %>% 
+  left_join(dd_N)
+
+dd_complete <- dd_complete %>% 
+  rownames_to_column("id") %>% 
+  mutate(gyield_14 = GYdry/.94, 
+         N_total = Plant_N_SI + Side_N_SI, 
+         sy = paste0(Site," (", Year, ")"), 
+         sy_f = as.numeric(factor(sy)), 
+         id = as.numeric(id)) 
+```
+
+```{r}
+dd_complete %>% 
+  ggplot(aes(N_total, gyield_14))+
+  geom_point()+
+  facet_wrap(~sy)+
+  coord_cartesian(ylim = c(0, 15000))+
+  theme_classic()+
+  labs(x = expression(Total~N~Applied~(kg~ha^{-1})),
+       y = expression(Grain~Yield~(kg~ha^{-1})))
+```
+
+```{r}
+id <- unique(dd_complete$id)
+n <- length(id)
+set.seed(54)
+subset_fit <- sample(id, size = n*.6, replace = FALSE)
+
+dd_complete_fit <- dd_complete %>% 
+  filter(id %in% subset_fit)
+dd_complete_test <- dd_complete %>% 
+  filter(!id %in% subset_fit)
+```
+
+```{r}
+m1 <- lm(gyield_14 ~ N_total + I(N_total^2), data = dd_complete_fit)
+m2 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block , data = dd_complete_fit)
+m3 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + PMPM, data = dd_complete_fit)
+m4 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay, data = dd_complete_fit)   
+m5 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay + Sand, data = dd_complete_fit)
+m6 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay + Sand + Silt, data = dd_complete_fit)
+```
+
+```{r}
+dd_complete_test$pred_m1 <- predict(m1, newdata = dd_complete_test)
+dd_complete_test$pred_m2 <- predict(m2, newdata = dd_complete_test)
+dd_complete_test$pred_m3 <- predict(m3, newdata = dd_complete_test)
+dd_complete_test$pred_m4 <- predict(m4, newdata = dd_complete_test)
+dd_complete_test$pred_m5 <- predict(m5, newdata = dd_complete_test)
+dd_complete_test$pred_m6 <- predict(m6, newdata = dd_complete_test)
+
+dd_complete_test %>% 
+  summarise(rmse_m1 = sqrt(mean((gyield_14 - pred_m1)^2)),
+            rmse_m2 = sqrt(mean((gyield_14 - pred_m2)^2)), 
+            rmse_m3 = sqrt(mean((gyield_14 - pred_m3)^2)), 
+            rmse_m4 = sqrt(mean((gyield_14 - pred_m4)^2)), 
+            rmse_m5 = sqrt(mean((gyield_14 - pred_m5)^2)), 
+            rmse_m6 = sqrt(mean((gyield_14 - pred_m6)^2)))
+```
+
+```{r}
+dd_complete_test %>% 
+  pivot_longer(cols = pred_m1:pred_m6) %>% 
+  ggplot(aes(gyield_14, value))+
+  geom_point()+
+  facet_wrap(~name)+
+  geom_abline(slope = 1)+
+  theme_classic()
+```
+
+### Broader Inference  
+
+```{r message=FALSE, warning=FALSE}
+dd_yield <- readxl::read_xlsx("data/8.Yield_Plant_Measurements.xlsx", sheet = 2) %>%
+  filter(State == "IA",) %>% 
+  mutate(across(VT_TissN:R4N, ~ as.numeric(.)))
+dd_soil <- readxl::read_xlsx("data/1.Site_Characterization.xlsx", sheet = 2) %>% 
+  filter(State == "IA", 
+         Horizon == "Ap") %>% 
+  mutate(Block = as.numeric(Block), 
+         across(Clay:WC, ~as.numeric(.)))
+dd_N <- readxl::read_xlsx("data/4.SoilN.xlsx", sheet = 2) %>% 
+  filter(State == "IA", 
+         Plot_ID %in% dd_yield$Plot_ID, 
+         Sam_Time == "Post") %>% 
+  mutate(across(c(Plot_ID, N_Trt, Plant_N, Side_N, Plant_N_SI, Side_N_SI), ~as.numeric(.)))
+
+dd_complete <- dd_yield %>% 
+  left_join(dd_soil) %>% 
+  left_join(dd_N)
+
+dd_complete <- dd_complete %>% 
+  rownames_to_column("id") %>% 
+  mutate(gyield_14 = GYdry/.94, 
+         N_total = Plant_N_SI + Side_N_SI, 
+         sy = paste0(Site," (", Year, ")"), 
+         sy_f = as.numeric(factor(sy)), 
+         id = as.numeric(id)) 
+```
+
+
+```{r}
+sy <- unique(dd_complete$sy_f)
+n <- length(sy)
+set.seed(54)
+
+subset_fit <- sample(sy, size = n*.6, replace = FALSE)
+
+dd_complete_fit <- dd_complete %>% 
+  filter(sy_f %in% subset_fit)
+dd_complete_test <- dd_complete %>% 
+  filter(!sy_f %in% subset_fit)
+```
+
+
+
+```{r}
+m1 <- lm(gyield_14 ~ N_total + I(N_total^2), data = dd_complete_fit)
+m2 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block , data = dd_complete_fit)
+m3 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + PMPM, data = dd_complete_fit)
+m4 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay, data = dd_complete_fit)   
+m5 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay + Sand, data = dd_complete_fit)
+m6 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay + Sand + Silt, data = dd_complete_fit)
+```
+
+```{r}
+dd_complete_test$pred_m1 <- predict(m1, newdata = dd_complete_test)
+dd_complete_test$pred_m2 <- predict(m2, newdata = dd_complete_test)
+dd_complete_test$pred_m3 <- predict(m3, newdata = dd_complete_test)
+dd_complete_test$pred_m4 <- predict(m4, newdata = dd_complete_test)
+dd_complete_test$pred_m5 <- predict(m5, newdata = dd_complete_test)
+dd_complete_test$pred_m6 <- predict(m6, newdata = dd_complete_test)
+
+dd_complete_test %>% 
+  summarise(rmse_m1 = sqrt(mean((gyield_14 - pred_m1)^2)),
+            rmse_m2 = sqrt(mean((gyield_14 - pred_m2)^2)), 
+            rmse_m3 = sqrt(mean((gyield_14 - pred_m3)^2)), 
+            rmse_m4 = sqrt(mean((gyield_14 - pred_m4)^2)), 
+            rmse_m5 = sqrt(mean((gyield_14 - pred_m5)^2)), 
+            rmse_m6 = sqrt(mean((gyield_14 - pred_m6)^2)))
+```
+
+
+
+####
+
+```{r}
+
+```
+
+
+## For next class  
+
+- [Assignment 3](https://jlacasa.github.io/stat705_fall2024/assignments/hw3) is due tomorrow midnight.  
+

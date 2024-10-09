@@ -200,7 +200,7 @@ metrics <- data.frame(model = c("N_total + I(N_total^2)",
                                        loocv_m4$results$RMSE, loocv_m5$results$RMSE, loocv_m6$results$RMSE), 
                       `R2.looCV` = c(loocv_m1$results$Rsquared, NA, NA,
                                           loocv_m4$results$Rsquared, loocv_m5$results$Rsquared, loocv_m6$results$Rsquared) ) %>%
-  mutate(across(R2:`Rsquared.looCV`, ~round(., 2)))
+  mutate(across(R2:`R2.looCV`, ~round(., 2)))
 
 knitr::kable(metrics, format = "html")
 ```

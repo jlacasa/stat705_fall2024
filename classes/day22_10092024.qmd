@@ -250,4 +250,4 @@ dd_complete %>%
 ## For next class  
 
 - [Assignment 3](https://jlacasa.github.io/stat705_fall2024/assignments/hw3) is due tomorrow midnight.  
-- Last few hours to chip in your feedback in the survey.  
+- Last few hours to chip in your feedback in the [survey](https://forms.gle/5W3AWhzrEtoysn3P6).  

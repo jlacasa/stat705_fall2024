@@ -16,11 +16,9 @@ editor: visual
 
 - What defines the "goodness" of a model?  
   - Penalized fit (i.e., penalty for including too many parameters)  
-    - Information Criteria (e.g., AIC, BIC)   
-    - R^2^~adj~  
-  - Out-of-sample prediction accuracy  
-    - Cross-validation  
-    - RMSEP (prediction root mean squared error)  
+  - Out-of-sample prediction accuracy
+    - Validation set  
+    - Cross-validation (k-fold/leave-one-out)    
   - [A paper on how to evaluate predictions versus observed values](https://www.sciencedirect.com/science/article/pii/S0308521X21001475).
 
 ### Variable selection based on out-of-sample prediction accuracy  
@@ -107,15 +105,6 @@ m6 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Sand + Clay + Silt, data =
 ```
 
 ```{r}
-cv::cv(m1, seed=1234, confint=TRUE)
-cv::cv(m2, k = "loo")
-cv::cv(m3)
-plot(cv::cv(m4))
-
-```
-
-
-```{r}
 dd_complete_test$pred_m1 <- predict(m1, newdata = dd_complete_test)
 dd_complete_test$pred_m2 <- predict(m2, newdata = dd_complete_test)
 dd_complete_test$pred_m3 <- predict(m3, newdata = dd_complete_test)
@@ -135,8 +124,11 @@ dd_complete_test %>%
 ```{r}
 dd_complete_test %>% 
   pivot_longer(cols = pred_m1:pred_m6) %>% 
+  mutate(name = str_replace(name, "pred_", "")) %>% 
   ggplot(aes(gyield_14, value))+
   geom_point()+
+  labs(x = expression(Observed~(Mg~ha^{-1})), 
+       y = expression(Predicted~(Mg~ha^{-1})))+
   facet_wrap(~name)+
   geom_abline(slope = 1)+
   theme_classic()
@@ -147,7 +139,7 @@ dd_complete_test %>%
 - $k$-fold cross validation  
 - leave-one-out cross validation ($n$-fold cross validation)  
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(caret)
 
 caret::train(gyield_14 ~ N_total + I(N_total^2), data = dd_complete, method = "lm",
@@ -200,15 +192,15 @@ metrics <- data.frame(model = c("N_total + I(N_total^2)",
                                        kcv_m4$results$RMSE, kcv_m5$results$RMSE, kcv_m6$results$RMSE), 
                       `RMSESD.kCV` = c(kcv_m1$results$RMSESD, NA, NA,
                                        kcv_m4$results$RMSESD, kcv_m5$results$RMSESD, kcv_m6$results$RMSESD), 
-                      `Rsquared.kCV` = c(kcv_m1$results$Rsquared, NA, NA,
+                      `R2.kCV` = c(kcv_m1$results$Rsquared, NA, NA,
                                        kcv_m4$results$Rsquared, kcv_m5$results$Rsquared, kcv_m6$results$Rsquared), 
-                      `RsquaredSD.kCV` = c(kcv_m1$results$RsquaredSD, NA, NA,
+                      `R2SD.kCV` = c(kcv_m1$results$RsquaredSD, NA, NA,
                                           kcv_m4$results$RsquaredSD, kcv_m5$results$RsquaredSD, kcv_m6$results$RsquaredSD), 
                       `RMSE.looCV` = c(loocv_m1$results$RMSE, NA, NA,
                                        loocv_m4$results$RMSE, loocv_m5$results$RMSE, loocv_m6$results$RMSE), 
-                      `Rsquared.looCV` = c(loocv_m1$results$Rsquared, NA, NA,
+                      `R2.looCV` = c(loocv_m1$results$Rsquared, NA, NA,
                                           loocv_m4$results$Rsquared, loocv_m5$results$Rsquared, loocv_m6$results$Rsquared) ) %>%
-  mutate(across(R2:`Rsquared.looCV`, ~round(., 3)))
+  mutate(across(R2:`Rsquared.looCV`, ~round(., 2)))
 
 knitr::kable(metrics, format = "html")
 ```

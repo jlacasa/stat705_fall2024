@@ -33,10 +33,6 @@ $$\hat{\mu}_{new} = \mathbf{x}_{new}'\hat{\boldsymbol{\beta}}$$
 
 Under the out-of-sample prediction accuracy criterion, we evaluate how the models estimate $\mu_{new}$ by checking how far the $\hat{\mu}_{new}$ estimate is from the observed (yet not used to fit the model) $y_{new}$.
 
-#### Cross-validation  
-
-- $k$-fold cross validation  
-- $n$-fold cross validation  
 
 #### Load the data  
 
@@ -88,6 +84,7 @@ dd_complete %>%
        y = expression(Grain~Yield~(kg~ha^{-1})))
 ```
 
+#### Validation set approach  
 ```{r}
 id <- unique(dd_complete$id)
 n <- length(id)
@@ -101,12 +98,20 @@ dd_complete_test <- dd_complete %>%
 ```
 
 ```{r}
-m1 <- lm(gyield_14 ~ N_total + I(N_total^2), data = dd_complete_fit)
-m2 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block , data = dd_complete_fit)
-m3 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + PMPM, data = dd_complete_fit)
-m4 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay, data = dd_complete_fit)   
-m5 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay + Sand, data = dd_complete_fit)
-m6 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay + Sand + Silt, data = dd_complete_fit)
+m1 <- lm(gyield_14 ~ N_total + I(N_total^2), data = dd_complete)
+m2 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block , data = dd_complete)
+m3 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + PMPM, data = dd_complete)
+m4 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Sand, data = dd_complete)   
+m5 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Sand + Clay, data = dd_complete)
+m6 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Sand + Clay + Silt, data = dd_complete)
+```
+
+```{r}
+cv::cv(m1, seed=1234, confint=TRUE)
+cv::cv(m2, k = "loo")
+cv::cv(m3)
+plot(cv::cv(m4))
+
 ```
 
 
@@ -135,6 +140,77 @@ dd_complete_test %>%
   facet_wrap(~name)+
   geom_abline(slope = 1)+
   theme_classic()
+```
+
+#### Cross-validation  
+
+- $k$-fold cross validation  
+- leave-one-out cross validation ($n$-fold cross validation)  
+
+```{r}
+library(caret)
+
+caret::train(gyield_14 ~ N_total + I(N_total^2), data = dd_complete, method = "lm",
+             trControl = trainControl(method = "cv", number = 10))
+
+caret::train(gyield_14 ~ N_total + I(N_total^2), data = dd_complete, method = "lm",
+             trControl = trainControl(method = "LOOCV"))
+```
+
+```{r}
+kcv_m1 <- caret::train(gyield_14 ~ N_total + I(N_total^2), data = dd_complete, method = "lm",
+                       trControl = trainControl(method = "cv", number = 10))
+loocv_m1 <- caret::train(gyield_14 ~ N_total + I(N_total^2), data = dd_complete, method = "lm",
+                         trControl = trainControl(method = "LOOCV"))
+
+kcv_m4 <- caret::train(gyield_14 ~ N_total + I(N_total^2) + Block + Sand, data = dd_complete, method = "lm",
+                       trControl = trainControl(method = "cv", number = 10))
+loocv_m4 <- caret::train(gyield_14 ~ N_total + I(N_total^2) + Block + Sand, data = dd_complete, method = "lm",
+                         trControl = trainControl(method = "LOOCV"))
+
+kcv_m5 <- caret::train(gyield_14 ~ N_total + I(N_total^2) + Block + Sand + Clay, data = dd_complete, method = "lm",
+                       trControl = trainControl(method = "cv", number = 10))
+loocv_m5 <- caret::train(gyield_14 ~ N_total + I(N_total^2) + Block + Sand + Clay, data = dd_complete, method = "lm",
+                         trControl = trainControl(method = "LOOCV"))
+
+kcv_m6 <- caret::train(gyield_14 ~ N_total + I(N_total^2) + Block + Sand + Clay + Silt,
+                       data = dd_complete, method = "lm",
+                       trControl = trainControl(method = "cv", number = 10))
+loocv_m6 <- caret::train(gyield_14 ~ N_total + I(N_total^2) + Block + Clay + Sand + Silt,
+                         data = dd_complete, method = "lm",
+                         trControl = trainControl(method = "LOOCV"))
+```
+
+
+```{r}
+metrics <- data.frame(model = c("N_total + I(N_total^2)",
+                                "N_total + I(N_total^2) + Block",
+                                "N_total + I(N_total^2) + Block + PMPM", 
+                                "N_total + I(N_total^2) + Block + Sand", 
+                                "N_total + I(N_total^2) + Block + Sand + Clay", 
+                                "N_total + I(N_total^2) + Block + Sand + Clay + Silt"),
+                      R2 = c(summary(m1)$r.squared, summary(m2)$r.squared, 
+                             summary(m3)$r.squared, summary(m4)$r.squared, summary(m5)$r.squared, summary(m6)$r.squared),
+                      R2_adj = c(summary(m1)$adj.r.squared, summary(m2)$adj.r.squared,
+                                 summary(m3)$adj.r.squared, summary(m4)$adj.r.squared, summary(m5)$adj.r.squared,
+                                 summary(m6)$adj.r.squared),
+                      AIC = AIC(m1, m2, m3, m4, m5, m6)$AIC,
+                      BIC = BIC(m1, m2, m3, m4, m5, m6)$BIC, 
+                      `RMSE.kCV` = c(kcv_m1$results$RMSE, NA, NA,
+                                       kcv_m4$results$RMSE, kcv_m5$results$RMSE, kcv_m6$results$RMSE), 
+                      `RMSESD.kCV` = c(kcv_m1$results$RMSESD, NA, NA,
+                                       kcv_m4$results$RMSESD, kcv_m5$results$RMSESD, kcv_m6$results$RMSESD), 
+                      `Rsquared.kCV` = c(kcv_m1$results$Rsquared, NA, NA,
+                                       kcv_m4$results$Rsquared, kcv_m5$results$Rsquared, kcv_m6$results$Rsquared), 
+                      `RsquaredSD.kCV` = c(kcv_m1$results$RsquaredSD, NA, NA,
+                                          kcv_m4$results$RsquaredSD, kcv_m5$results$RsquaredSD, kcv_m6$results$RsquaredSD), 
+                      `RMSE.looCV` = c(loocv_m1$results$RMSE, NA, NA,
+                                       loocv_m4$results$RMSE, loocv_m5$results$RMSE, loocv_m6$results$RMSE), 
+                      `Rsquared.looCV` = c(loocv_m1$results$Rsquared, NA, NA,
+                                          loocv_m4$results$Rsquared, loocv_m5$results$Rsquared, loocv_m6$results$Rsquared) ) %>%
+  mutate(across(R2:`Rsquared.looCV`, ~round(., 3)))
+
+knitr::kable(metrics, format = "html")
 ```
 
 #### Data example 2   
@@ -175,58 +251,11 @@ dd_complete %>%
        y = expression(Grain~Yield~(kg~ha^{-1})))
 ```
 
-
-```{r}
-sy <- unique(dd_complete$sy_f)
-n <- length(sy)
-set.seed(54)
-
-subset_fit <- sample(sy, size = n*.6, replace = FALSE)
-
-dd_complete_fit <- dd_complete %>% 
-  filter(sy_f %in% subset_fit)
-dd_complete_test <- dd_complete %>% 
-  filter(!sy_f %in% subset_fit)
-```
-
-
-
-```{r}
-m1 <- lm(gyield_14 ~ N_total + I(N_total^2), data = dd_complete_fit)
-m2 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block , data = dd_complete_fit)
-m3 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + PMPM, data = dd_complete_fit)
-m4 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay, data = dd_complete_fit)   
-m5 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay + Sand, data = dd_complete_fit)
-m6 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Clay + Sand + Silt, data = dd_complete_fit)
-```
-
-```{r}
-dd_complete_test$pred_m1 <- predict(m1, newdata = dd_complete_test)
-dd_complete_test$pred_m2 <- predict(m2, newdata = dd_complete_test)
-dd_complete_test$pred_m3 <- predict(m3, newdata = dd_complete_test)
-dd_complete_test$pred_m4 <- predict(m4, newdata = dd_complete_test)
-dd_complete_test$pred_m5 <- predict(m5, newdata = dd_complete_test)
-dd_complete_test$pred_m6 <- predict(m6, newdata = dd_complete_test)
-
-dd_complete_test %>% 
-  summarise(rmse_m1 = sqrt(mean((gyield_14 - pred_m1)^2)),
-            rmse_m2 = sqrt(mean((gyield_14 - pred_m2)^2)), 
-            rmse_m3 = sqrt(mean((gyield_14 - pred_m3)^2)), 
-            rmse_m4 = sqrt(mean((gyield_14 - pred_m4)^2)), 
-            rmse_m5 = sqrt(mean((gyield_14 - pred_m5)^2)), 
-            rmse_m6 = sqrt(mean((gyield_14 - pred_m6)^2)))
-```
-
-
-
-####
-
-```{r}
-
-```
-
+- How to perform cross-validation in this case  
+- Dependence structures  
+- [Paper "Cross-validation strategies for data with temporal, spatial, hierarchical, or phylogenetic structure"](https://doi.org/10.1111/ecog.02881)
 
 ## For next class  
 
 - [Assignment 3](https://jlacasa.github.io/stat705_fall2024/assignments/hw3) is due tomorrow midnight.  
-
+- Last few hours to chip in your feedback in the survey.  

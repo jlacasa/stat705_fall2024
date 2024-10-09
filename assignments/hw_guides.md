@@ -14,11 +14,12 @@ The following guides are solved homeworks, indicating what was expected from eac
 | --------- | ------- | ----------- |
 | HW2       | [PDF](../homeworks/hw2_solved.pdf) |[R script]("https://github.com/jlacasa/stat705_fall2024/blob/main/homeworks/hw2_solved.Rmd") |
 | HW3       |         |             |
-|           |         |             |
-|           |         |             |
-|           |         |             |
-|           |         |             |
+| HW4       |         |             |
+| HW5       |         |             |
+| HW6       |         |             |
+| HW7       |         |             |
 |Project proposal | [PDF](../homeworks/finalproj.pdf) |             |
+|Project manuscript | [PDF](../homeworks/finalproj_final.pdf) |             |
 
 
 

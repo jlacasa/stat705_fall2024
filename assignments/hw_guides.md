@@ -18,7 +18,7 @@ The following guides are solved homeworks, indicating what was expected from eac
 |           |         |             |
 |           |         |             |
 |           |         |             |
-|           |         |             |
+|Project proposal | [PDF](../homeworks/finalproj.pdf) |             |
 
 
 

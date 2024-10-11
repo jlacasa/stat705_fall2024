@@ -38,3 +38,6 @@ Oct 11
 : No class - Fall pause day 
   : []()
 
+Oct 14 
+: Model selection V
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day23_10142024)

@@ -197,12 +197,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span>id <span class="sc">%in%</span> subset_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> dd_complete)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block , <span class="at">data =</span> dd_complete)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> PMPM, <span class="at">data =</span> dd_complete)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>m4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> Sand, <span class="at">data =</span> dd_complete)   </span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> Sand <span class="sc">+</span> Clay, <span class="at">data =</span> dd_complete)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>m6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> Sand <span class="sc">+</span> Clay <span class="sc">+</span> Silt, <span class="at">data =</span> dd_complete)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>), <span class="at">data =</span> dd_complete_fit)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block , <span class="at">data =</span> dd_complete_fit)</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> PMPM, <span class="at">data =</span> dd_complete_fit)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>m4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> Sand, <span class="at">data =</span> dd_complete_fit)   </span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> Sand <span class="sc">+</span> Clay, <span class="at">data =</span> dd_complete_fit)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>m6 <span class="ot">&lt;-</span> <span class="fu">lm</span>(gyield_14 <span class="sc">~</span> N_total <span class="sc">+</span> <span class="fu">I</span>(N_total<span class="sc">^</span><span class="dv">2</span>) <span class="sc">+</span> Block <span class="sc">+</span> Sand <span class="sc">+</span> Clay <span class="sc">+</span> Silt, <span class="at">data =</span> dd_complete_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dd_complete_test<span class="sc">$</span>pred_m1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(m1, <span class="at">newdata =</span> dd_complete_test)</span>
@@ -223,7 +223,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <pre><code># A tibble: 1 × 6
   rmse_m1 rmse_m2 rmse_m3 rmse_m4 rmse_m5 rmse_m6
     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1    622.    596.    585.    595.    591.    591.</code></pre>
+1    637.    627.    618.    640.    648.    648.</code></pre>
 </div>
 </div>
 <div class="cell">
@@ -361,10 +361,10 @@ Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">N_total + I(N_total^2)</td>
-<td style="text-align: right;">0.87</td>
-<td style="text-align: right;">0.87</td>
-<td style="text-align: right;">997.50</td>
-<td style="text-align: right;">1006.14</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">586.91</td>
+<td style="text-align: right;">593.46</td>
 <td style="text-align: right;">576.23</td>
 <td style="text-align: right;">162.27</td>
 <td style="text-align: right;">0.81</td>
@@ -374,10 +374,10 @@ Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 </tr>
 <tr class="even">
 <td style="text-align: left;">N_total + I(N_total^2) + Block</td>
-<td style="text-align: right;">0.88</td>
-<td style="text-align: right;">0.87</td>
-<td style="text-align: right;">997.15</td>
-<td style="text-align: right;">1007.94</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">588.69</td>
+<td style="text-align: right;">596.87</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
@@ -387,10 +387,10 @@ Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">N_total + I(N_total^2) + Block + PMPM</td>
-<td style="text-align: right;">0.88</td>
-<td style="text-align: right;">0.87</td>
-<td style="text-align: right;">996.82</td>
-<td style="text-align: right;">1009.78</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">589.36</td>
+<td style="text-align: right;">599.18</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
 <td style="text-align: right;">NA</td>
@@ -400,10 +400,10 @@ Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 </tr>
 <tr class="even">
 <td style="text-align: left;">N_total + I(N_total^2) + Block + Sand</td>
-<td style="text-align: right;">0.88</td>
-<td style="text-align: right;">0.87</td>
-<td style="text-align: right;">998.61</td>
-<td style="text-align: right;">1011.56</td>
+<td style="text-align: right;">0.84</td>
+<td style="text-align: right;">0.82</td>
+<td style="text-align: right;">589.59</td>
+<td style="text-align: right;">599.41</td>
 <td style="text-align: right;">585.76</td>
 <td style="text-align: right;">152.05</td>
 <td style="text-align: right;">0.80</td>
@@ -413,10 +413,10 @@ Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">N_total + I(N_total^2) + Block + Sand + Clay</td>
-<td style="text-align: right;">0.88</td>
-<td style="text-align: right;">0.87</td>
-<td style="text-align: right;">998.16</td>
-<td style="text-align: right;">1013.27</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">588.66</td>
+<td style="text-align: right;">600.13</td>
 <td style="text-align: right;">575.84</td>
 <td style="text-align: right;">186.71</td>
 <td style="text-align: right;">0.80</td>
@@ -426,10 +426,10 @@ Tuning parameter 'intercept' was held constant at a value of TRUE</code></pre>
 </tr>
 <tr class="even">
 <td style="text-align: left;">N_total + I(N_total^2) + Block + Sand + Clay + Silt</td>
-<td style="text-align: right;">0.88</td>
-<td style="text-align: right;">0.87</td>
-<td style="text-align: right;">998.16</td>
-<td style="text-align: right;">1013.27</td>
+<td style="text-align: right;">0.85</td>
+<td style="text-align: right;">0.83</td>
+<td style="text-align: right;">588.66</td>
+<td style="text-align: right;">600.13</td>
 <td style="text-align: right;">588.35</td>
 <td style="text-align: right;">138.19</td>
 <td style="text-align: right;">0.79</td>

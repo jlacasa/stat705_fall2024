@@ -41,3 +41,7 @@ Oct 11
 Oct 14 
 : Model selection V
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day23_10142024)
+
+Oct 14 
+: Model selection VI
+  : [](https://jlacasa.github.io/stat705_fall2024/classes/day24_10162024)

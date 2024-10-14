@@ -17,19 +17,19 @@ library(tidyverse)
 ## Data  
 ```{r message=FALSE, warning=FALSE}
 # find data at https://doi.org/10.1002/agj2.20812
-dd_yield <- readxl::read_xlsx("data/8.Yield_Plant_Measurements.xlsx", sheet = 2) %>%
+dd_yield <- readxl::read_xlsx("../data/8.Yield_Plant_Measurements.xlsx", sheet = 2) %>%
   filter(Year == 2014, 
          State == "IA",
          Site == "Ames") %>% 
   mutate(across(VT_TissN:R4N, ~ as.numeric(.)))
-dd_soil <- readxl::read_xlsx("data/1.Site_Characterization.xlsx", sheet = 2) %>% 
+dd_soil <- readxl::read_xlsx("../data/1.Site_Characterization.xlsx", sheet = 2) %>% 
   filter(Year == 2014, 
          State == "IA", 
          Site == "Ames",
          Horizon == "Ap") %>% 
   mutate(Block = as.numeric(Block), 
          across(Clay:WC, ~as.numeric(.)))
-dd_N <- readxl::read_xlsx("data/4.SoilN.xlsx", sheet = 2) %>% 
+dd_N <- readxl::read_xlsx("../data/4.SoilN.xlsx", sheet = 2) %>% 
   filter(Year == 2014, 
          State == "IA", 
          Site == "Ames",
@@ -71,8 +71,10 @@ subset_fit <- sample(id, size = n*.6, replace = FALSE)
 
 dd_complete_fit <- dd_complete %>% 
   filter(id %in% subset_fit)
+nrow(dd_complete_fit)
 dd_complete_test <- dd_complete %>% 
   filter(!id %in% subset_fit)
+nrow(dd_complete_test)
 ```
 
 ```{r}
@@ -85,6 +87,7 @@ m6 <- lm(gyield_14 ~ N_total + I(N_total^2) + Block + Sand + Clay + Silt, data =
 ```
 
 ```{r}
+## oos predictions
 dd_complete_test$pred_m1 <- predict(m1, newdata = dd_complete_test)
 dd_complete_test$pred_m2 <- predict(m2, newdata = dd_complete_test)
 dd_complete_test$pred_m3 <- predict(m3, newdata = dd_complete_test)
@@ -92,6 +95,7 @@ dd_complete_test$pred_m4 <- predict(m4, newdata = dd_complete_test)
 dd_complete_test$pred_m5 <- predict(m5, newdata = dd_complete_test)
 dd_complete_test$pred_m6 <- predict(m6, newdata = dd_complete_test)
 
+#is predictions
 dd_complete_fit$fitted_m1 <- predict(m1)
 dd_complete_fit$fitted_m2 <- predict(m2)
 dd_complete_fit$fitted_m3 <- predict(m3)
@@ -118,7 +122,6 @@ dd_complete_test %>%
   pivot_longer(cols = everything()) %>% 
   separate(name, c("data", NA, "model")) %>% 
   pivot_wider(names_from = data, values_from = value)
-
 ```
 
 ```{r}
@@ -209,15 +212,15 @@ knitr::kable(metrics, format = "html")
 #### Data example 2   
 
 ```{r message=FALSE, warning=FALSE}
-dd_yield <- readxl::read_xlsx("data/8.Yield_Plant_Measurements.xlsx", sheet = 2) %>%
+dd_yield <- readxl::read_xlsx("../data/8.Yield_Plant_Measurements.xlsx", sheet = 2) %>%
   filter(State == "IA",) %>% 
   mutate(across(VT_TissN:R4N, ~ as.numeric(.)))
-dd_soil <- readxl::read_xlsx("data/1.Site_Characterization.xlsx", sheet = 2) %>% 
+dd_soil <- readxl::read_xlsx("../data/1.Site_Characterization.xlsx", sheet = 2) %>% 
   filter(State == "IA", 
          Horizon == "Ap") %>% 
   mutate(Block = as.numeric(Block), 
          across(Clay:WC, ~as.numeric(.)))
-dd_N <- readxl::read_xlsx("data/4.SoilN.xlsx", sheet = 2) %>% 
+dd_N <- readxl::read_xlsx("../data/4.SoilN.xlsx", sheet = 2) %>% 
   filter(State == "IA", 
          Plot_ID %in% dd_yield$Plot_ID, 
          Sam_Time == "Post") %>% 

@@ -129,18 +129,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="ridge-regression" class="level3">
 <h3 class="anchored" data-anchor-id="ridge-regression">Ridge Regression</h3>
 <ul>
-<li>Minimize the function <span class="math inline">\(\underset{\beta}{\text{argmin}} = (\mathbf{y}-\mathbf{X}\beta)^\top(\mathbf{y}-\mathbf{X}\beta)+\lambda(\beta^\top \beta - c)\)</span>.<br>
+<li>Solve <span class="math inline">\(\underset{\beta}{\text{argmin}} = (\mathbf{y}-\mathbf{X}\beta)^\top(\mathbf{y}-\mathbf{X}\beta)+\lambda(\beta^\top \beta - c)\)</span>.<br>
 </li>
 <li><span class="math inline">\(\hat{\beta}_{\text{Ridge}}=(\mathbf{X}^\top\mathbf{X}+\lambda\mathbf{I})^{-1}\mathbf{X}^\top\mathbf{y}\)</span>.</li>
 <li><span class="math inline">\(\hat{\beta}_{\text{Ridge}}\)</span> for <span class="math inline">\(\lambda = 0\)</span>.<br>
 </li>
 <li>As the ridge parameter <span class="math inline">\(\lambda\)</span> increases, the estimates can become close to zero.<br>
 </li>
-<li>Useful for cases with collinearity, unstable <span class="math inline">\(\hat{\beta}_{OLS}\)</span>.<br>
+<li>Useful for cases with collinearity and unstable <span class="math inline">\(\hat{\beta}_{OLS}\)</span>.<br>
 </li>
 <li>Pick the smallest value of <span class="math inline">\(\lambda\)</span> that produces stable estimates of <span class="math inline">\(\beta\)</span>.<br>
 </li>
-<li>There are also automatic selections of <span class="math inline">\(lambda\)</span>.</li>
+<li>There are also automatic selections of <span class="math inline">\(\lambda\)</span>.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -171,7 +171,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Lasso = Least absolute shrinkage and selection operator<br>
 </li>
-<li>Minimize the function <span class="math inline">\(\underset{\beta_0, \beta }{\text{argmin}} = \left\{ \sum_{i=1}^{N}(y_i - \beta_0 - x_i^T \beta)^2 \right\} \text{subject to} \sum_{j=1}^{p}|\beta_j| \leq t\)</span>.</li>
+<li>Solve <span class="math inline">\(\underset{\beta_0, \beta }{\text{argmin}} = \left\{ \sum_{i=1}^{N}(y_i - \beta_0 - x_i^T \beta)^2 \right\} \text{subject to} \sum_{j=1}^{p}|\beta_j| \leq t\)</span>.</li>
 <li><span class="math inline">\(\hat{\beta}\)</span> does not have a closed form solution.<br>
 </li>
 <li>As penalization increases, the <span class="math inline">\(\beta\)</span> estimates can become zero.</li>
@@ -194,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Combines the L1 (Lasso) and L2 (Ridge) regularization penalties.<br>
 </li>
-<li><span class="math inline">\(\hat{\beta} \equiv \underset{\beta}{\text{argmin}}(||y-\mathbf{X}\beta||^2 +\lambda_2||\beta||^2) +\lambda_1||\beta||_1\)</span>, where <span class="math inline">\(||\beta||_1 = \sum_{j=1}^{p}|\beta_j|\)</span>.</li>
+<li><span class="math inline">\(\hat{\beta} \equiv \underset{\beta}{\text{argmin}}(||y-\mathbf{X}\beta||^2 +\lambda_2||\beta||^2 +\lambda_1||\beta||_1)\)</span>, where <span class="math inline">\(||\beta||_1 = \sum_{j=1}^{p}|\beta_j|\)</span>.</li>
 <li>Ridge and Lasso are special cases of Elastic Net.</li>
 </ul>
 <div class="cell">
@@ -221,9 +221,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="principal-components" class="level3">
 <h3 class="anchored" data-anchor-id="principal-components">Principal Components</h3>
 <ul>
+<li>Dimension reduction.<br>
+</li>
+<li>All variables are reduced into a few “principal components” that are linear combinations of said variables.<br>
+</li>
 <li>Helpful for cases that present collinearity.</li>
 </ul>
-<p><img src="https://i.sstatic.net/Q7HIP.gif" class="img-fluid"></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pca <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(dd)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>pca</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Standard deviations (1, .., p=10):
+ [1] 28.3128508  7.1567817  1.5647572  1.3808222  0.8129917  0.5710866
+ [7]  0.4881765  0.4136752  0.3298806  0.2713449
+
+Rotation (n x k) = (10 x 10):
+                PC1          PC2         PC3          PC4          PC5
+lcavol  0.018209408 -0.016873128  0.60226447 -0.096028751 -0.189062877
+lweight 0.001733282 -0.020076745  0.09288546  0.109978129 -0.076095426
+age     0.077590211 -0.993864995 -0.01728889 -0.072237987  0.007021371
+lbph    0.004375509 -0.071633091  0.06293385  0.970367573  0.157836437
+svi     0.006704749  0.001112326  0.13664589 -0.051679105  0.049232261
+lcp     0.031208032  0.012011062  0.54156574 -0.127311476  0.775311057
+gleason 0.019215746 -0.004958514  0.04232931 -0.007612331 -0.007549060
+pgg45   0.995959332  0.077956766 -0.03836989  0.005570729 -0.012100079
+lpsa    0.017321304 -0.008215582  0.55417421  0.109018476 -0.572842885
+train   0.001694013 -0.009922213 -0.04529459 -0.031603567 -0.040244907
+                 PC6          PC7          PC8          PC9         PC10
+lcavol   0.671290542  0.358944315 -0.094572994  0.011688492  0.056055777
+lweight -0.154894134  0.021776013 -0.179714119  0.946642705  0.142072328
+age     -0.014059758 -0.011933186 -0.009168881 -0.013345716 -0.006583614
+lbph     0.094407842  0.064132049  0.037880421 -0.092203422  0.037432071
+svi     -0.197564040  0.007911475 -0.005382256 -0.179720175  0.951191208
+lcp     -0.226551635 -0.070686058  0.060086870  0.025118571 -0.166461277
+gleason  0.384150965 -0.659546669  0.610006091  0.172544720  0.115093780
+pgg45   -0.001450991  0.011953094 -0.013798218 -0.000957456 -0.001330172
+lpsa    -0.490045822 -0.233226076  0.085297103 -0.146235623 -0.171142213
+train   -0.195422946  0.609779686  0.757645677  0.104707457 -0.014718193</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># factoextra::fviz_pca_biplot(pca, label = "var", repel = TRUE)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><a href="https://i.sstatic.net/Q7HIP.gif">Helpful visualization of dimension reduction</a></p>
 </section>
 </section>
 <section id="for-next-class" class="level2">

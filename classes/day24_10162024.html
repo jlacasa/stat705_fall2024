@@ -129,9 +129,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="ridge-regression" class="level3">
 <h3 class="anchored" data-anchor-id="ridge-regression">Ridge Regression</h3>
 <ul>
-<li></li>
-<li><span class="math inline">\(\hat{\beta}_{\text{Ridge}}=(\mathbf{X}^\top\mathbf{X}+\lambda\mathbf{I})^{-1}\mathbf{X}^\top\mathbf{y}\)</span></li>
-<li>As penalization increases, the estimates can become close to zero</li>
+<li>Minimize the function <span class="math inline">\(\underset{\beta}{\text{argmin}} = (\mathbf{y}-\mathbf{X}\beta)^\top(\mathbf{y}-\mathbf{X}\beta)+\lambda(\beta^\top \beta - c)\)</span>.<br>
+</li>
+<li><span class="math inline">\(\hat{\beta}_{\text{Ridge}}=(\mathbf{X}^\top\mathbf{X}+\lambda\mathbf{I})^{-1}\mathbf{X}^\top\mathbf{y}\)</span>.</li>
+<li><span class="math inline">\(\hat{\beta}_{\text{Ridge}}\)</span> for <span class="math inline">\(\lambda = 0\)</span>.<br>
+</li>
+<li>As the ridge parameter <span class="math inline">\(\lambda\)</span> increases, the estimates can become close to zero.<br>
+</li>
+<li>Useful for cases with collinearity, unstable <span class="math inline">\(\hat{\beta}_{OLS}\)</span>.<br>
+</li>
+<li>Pick the smallest value of <span class="math inline">\(\lambda\)</span> that produces stable estimates of <span class="math inline">\(\beta\)</span>.<br>
+</li>
+<li>There are also automatic selections of <span class="math inline">\(lambda\)</span>.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(glmnet)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -162,9 +171,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <ul>
 <li>Lasso = Least absolute shrinkage and selection operator<br>
 </li>
+<li>Minimize the function <span class="math inline">\(\underset{\beta_0, \beta }{\text{argmin}} = \left\{ \sum_{i=1}^{N}(y_i - \beta_0 - x_i^T \beta)^2 \right\} \text{subject to} \sum_{j=1}^{p}|\beta_j| \leq t\)</span>.</li>
 <li><span class="math inline">\(\hat{\beta}\)</span> does not have a closed form solution.<br>
 </li>
-<li>As penalization increases, the estimates can become zero</li>
+<li>As penalization increases, the <span class="math inline">\(\beta\)</span> estimates can become zero.</li>
+<li>Not great for cases with collinearity. Elastic net is a better alternative.<br>
+</li>
+<li>Problems with high-dimensional data (e.g., genetics data). Elastic net is a better alternative.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit_lasso <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(X, y, <span class="at">family =</span> <span class="fu">c</span>(<span class="st">"gaussian"</span>), <span class="at">alpha =</span> <span class="dv">1</span>)</span>
@@ -179,7 +192,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="elastic-net-regression" class="level3">
 <h3 class="anchored" data-anchor-id="elastic-net-regression">Elastic Net Regression</h3>
 <ul>
-<li>Combines the L1 (Lasso) and L2 (Ridge) regularization penalties</li>
+<li>Combines the L1 (Lasso) and L2 (Ridge) regularization penalties.<br>
+</li>
+<li><span class="math inline">\(\hat{\beta} \equiv \underset{\beta}{\text{argmin}}(||y-\mathbf{X}\beta||^2 +\lambda_2||\beta||^2) +\lambda_1||\beta||_1\)</span>, where <span class="math inline">\(||\beta||_1 = \sum_{j=1}^{p}|\beta_j|\)</span>.</li>
+<li>Ridge and Lasso are special cases of Elastic Net.</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fit_elasticnet <span class="ot">&lt;-</span> <span class="fu">glmnet</span>(X, y, <span class="at">family =</span> <span class="fu">c</span>(<span class="st">"gaussian"</span>), <span class="at">alpha =</span> .<span class="dv">5</span>)</span>

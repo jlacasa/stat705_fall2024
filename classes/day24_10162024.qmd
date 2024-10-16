@@ -19,7 +19,7 @@ Recall Figure 2 in [Hooten et al. (2015)](https://esajournals.onlinelibrary.wile
 
 ## Model-based model selection  
 
-- These methods are useful for scenarios where the independent variables are highly correlated.  
+- These methods are sometimes a useful alternative for scenarios where the predictors present collinearity.  
 - regularization, shrinkage, penalization.  
 
 ### Refresh: Ordinary Least Squares Regression
@@ -40,16 +40,16 @@ library(glmnet)
 This data example was used in [Zou and Hastie (2005)](https://academic.oup.com/jrsssb/article/67/2/301/7109482) and is available for easy download [here](https://www.kaggle.com/datasets/soujanyahp/prostate-cancer-dataset).  
 
 ```{r}
-dd <- read.csv("data/prostate.csv")[-c(1:4),]
+dd <- read.csv("data/prostate.csv")
 names(dd)
-y <- log(dd$lpsa)
+y <- dd$lpsa # log prostate-specific antigen
 X <- model.matrix(lpsa ~ ., dd)[, -1]
 ```
 
 
 ```{r}
+m_ridge <- glmnet(X, y, family = c("gaussian"), alpha = 0)
 par(mfrow = c(1, 2))
-m_ridge <- glmnet(X, y, alpha = 0)
 plot(m_ridge)
 plot(m_ridge, xvar = "lambda", label = TRUE)
 ```
@@ -62,7 +62,8 @@ plot(m_ridge, xvar = "lambda", label = TRUE)
 - As penalization increases, the estimates can become zero 
 
 ```{r}
-fit_lasso <- glmnet(X, y, alpha = 1)
+fit_lasso <- glmnet(X, y, family = c("gaussian"), alpha = 1)
+par(mfrow = c(1, 2))
 plot(fit_lasso)
 plot(fit_lasso, xvar = "lambda", label = TRUE)
 ```
@@ -72,9 +73,15 @@ plot(fit_lasso, xvar = "lambda", label = TRUE)
 - Combines the L1 (Lasso) and L2 (Ridge) regularization penalties 
 
 ```{r}
-fit_elasticnet <- glmnet(X, y, alpha = .5)
+fit_elasticnet <- glmnet(X, y, family = c("gaussian"), alpha = .5)
+par(mfrow = c(1, 2))
 plot(fit_elasticnet)
 plot(fit_elasticnet, xvar = "lambda", label = TRUE)
+```
+
+## Other shrinkage examples  
+
+```{r}
 
 ```
 

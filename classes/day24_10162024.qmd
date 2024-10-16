@@ -87,11 +87,26 @@ plot(fit_elasticnet)
 plot(fit_elasticnet, xvar = "lambda", label = TRUE)
 ```
 
+### Some thoghts about regularization  
+
+- Interpretation.  
+- Objective of the study.   
+
 ## Other shrinkage examples  
 
-```{r}
+### Principal Components   
 
+- Dimension reduction.  
+- All variables are reduced into a few "principal components" that are linear combinations of said variables.   
+- Helpful for cases that present collinearity.  
+
+```{r}
+library(mva)
+pca <- prcomp(dd)
+# factoextra::fviz_pca_biplot(pca, label = "var", repel = TRUE)
 ```
+
+[Helpful visualization of dimension reduction](https://i.sstatic.net/Q7HIP.gif)  
 
 
 ## For next class  

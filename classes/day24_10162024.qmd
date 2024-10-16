@@ -1,0 +1,84 @@
+---
+title: "Day 24 - 10/16/2024"
+format: html
+editor: visual
+---
+
+## Model selection  
+
+Recall Figure 2 in [Hooten et al. (2015)](https://esajournals.onlinelibrary.wiley.com/doi/full/10.1890/14-0661.1).  
+
+![](misc_plots/model_selection_hooten2015.png){width="85%"}\
+
+- $AIC = 2p - 2\log(\hat{L})$  
+- $BIC = \log (n) \cdot p - 2\log(\hat{L})$  
+- $R_{adj} =  R^2 - (1 - R^2) \frac{p-1}{n-p}$  
+- Cross validation (k-fold, leave-one-out)  
+- $RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y_i})}$  
+- FYI. Consider that $MSE(\hat\theta) = Bias(\hat{\theta}, \theta) + Var(\hat{\theta})$ whenever you are evaluating models.
+
+## Model-based model selection  
+
+- These methods are useful for scenarios where the independent variables are highly correlated.  
+- regularization, shrinkage, penalization.  
+
+### Refresh: Ordinary Least Squares Regression
+
+$$\hat{\beta}_{OLS}=(\mathbf{X}^\top\mathbf{X})^{-1}\mathbf{X}^\top\mathbf{y}$$
+
+### Ridge Regression  
+
+- 
+- $\hat{\beta}_{\text{Ridge}}=(\mathbf{X}^\top\mathbf{X}+\lambda\mathbf{I})^{-1}\mathbf{X}^\top\mathbf{y}$
+- As penalization increases, the estimates can become close to zero 
+
+
+```{r message=FALSE, warning=FALSE}
+library(glmnet)
+```
+
+This data example was used in [Zou and Hastie (2005)](https://academic.oup.com/jrsssb/article/67/2/301/7109482) and is available for easy download [here](https://www.kaggle.com/datasets/soujanyahp/prostate-cancer-dataset).  
+
+```{r}
+dd <- read.csv("data/prostate.csv")[-c(1:4),]
+names(dd)
+y <- log(dd$lpsa)
+X <- model.matrix(lpsa ~ ., dd)[, -1]
+```
+
+
+```{r}
+par(mfrow = c(1, 2))
+m_ridge <- glmnet(X, y, alpha = 0)
+plot(m_ridge)
+plot(m_ridge, xvar = "lambda", label = TRUE)
+```
+
+
+### Lasso Regression  
+
+- Lasso = Least absolute shrinkage and selection operator  
+- $\hat{\beta}$ does not have a closed form solution.  
+- As penalization increases, the estimates can become zero 
+
+```{r}
+fit_lasso <- glmnet(X, y, alpha = 1)
+plot(fit_lasso)
+plot(fit_lasso, xvar = "lambda", label = TRUE)
+```
+
+### Elastic Net Regression  
+
+- Combines the L1 (Lasso) and L2 (Ridge) regularization penalties 
+
+```{r}
+fit_elasticnet <- glmnet(X, y, alpha = .5)
+plot(fit_elasticnet)
+plot(fit_elasticnet, xvar = "lambda", label = TRUE)
+
+```
+
+
+## For next class  
+
+- We'll focus on a project example (including post-hoc mean comparisons).  

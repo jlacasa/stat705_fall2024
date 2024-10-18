@@ -4,7 +4,7 @@
   
 Oct 18
 : Wrap up, modeling I   
-  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day24_10162024)  
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day25_10182024)  
 
 Oct 21
 : Mixed models I

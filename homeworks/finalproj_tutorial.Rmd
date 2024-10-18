@@ -150,7 +150,8 @@ hist(m3_residuals)
 
 
 ```{r}
-left_join(AIC(m1,m2,m3) %>% rownames_to_column("model"), BIC(m1,m2,m3))
+left_join(AIC(m1,m2,m3) %>% rownames_to_column("model"), 
+          BIC(m1,m2,m3) %>% rownames_to_column("model"))
 ```
 
 
@@ -160,11 +161,19 @@ left_join(AIC(m1,m2,m3) %>% rownames_to_column("model"), BIC(m1,m2,m3))
 gam.check(m3)
 ```
 
+### Inference  
+
+#### Summary  
 ```{r}
 summary(m3)
 ```
 
+#### ANOVA  
+```{r}
+anova(m3)
+```
 
+#### Means, Mean comparisons  
 ```{r message=FALSE, warning=FALSE}
 means <- emmeans::emmeans(m3, ~species:trt, offset = c(doy= 237))
 mean_comparisons <- multcomp::cld(means,
@@ -243,3 +252,4 @@ plot_data %>%
   theme(aspect.ratio = 1, 
         strip.background = element_rect(fill = NA, color = "black"))
 ```
+

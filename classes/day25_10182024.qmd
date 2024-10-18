@@ -27,6 +27,7 @@ editor: visual
 - Which parameters are we interested in estimating?  
 
 Let's try it out! [R code](https://github.com/jlacasa/stat705_fall2024/blob/main/homeworks/finalproj_tutorial.Rmd).
+[tutorial html](https://jlacasa.github.io/stat705_fall2024/homeworks/finalproj_tutorial)
 
 ## For next class  
 

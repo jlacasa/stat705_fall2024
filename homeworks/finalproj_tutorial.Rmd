@@ -21,8 +21,10 @@ library(ggpubr) # plot aesthetics
 ## Loading the data  
 
 ```{r}
-# dd_finalproj %>% write.csv("../classes/data/dd_finalproj.csv", row.names = F)
-dd_finalproj <- read.csv("../classes/data/dd_finalproj.csv")
+# dd_finalproj <- read.csv("../classes/data/dd_finalproj.csv")
+url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/dd_finalproj.csv"
+dd_finalproj <- read.csv(url)
+
 ```
 
 ## Exploratory Data Analysis  
@@ -44,10 +46,10 @@ dd_finalproj %>%
 ## Model Fitting  
 
 Firstly, fit a simple model 
-$$y_{ijk} \sim N(\mu_{ijk}, \sigma^2)$$
-$$\mu_{ijk}=\beta_0 + \tau_i + \rho_j + (\tau \rho)_{ij},$$
+$$y_{ijkl} \sim N(\mu_{ijk}, \sigma^2)$$
+$$\mu_{ijk}=\beta_0 + \tau_i + \rho_j + \alpha_k + (\tau \rho)_{ij} + (\tau \alpha)_{ik} +  (\rho \alpha)_{ik} +  (\tau \rho \alpha)_{ijk},$$
 
-where $y_{ijk}$ is the observation of aboveground biomass (in g) for the $i$th treatment, $j$th species and $k$th repetition, that arises from a Normal distribution with mean $mu_{ijk}$ and variance $sigma^2$, $\beta_0$ is the general intercept, $\tau_i$ is the effect of the $i$th treatment, $\rho_j$ is the effect of the $j$th species, and $(\tau \rho)_{ij}$ is the interaction between the $i$th treatment and the $j$th species. Note that there is a single variance for all observations.  
+where $y_{ijkl}$ is the observation of aboveground biomass (in g) for the $i$th treatment, $j$th species, $k$th moment (i.e., time), and $l$th repetition, that arises from a Normal distribution with mean $mu_{ijk}$ and variance $sigma^2$. The $\beta_0$ is the general intercept, $\tau_i$ is the effect of the $i$th treatment, $\rho_j$ is the effect of the $j$th species, and $(\tau \rho)_{ij}$, $(\tau \alpha)_{ik}$, and $(\rho \alpha)_{ik}$ are the two-way interactions between the factors mentioned above, and $(\tau \rho \alpha)_{ijk}$ is the three-way interaction of the factors mentioned above. Note that there is a single variance for all observations.    
 
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
@@ -66,6 +68,16 @@ plot(m1$fitted.values, abs(residuals(m1, type = "deviance")),
 ```
 
 ### Model fitting II  
+
+The first, simpler, model (i.e., `m1`) does not seem to have constant variance. We can follow two routes: (1) transform the response and keep the assumptions, or (2) keep the data as is and change our model assumptions.  
+
+Following the second option, we can model 
+
+$$y_{ijkl} \sim N(\mu_{ijk}, \sigma^2_k)$$
+$$\mu_{ijk}=\beta_0 + \tau_i + \rho_j + \alpha_k + (\tau \rho)_{ij} + (\tau \alpha)_{ik} +  (\rho \alpha)_{ik} +  (\tau \rho \alpha)_{ijk},$$  
+
+where $y_{ijkl}$ is the observation of aboveground biomass (in g) for the $i$th treatment, $j$th species, $k$th moment (i.e., time), and $l$th repetition, that arises from a Normal distribution with mean $mu_{ijk}$ and variance at time $k$, $sigma^2_k$. The $\beta_0$ is the general intercept, $\tau_i$ is the effect of the $i$th treatment, $\rho_j$ is the effect of the $j$th species, and $(\tau \rho)_{ij}$, $(\tau \alpha)_{ik}$, and $(\rho \alpha)_{ik}$ are the two-way interactions between the factors mentioned above, and $(\tau \rho \alpha)_{ijk}$ is the three-way interaction of the factors mentioned above. Note that the variance is a function of time.  
+
 
 ```{r}
 m2 <- gam(list(agb_g ~ species*trt*factor(doy),
@@ -91,6 +103,15 @@ plot(m2_fitted, abs(m2_residuals),
 
 
 ### Model fitting III    
+
+The second, model (i.e., `m2`) fixes the issue of constant variance. However, the variance seems to be different depending on the groups.  
+
+We can thus further model $\sigma^2$:  
+
+$$y_{ijkl} \sim N(\mu_{ijk}, \sigma^2_{jk})$$
+$$\mu_{ijk}=\beta_0 + \tau_i + \rho_j + \alpha_k + (\tau \rho)_{ij} + (\tau \alpha)_{ik} +  (\rho \alpha)_{ik} +  (\tau \rho \alpha)_{ijk},$$  
+
+where $y_{ijkl}$ is the observation of aboveground biomass (in g) for the $i$th treatment, $j$th species, $k$th moment (i.e., time), and $l$th repetition, that arises from a Normal distribution with mean $mu_{ijk}$ and variance at time $k$ for species $j$, $sigma^2_{jk}$. The $\beta_0$ is the general intercept, $\tau_i$ is the effect of the $i$th treatment, $\rho_j$ is the effect of the $j$th species, and $(\tau \rho)_{ij}$, $(\tau \alpha)_{ik}$, and $(\rho \alpha)_{ik}$ are the two-way interactions between the factors mentioned above, and $(\tau \rho \alpha)_{ijk}$ is the three-way interaction of the factors mentioned above. Note that the variance is a function of time.  
 
 ```{r}
 m3 <- gam(list(agb_g ~ species*trt*factor(doy),

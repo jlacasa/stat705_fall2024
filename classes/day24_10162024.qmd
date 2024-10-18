@@ -51,7 +51,7 @@ X <- model.matrix(lpsa ~ ., dd)[, -1]
 
 
 ```{r}
-m_ridge <- glmnet(X, y, family = c("gaussian"), alpha = 0)
+m_ridge <- glmnet(X, y, family = c("gaussian"), alpha = 0, standardize  = FALSE)
 par(mfrow = c(1, 2))
 plot(m_ridge)
 plot(m_ridge, xvar = "lambda", label = TRUE)
@@ -68,7 +68,7 @@ plot(m_ridge, xvar = "lambda", label = TRUE)
 - Problems with high-dimensional data (e.g., genetics data). Elastic net is a better alternative.  
 
 ```{r}
-fit_lasso <- glmnet(X, y, family = c("gaussian"), alpha = 1)
+fit_lasso <- glmnet(X, y, family = c("gaussian"), alpha = 1, standardize  = FALSE)
 par(mfrow = c(1, 2))
 plot(fit_lasso)
 plot(fit_lasso, xvar = "lambda", label = TRUE)
@@ -81,7 +81,7 @@ plot(fit_lasso, xvar = "lambda", label = TRUE)
 - Ridge and Lasso are special cases of Elastic Net.  
 
 ```{r}
-fit_elasticnet <- glmnet(X, y, family = c("gaussian"), alpha = .5)
+fit_elasticnet <- glmnet(X, y, family = c("gaussian"), alpha = .5, standardize  = FALSE)
 par(mfrow = c(1, 2))
 plot(fit_elasticnet)
 plot(fit_elasticnet, xvar = "lambda", label = TRUE)

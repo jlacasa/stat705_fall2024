@@ -43,6 +43,7 @@ where $y_{ijk}$ is the observation of biomass for the $i$th treatment ($i = 1, 2
 
 ```{r}
 m1 <- lm(agb_g ~ trt*species, data = dd)
+car::Anova(m1, type = 2)
 ```
 
 
@@ -68,10 +69,12 @@ car::leveneTest(m1)
 
 ```{r}
 library(mgcv)
+
 m2 <- gam(list(agb_g ~ trt*species,
                ~ species),
           data = dd, 
           family = gaulss())
+
 
 emmeans::emmeans(m1, ~trt:species)
 emmeans::emmeans(m2, ~trt:species)
@@ -123,7 +126,8 @@ newdata %>%
 ```{r}
 library(emmeans)
 library(multcomp)
-
+summary(m1)
+confint(m1)
 means <- emmeans(m1, ~ trt:species)
 
 cld(means, 

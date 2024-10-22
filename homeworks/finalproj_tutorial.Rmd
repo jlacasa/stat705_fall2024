@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Libraries 
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
+```{r message=FALSE, warning=FALSE}
 library(tidyverse) # data wrangling, data viz
 library(mgcv) # fitting generalized additive models 
 library(latex2exp) # math notation in plots
@@ -24,7 +24,7 @@ library(ggpubr) # plot aesthetics
 # dd_finalproj <- read.csv("../classes/data/dd_finalproj.csv")
 url <- "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/dd_finalproj.csv"
 dd_finalproj <- read.csv(url)
-
+dd_finalproj$doy_f <- factor(dd_finalproj$doy)
 ```
 
 ## Exploratory Data Analysis  
@@ -54,6 +54,10 @@ where $y_{ijkl}$ is the observation of aboveground biomass (in g) for the $i$th 
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 m1 <- lm(agb_g ~ species*trt*factor(doy), data = dd_finalproj)
+# m1 <- lm(agb_g ~ species+trt+doy_f+
+#            species:trt+species:doy_f+trt:doy_f+
+#            species:trt:doy_f, data = dd_finalproj)
+# View(model.matrix(m1))
 ```
 
 ### Model diagnostics  
@@ -62,9 +66,13 @@ m1 <- lm(agb_g ~ species*trt*factor(doy), data = dd_finalproj)
 ```{r}
 plot(m1$fitted.values, abs(residuals(m1, type = "deviance")), 
      xlab = TeX("$\\hat{y}_i$"), 
-     ylab = TeX("$\\hat{\\epsilon}_i$"), 
+     ylab = TeX("|$\\hat{\\epsilon}_i$|"), 
      main = "Residuals versus fitted values", 
      sub = "Note that the errors increase together with the means")
+```
+
+```{r}
+lm(log(agb_g) ~ species*trt*doy_f, data = dd_finalproj)
 ```
 
 ### Model fitting II  
@@ -175,14 +183,21 @@ anova(m3)
 
 #### Means, Mean comparisons  
 ```{r message=FALSE, warning=FALSE}
-means <- emmeans::emmeans(m3, ~species:trt, offset = c(doy= 237))
+means <- emmeans::emmeans(m3,
+                          ~species:trt, at = list(doy =237))
 mean_comparisons <- multcomp::cld(means,
                                   level = 0.05,
-                                  adjust = "none",
+                                  adjust = "sidak",
                                   decreasing = TRUE,
                                   Letters = letters) %>%
   mutate(.group = trimws(.group))
 
+mean_comparisons %>% 
+  transmute(species, trt, emmean = round(emmean, 2), group = .group)
+```
+
+
+```{r message=FALSE, warning=FALSE}
 ggplot(mean_comparisons, aes(emmean, species))+
   geom_errorbarh(aes(xmin = emmean-SE, xmax = emmean + SE, color = trt), height = 0)+
   geom_point(aes(color = trt) , position = "dodge")+

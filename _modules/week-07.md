@@ -12,6 +12,6 @@ Oct 21
   
 Oct 23
 : Mixed models I
-  : []()  
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day27_10232024)  
 : []()
-  : **[New Assignment](https://jlacasa.github.io/stat705_fall2024/assignments/hw3)**{: .label .label-green } Due 10/31  
+  : **[New Assignment](https://jlacasa.github.io/stat705_fall2024/assignments/hw4)**{: .label .label-green } Due 10/31  

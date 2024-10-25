@@ -17,7 +17,7 @@ editor: visual
 - $y_i \sim N(\mu_i, \sigma^2)$, $\mu_i = \beta_0 + \beta_1 x_i$
 - $y_{ij} \sim N(\mu_{ij}, \sigma^2)$, $\mu_{ij} = \beta_{0i} + \beta_1 x_{ij}$  
 - $y_{ij}|b_{0i} \sim N(\mu_{ij}, \sigma^2)$, $\mu_{ij} = \beta_{0} + b_{0i} + \beta_1 x_{ij}$, $b_{0i} \sim N(0, \sigma^2_0)$  
-- $y_{ij}|b_{0i} \sim N(\mu_{ij}, \sigma^2)$, $\mu_{ij} = \beta_{0} + b_{0i} + \beta_1 x_{ij}$, $\begin{bmatrix}b_{0i} \\ b_{1i} \end{bmatrix} \sim N \left( \begin{bmatrix}0 \\ 0 \end{bmatrix}, \begin{bmatrix}\sigma^2_{0} & \sigma^2_{01} \\ \sigma^2_{01} & \sigma^2_{1} \end{bmatrix} \right)$.
+- $y_{ij}|b_{0i},b_{1i} \sim N(\mu_{ij}, \sigma^2)$, $\mu_{ij} = \beta_{0} + b_{0i} + \beta_1 x_{ij}$, $\begin{bmatrix}b_{0i} \\ b_{1i} \end{bmatrix} \sim N \left( \begin{bmatrix}0 \\ 0 \end{bmatrix}, \begin{bmatrix}\sigma^2_{0} & \sigma^2_{01} \\ \sigma^2_{01} & \sigma^2_{1} \end{bmatrix} \right)$.
 
 - What implications do random effects have over modeling as fixed effects?  
 - What minimum information would we need?  
@@ -37,7 +37,7 @@ ggplot2::theme_set(
 
 
 ```{r}
-dd <- read.csv("data/student-por.csv") %>% 
+dd <- read.csv("data/student_data.csv") %>% 
   rownames_to_column("student_ID") %>% 
   pivot_longer(cols = c(G1, G2), values_to = "prev_grade", names_to = "term")
 ```
@@ -55,13 +55,13 @@ library(nlme)
 
 
 ```{r}
-m1 <- lm(G3 ~ prev_grade : school, data = dd)
-m2 <- lm(G3 ~ prev_grade : school + student_ID , data = dd)
-coef(m2)[1:10]
-m3 <- lm(G3 ~ prev_grade : school : student_ID , data = dd)
+m1 <- lm(G3 ~ school + prev_grade : school, data = dd)
+m2 <- lm(G3 ~ school+ prev_grade : school + student_ID , data = dd)
+m3 <- lm(G3 ~ school + prev_grade : school : student_ID , data = dd)
+coef(m3)[1:10]
 m4 <- lme(G3 ~ prev_grade : school, random = ~ 1|student_ID, data = dd)
 m4
-m5 <- lme(G3 ~ prev_grade : school, random = ~ 0+prev_grade|student_ID, data = dd)
+m5 <- lme(G3 ~ school + prev_grade : school, random = ~ 0+prev_grade|student_ID, data = dd)
 m5
 ```
 
@@ -76,10 +76,10 @@ dd %>%
   ggplot(aes())+
   facet_wrap(~school)+
   geom_point(aes(x =prev_grade, y=G3))+
-  geom_point(aes(x=prev_grade, y=p1), color = 'tomato')+
   geom_point(aes(x=prev_grade, y=p2, group = school), color = 'lightblue')+
   geom_point(aes(x=prev_grade, y=p3, group = school), color = 'orange')+
   geom_point(aes(x=prev_grade, y=p4, group = school), color = 'gold')+
-  geom_point(aes(x=prev_grade, y=p5, group = school), color = 'lightgreen')
+  geom_point(aes(x=prev_grade, y=p5, group = school), color = 'lightgreen')+
+  geom_point(aes(x=prev_grade, y=p1), color = 'tomato')
 ```
 

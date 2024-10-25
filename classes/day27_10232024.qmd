@@ -14,7 +14,6 @@ editor: visual
 
 - Whiteboard  
 
-
 ## For next class  
 
 - Mixed models.  

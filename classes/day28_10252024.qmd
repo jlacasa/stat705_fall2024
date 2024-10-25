@@ -37,7 +37,7 @@ ggplot2::theme_set(
 
 ```{r}
 dd <- read.csv("data/student-por.csv") %>% 
-  rownames_to_column("student_ID") 
+  rownames_to_column("student_ID")
 ```
 
 ```{r}
@@ -67,6 +67,9 @@ dd_predict <- expand.grid(G1 = min(dd$G1):max(dd$G1),
                           student_ID = unique(dd$student_ID))
 dd_predict$p1 <- predict(m1, dd_predict)
 dd_predict$p2 <- predict(m2, dd_predict)
+m2$rank # number of linearly independent rows 
+length(coef(m2)) # number of parameters
+
 dd_predict$p3 <- predict(m3, dd_predict)
 ```
 

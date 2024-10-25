@@ -38,12 +38,13 @@ ggplot2::theme_set(
 
 ```{r}
 dd <- read.csv("data/student-por.csv") %>% 
-  rownames_to_column("student_ID")
+  rownames_to_column("student_ID") %>% 
+  pivot_longer(cols = c(G1, G2), values_to = "prev_grade", names_to = "term")
 ```
 
 ```{r}
 dd %>% 
-  ggplot(aes(G1, G3))+
+  ggplot(aes(prev_grade, G3))+
   geom_point()+
   facet_wrap(~school)
 ```
@@ -54,36 +55,31 @@ library(nlme)
 
 
 ```{r}
-m1 <- lm(G3 ~ G1 : school, data = dd)
-m2 <- lm(G3 ~ G1 : school + student_ID , data = dd)
+m1 <- lm(G3 ~ prev_grade : school, data = dd)
+m2 <- lm(G3 ~ prev_grade : school + student_ID , data = dd)
 coef(m2)[1:10]
-m3 <- lme(G3 ~ G1 : school, random = ~ 1|student_ID, data = dd)
-m3
-```
-
-```{r}
-dd_predict <- expand.grid(G1 = min(dd$G1):max(dd$G1), 
-                          school = unique(dd$school), 
-                          sex = unique(dd$sex), 
-                          student_ID = unique(dd$student_ID))
-dd_predict$p1 <- predict(m1, dd_predict)
-dd_predict$p2 <- predict(m2, dd_predict)
-m2$rank # number of linearly independent rows 
-length(coef(m2)) # number of parameters
-
-dd_predict$p3 <- predict(m3, dd_predict)
+m3 <- lm(G3 ~ prev_grade : school : student_ID , data = dd)
+m4 <- lme(G3 ~ prev_grade : school, random = ~ 1|student_ID, data = dd)
+m4
+m5 <- lme(G3 ~ prev_grade : school, random = ~ 0+prev_grade|student_ID, data = dd)
+m5
 ```
 
 ```{r}
 dd$p1 <- predict(m1, dd)
 dd$p2 <- predict(m2, dd)
 dd$p3 <- predict(m3, dd)
+dd$p4 <- predict(m4, dd)
+dd$p5 <- predict(m5, dd)
+
 dd %>%
   ggplot(aes())+
   facet_wrap(~school)+
-  geom_point(aes(x =G1, y=G3))+
-  geom_point(aes(x=G1, y=p1), color = 'tomato')+
-  geom_point(aes(x=G1, y=p2, group = school), color = 'lightblue')+
-  geom_point(aes(x=G1, y=p3, group = school), color = 'orange')
+  geom_point(aes(x =prev_grade, y=G3))+
+  geom_point(aes(x=prev_grade, y=p1), color = 'tomato')+
+  geom_point(aes(x=prev_grade, y=p2, group = school), color = 'lightblue')+
+  geom_point(aes(x=prev_grade, y=p3, group = school), color = 'orange')+
+  geom_point(aes(x=prev_grade, y=p4, group = school), color = 'gold')+
+  geom_point(aes(x=prev_grade, y=p5, group = school), color = 'lightgreen')
 ```
 

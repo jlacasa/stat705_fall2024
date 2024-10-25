@@ -135,11 +135,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dd <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/student-por.csv"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"student_ID"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rownames_to_column</span>(<span class="st">"student_ID"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(G1, G2), <span class="at">values_to =</span> <span class="st">"prev_grade"</span>, <span class="at">names_to =</span> <span class="st">"term"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span> </span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(G1, G3))<span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(prev_grade, G3))<span class="sc">+</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()<span class="sc">+</span></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>school)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -150,8 +151,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(nlme)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(G3 <span class="sc">~</span> G1 <span class="sc">:</span> school, <span class="at">data =</span> dd)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(G3 <span class="sc">~</span> G1 <span class="sc">:</span> school <span class="sc">+</span> student_ID , <span class="at">data =</span> dd)</span>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(G3 <span class="sc">~</span> prev_grade <span class="sc">:</span> school, <span class="at">data =</span> dd)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(G3 <span class="sc">~</span> prev_grade <span class="sc">:</span> school <span class="sc">+</span> student_ID , <span class="at">data =</span> dd)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(m2)[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  (Intercept)  student_ID10 student_ID100 student_ID101 student_ID102 
@@ -159,59 +160,62 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 student_ID103 student_ID104 student_ID105 student_ID106 student_ID107 
             1            -1             5            -1            -1 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lme</span>(G3 <span class="sc">~</span> G1 <span class="sc">:</span> school, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span><span class="sc">|</span>student_ID, <span class="at">data =</span> dd)</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>m3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(G3 <span class="sc">~</span> prev_grade <span class="sc">:</span> school <span class="sc">:</span> student_ID , <span class="at">data =</span> dd)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>m4 <span class="ot">&lt;-</span> <span class="fu">lme</span>(G3 <span class="sc">~</span> prev_grade <span class="sc">:</span> school, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">1</span><span class="sc">|</span>student_ID, <span class="at">data =</span> dd)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>m4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Linear mixed-effects model fit by REML
   Data: dd 
-  Log-restricted-likelihood: -1315.996
-  Fixed: G3 ~ G1:school 
-(Intercept) G1:schoolGP G1:schoolMS 
-  0.8921246   0.9708224   0.9561604 
+  Log-restricted-likelihood: 19270.31
+  Fixed: G3 ~ prev_grade:school 
+        (Intercept) prev_grade:schoolGP prev_grade:schoolMS 
+       1.070155e+01        1.404539e-17        5.450246e-17 
 
 Random effects:
  Formula: ~1 | student_ID
-        (Intercept) Residual
-StdDev:    1.704493 0.639185
+        (Intercept)     Residual
+StdDev:    3.447576 1.367618e-15
 
-Number of Observations: 649
+Number of Observations: 1298
+Number of Groups: 649 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>m5 <span class="ot">&lt;-</span> <span class="fu">lme</span>(G3 <span class="sc">~</span> prev_grade <span class="sc">:</span> school, <span class="at">random =</span> <span class="sc">~</span> <span class="dv">0</span><span class="sc">+</span>prev_grade<span class="sc">|</span>student_ID, <span class="at">data =</span> dd)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>m5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Linear mixed-effects model fit by REML
+  Data: dd 
+  Log-restricted-likelihood: -2422.346
+  Fixed: G3 ~ prev_grade:school 
+        (Intercept) prev_grade:schoolGP prev_grade:schoolMS 
+          1.9256970           0.8765583           0.8206894 
+
+Random effects:
+ Formula: ~0 + prev_grade | student_ID
+        prev_grade Residual
+StdDev:  0.1358343 1.009312
+
+Number of Observations: 1298
 Number of Groups: 649 </code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>dd_predict <span class="ot">&lt;-</span> <span class="fu">expand.grid</span>(<span class="at">G1 =</span> <span class="fu">min</span>(dd<span class="sc">$</span>G1)<span class="sc">:</span><span class="fu">max</span>(dd<span class="sc">$</span>G1), </span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                          <span class="at">school =</span> <span class="fu">unique</span>(dd<span class="sc">$</span>school), </span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                          <span class="at">sex =</span> <span class="fu">unique</span>(dd<span class="sc">$</span>sex), </span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">student_ID =</span> <span class="fu">unique</span>(dd<span class="sc">$</span>student_ID))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>dd_predict<span class="sc">$</span>p1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(m1, dd_predict)</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>dd_predict<span class="sc">$</span>p2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(m2, dd_predict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in predict.lm(m2, dd_predict): prediction from rank-deficient fit;
-attr(*, "non-estim") has doubtful cases</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>m2<span class="sc">$</span>rank <span class="co"># number of linearly independent rows </span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 649</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(<span class="fu">coef</span>(m2)) <span class="co"># number of parameters</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 651</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>dd_predict<span class="sc">$</span>p3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(m3, dd_predict)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>p1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(m1, dd)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>p2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(m2, dd)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>p3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(m3, dd)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>())<span class="sc">+</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>school)<span class="sc">+</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span>G1, <span class="at">y=</span>G3))<span class="sc">+</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>G1, <span class="at">y=</span>p1), <span class="at">color =</span> <span class="st">'tomato'</span>)<span class="sc">+</span></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>G1, <span class="at">y=</span>p2, <span class="at">group =</span> school), <span class="at">color =</span> <span class="st">'lightblue'</span>)<span class="sc">+</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>G1, <span class="at">y=</span>p3, <span class="at">group =</span> school), <span class="at">color =</span> <span class="st">'orange'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>p1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(m1, dd)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>p2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(m2, dd)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>p3 <span class="ot">&lt;-</span> <span class="fu">predict</span>(m3, dd)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>p4 <span class="ot">&lt;-</span> <span class="fu">predict</span>(m4, dd)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>dd<span class="sc">$</span>p5 <span class="ot">&lt;-</span> <span class="fu">predict</span>(m5, dd)</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>dd <span class="sc">%&gt;%</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>())<span class="sc">+</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>school)<span class="sc">+</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span>prev_grade, <span class="at">y=</span>G3))<span class="sc">+</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>prev_grade, <span class="at">y=</span>p1), <span class="at">color =</span> <span class="st">'tomato'</span>)<span class="sc">+</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>prev_grade, <span class="at">y=</span>p2, <span class="at">group =</span> school), <span class="at">color =</span> <span class="st">'lightblue'</span>)<span class="sc">+</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>prev_grade, <span class="at">y=</span>p3, <span class="at">group =</span> school), <span class="at">color =</span> <span class="st">'orange'</span>)<span class="sc">+</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>prev_grade, <span class="at">y=</span>p4, <span class="at">group =</span> school), <span class="at">color =</span> <span class="st">'gold'</span>)<span class="sc">+</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x=</span>prev_grade, <span class="at">y=</span>p5, <span class="at">group =</span> school), <span class="at">color =</span> <span class="st">'lightgreen'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day28_10252024_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+<p><img src="day28_10252024_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>

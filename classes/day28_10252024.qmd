@@ -24,6 +24,7 @@ editor: visual
 
 ## Applied example  
 
+Data can be found [here](https://www.kaggle.com/datasets/devansodariya/student-performance-data).
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
 ```

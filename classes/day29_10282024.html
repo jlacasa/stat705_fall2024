@@ -68,6 +68,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="day29_10282024_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="day29_10282024_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 </head>
 
@@ -100,6 +102,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>A combination of “fixed effects” and “random effects”.<br>
 </li>
 <li>Slap a new set of assumptions on top of the ones we had.</li>
+<li>We estimate fixed effects, <span class="math inline">\(\mu, \boldsymbol{\beta}\)</span>, and random effects, <span class="math inline">\(\sigma^2_u, \sigma^2_v, \sigma^2_{\varepsilon}\)</span>, etc.</li>
 <li>Review the assumptions of the general linear model vs.&nbsp;the general linear mixed model.<br>
 </li>
 <li>Discuss the type of data needed for a variable with random effects.</li>
@@ -111,7 +114,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </li>
 <li>A few differences:
 <ul>
-<li>Methods of estimation.<br>
+<li>Methods of estimation. LSE, shrinkage.<br>
 </li>
 <li>What process is being studied? (interest at the population-level versus at the individual-level)<br>
 </li>
@@ -120,6 +123,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Different types of inference we obtain.</li>
 </ul></li>
 <li><a href="https://newprairiepress.org/agstatconference/2016/proceedings/4/">Should blocks be fixed or random?</a></li>
+</ul>
+</section>
+<section id="restricted-maximum-likelihood-reml" class="level3">
+<h3 class="anchored" data-anchor-id="restricted-maximum-likelihood-reml">Restricted maximum likelihood (REML)</h3>
+<ul>
+<li><p>REML is the default in most cases because, for small data (aka most cases), maximum likelihood (ML) provides variance estimates that are downward biased.<br>
+</p></li>
+<li><p>Why is the unbiased estimation of variance components so important?</p>
+<ul>
+<li>Relationship between variance estimates, standard error, confidence intervals, t-tests, type I error.<br>
+</li>
+</ul></li>
+<li><p>In REML, the likelihood is maximized after accounting for the model’s fixed effects.</p></li>
+<li><p>In ML, <span class="math inline">\(-\ell_{ML}(\boldsymbol{\sigma; \boldsymbol{\beta}, \mathbf{y}}) = - (\frac{n}{2}) \log(2\pi)-(\frac{1}{2}) \log (|\mathbf{V}(\boldsymbol\sigma)|) - (\frac{1}{2}) (\mathbf{y}-\mathbf{X}\boldsymbol{\beta})^T[\mathbf{V}(\boldsymbol\sigma)]^{-1}(\mathbf{y}-\mathbf{X}\boldsymbol{\beta})\)</span><br>
+</p></li>
+<li><p>In REML, <span class="math inline">\(\ell_{REML}(\boldsymbol{\sigma};\mathbf{y}) = - (\frac{n-p}{2}) \log (2\pi) - (\frac{1}{2}) \log (|\mathbf{V}(\boldsymbol\sigma)|) - (\frac{1}{2})log \left( |\mathbf{X}^T[\mathbf{V}(\boldsymbol\sigma)]^{-1}\mathbf{X}|\right) - (\frac{1}{2})\mathbf{r}[\mathbf{V}(\boldsymbol\sigma)]^{-1}\mathbf{r}\)</span>, where <span class="math inline">\(p = rank(\mathbf{X})\)</span> and <span class="math inline">\(\mathbf{r} = \mathbf{y}-\mathbf{X}\hat{\boldsymbol{\beta}}_{ML}\)</span>.</p>
+<ul>
+<li>Start with initial values for <span class="math inline">\(\boldsymbol\sigma\)</span>, <span class="math inline">\(\tilde{\boldsymbol{\sigma}}\)</span>.<br>
+</li>
+<li>Compute <span class="math inline">\(\mathbf{G}(\tilde{\boldsymbol{\sigma}})\)</span> and <span class="math inline">\(\mathbf{R}(\tilde{\boldsymbol{\sigma}})\)</span>.<br>
+</li>
+<li>Obtain <span class="math inline">\(\boldsymbol{\beta}\)</span> and <span class="math inline">\(\mathbf{b}\)</span>.<br>
+</li>
+<li>Update <span class="math inline">\(\tilde{\boldsymbol{\sigma}}\)</span>.<br>
+</li>
+<li>Repeat until convergence.</li>
+</ul></li>
 </ul>
 </section>
 <section id="an-applied-example" class="level3">

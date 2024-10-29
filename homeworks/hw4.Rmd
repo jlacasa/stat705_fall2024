@@ -1,5 +1,5 @@
 ---
-title: "Howework 4"
+title: "Homework 4"
 author: "J Lacasa"
 date: "2024-10-22"
 output: pdf_document

@@ -28,5 +28,12 @@ Submit a report containing:
 1. A manuscript with Introduction, Methods (including a clear and complete description of the statistical model), Results and Conclusions.
 2. A tutorial with code and detailed comments.   
 
+**Detailed due dates**  
+
+- **Friday November 22 at 2pm CT**: send to your classmate for peer review.  
+- **Monday December 2 at 2pm CT**: return review to your classmate.  
+- **December 9-13**: schedule final presentations.  
+- **December 13 11:59 pm CT**: send final report and tutorial.  
+
 ## Practical reads  
 1. Broman, K. W., & Woo, K. H. (2018). Data Organization in Spreadsheets. The American Statistician, 72(1), 2–10. [https://doi.org/10.1080/00031305.2017.1375989](https://doi.org/10.1080/00031305.2017.1375989)

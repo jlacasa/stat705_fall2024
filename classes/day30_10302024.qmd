@@ -125,7 +125,7 @@ m_mixed
 
 #### Hierarchical models  
 
-- A different interpretation of random effects.  
+- Further interpretations of (nested) random effects.  
 
 ## Coming next  
 

@@ -17,7 +17,7 @@ editor: visual
 - Assignment is due tomorrow 11:59 pm  
 - Projects are due November 22 (3.5 weeks)  
   - Send to one of your classmates for peer review
-  - Peer review feedback due November 2nd.  
+  - Peer review feedback due December 2nd.  
   - Presentations (15 min) the week of finals.  
 
 ## Mixed models  
@@ -132,6 +132,6 @@ m_mixed
 - Assignment is due tomorrow 11:59 pm  
 - Projects are due November 22 (3.5 weeks)  
   - Send to one of your classmates for peer review
-  - Peer review feedback due November 2nd.  
+  - Peer review feedback due December 2nd.  
   - Presentations (15 min) the week of finals.  
 

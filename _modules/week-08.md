@@ -13,3 +13,7 @@ Oct 28
 Oct 30
 : Mixed models III
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day30_10302024)  
+
+Nov 1 
+: Kahoot!
+  : []()  

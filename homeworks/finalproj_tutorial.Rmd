@@ -184,22 +184,25 @@ anova(m3)
 #### Means, Mean comparisons  
 ```{r message=FALSE, warning=FALSE}
 means <- emmeans::emmeans(m3,
-                          ~species:trt, at = list(doy =237))
+                          ~trt:species, at = list("doy" = c(237)))
+
 mean_comparisons <- multcomp::cld(means,
                                   level = 0.05,
-                                  adjust = "sidak",
+                                  adjust = "none",
                                   decreasing = TRUE,
                                   Letters = letters) %>%
   mutate(.group = trimws(.group))
 
 mean_comparisons %>% 
-  transmute(species, trt, emmean = round(emmean, 2), group = .group)
+  transmute(species, trt,SE=round(SE,2),
+            emmean = round(emmean, 2), group = .group,
+            lower.CL = round(lower.CL,2), upper.CL = round(upper.CL,2))
 ```
 
 
 ```{r message=FALSE, warning=FALSE}
 ggplot(mean_comparisons, aes(emmean, species))+
-  geom_errorbarh(aes(xmin = emmean-SE, xmax = emmean + SE, color = trt), height = 0)+
+  geom_errorbarh(aes(xmin = emmean-SE, xmax = emmean + SE, color = trt), height = 0.1)+
   geom_point(aes(color = trt) , position = "dodge")+
   scale_fill_manual(values = c("#FC4C02", "#008E97"))+
   scale_color_manual(values = c("#FC4C02", "#008E97"))+
@@ -241,7 +244,9 @@ plot_data %>%
 ```
 
 
-### What if we hadn't changed our model?  
+### Bonus: What if we hadn't changed our model?  
+
+This is just a demonstration of what happens when we design a model that does not describe our data generating process well. This does not necessarily have to go in your project. 
 
 ```{r}
 plot_data <- expand.grid(doy = unique(dd_finalproj$doy), 

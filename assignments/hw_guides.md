@@ -19,6 +19,7 @@ The following guides are solved homeworks, indicating what was expected from eac
 | HW6       |         |             |
 | HW7       |         |             |
 |Project proposal | [PDF](../homeworks/finalproj.pdf) |             |
+|Project tutorial | [PDF](../homeworks/finalproj_tutorial.pdf) | [R script](../homeworks/finalproj_tutorial.Rmd) |
 |Project manuscript | [PDF](../homeworks/finalproj_final.pdf) |             |
 
 

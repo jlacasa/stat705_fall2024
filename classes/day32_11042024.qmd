@@ -16,7 +16,7 @@ Extending our understanding of how we construct statistical models
 - More restrictive for non-normal distributions  
   - What is the residual even?  
   - $Var(y)$ in other distributions  
-  - *"When you have a hammer, try to make every problem look like a nail"* ([Stroup et al., 2024](https://www.routledge.com/Generalized-Linear-Mixed-Models-Modern-Concepts-Methods-and-Applications/Stroup-Ptukhina-Garai/p/book/9781498755566?srsltid=AfmBOoo-C2dJm7p5SEH4mizPbgCJC_a8nHQ-mvKc91FaplWRSM499OkL))  
+  - 'If the data are not Gaussian, we must make them "act Gaussian"', *essentially amounts to the modeling version of the "when you have a hammer, try to make every problem look like a nail"* ([Stroup et al., 2024](https://www.routledge.com/Generalized-Linear-Mixed-Models-Modern-Concepts-Methods-and-Applications/Stroup-Ptukhina-Garai/p/book/9781498755566?srsltid=AfmBOoo-C2dJm7p5SEH4mizPbgCJC_a8nHQ-mvKc91FaplWRSM499OkL))  
 
 #### Probability distribution form  
 

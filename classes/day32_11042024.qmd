@@ -11,14 +11,11 @@ Extending our understanding of how we construct statistical models
 #### Model equation form  
 
 - $y_{ij} = \mu + \tau_i + \varepsilon_{ij}, \ \varepsilon_{ij}\sim N(0,\sigma^2)$  
-- $y_{ij}\sim N(\mu_{ij},\sigma^2), \ \mu_{ij} = \mu + \tau_i$
-- $y_{ij}\sim N(\mu + \tau_i,\sigma^2)$  
-- More restrictive for non-normal distributions  
-  - What is the residual even?  
-  - $Var(y)$ in other distributions  
-  - 'If the data are not Gaussian, we must make them "act Gaussian"', *essentially amounts to the modeling version of the "when you have a hammer, try to make every problem look like a nail"* ([Stroup et al., 2024](https://www.routledge.com/Generalized-Linear-Mixed-Models-Modern-Concepts-Methods-and-Applications/Stroup-Ptukhina-Garai/p/book/9781498755566?srsltid=AfmBOoo-C2dJm7p5SEH4mizPbgCJC_a8nHQ-mvKc91FaplWRSM499OkL))  
 
 #### Probability distribution form  
+
+- $y_{ij}\sim N(\mu_{ij},\sigma^2), \ \mu_{ij} = \mu + \tau_i$
+- $y_{ij}\sim N(\mu + \tau_i,\sigma^2)$  
 
 Necessary steps:  
 
@@ -26,6 +23,13 @@ Necessary steps:
 - - Define what your model is focusing on (usually the expected value $E(y)$)  
 - State the linear predictor $\eta$  
 - Identify a link function that connects $E(y)$ to the linear predictor  
+
+#### Model equation versus Probability distribution forms  
+
+- Model equation is much more restrictive for non-normal distributions  
+  - What is the residual even?  
+  - $Var(y)$ in other distributions  
+  - 'If the data are not Gaussian, we must make them "act Gaussian"', *essentially amounts to the modeling version of the "when you have a hammer, try to make every problem look like a nail"* ([Stroup et al., 2024](https://www.routledge.com/Generalized-Linear-Mixed-Models-Modern-Concepts-Methods-and-Applications/Stroup-Ptukhina-Garai/p/book/9781498755566?srsltid=AfmBOoo-C2dJm7p5SEH4mizPbgCJC_a8nHQ-mvKc91FaplWRSM499OkL))  
 
 
 ### The general linear model as a special case of the GLM   

@@ -171,23 +171,15 @@ pre code {
 <div id="model-equation-form" class="section level4">
 <h4>Model equation form</h4>
 <ul>
-<li><span class="math inline">\(y_{ij} = \mu + \tau_i + \varepsilon_{ij}, \ \varepsilon_{ij}\sim N(0,\sigma^2)\)</span><br />
-</li>
-<li><span class="math inline">\(y_{ij}\sim N(\mu_{ij},\sigma^2), \ \mu_{ij} = \mu + \tau_i\)</span></li>
-<li><span class="math inline">\(y_{ij}\sim N(\mu + \tau_i,\sigma^2)\)</span><br />
-</li>
-<li>More restrictive for non-normal distributions
-<ul>
-<li>What is the residual even?<br />
-</li>
-<li><span class="math inline">\(Var(y)\)</span> in other distributions<br />
-</li>
-<li>‘If the data are not Gaussian, we must make them “act Gaussian”’, <em>essentially amounts to the modeling version of the “when you have a hammer, try to make every problem look like a nail”</em> (<a href="https://www.routledge.com/Generalized-Linear-Mixed-Models-Modern-Concepts-Methods-and-Applications/Stroup-Ptukhina-Garai/p/book/9781498755566?srsltid=AfmBOoo-C2dJm7p5SEH4mizPbgCJC_a8nHQ-mvKc91FaplWRSM499OkL">Stroup et al., 2024</a>)</li>
-</ul></li>
+<li><span class="math inline">\(y_{ij} = \mu + \tau_i + \varepsilon_{ij}, \ \varepsilon_{ij}\sim N(0,\sigma^2)\)</span></li>
 </ul>
 </div>
 <div id="probability-distribution-form" class="section level4">
 <h4>Probability distribution form</h4>
+<ul>
+<li><span class="math inline">\(y_{ij}\sim N(\mu_{ij},\sigma^2), \ \mu_{ij} = \mu + \tau_i\)</span></li>
+<li><span class="math inline">\(y_{ij}\sim N(\mu + \tau_i,\sigma^2)\)</span></li>
+</ul>
 <p>Necessary steps:</p>
 <ul>
 <li>Identify the probability distribution of <span class="math inline">\(y\)</span><br />
@@ -199,6 +191,19 @@ pre code {
 <li>State the linear predictor <span class="math inline">\(\eta\)</span><br />
 </li>
 <li>Identify a link function that connects <span class="math inline">\(E(y)\)</span> to the linear predictor</li>
+</ul>
+</div>
+<div id="model-equation-versus-probability-distribution-forms" class="section level4">
+<h4>Model equation versus Probability distribution forms</h4>
+<ul>
+<li>Model equation is much more restrictive for non-normal distributions
+<ul>
+<li>What is the residual even?<br />
+</li>
+<li><span class="math inline">\(Var(y)\)</span> in other distributions<br />
+</li>
+<li>‘If the data are not Gaussian, we must make them “act Gaussian”’, <em>essentially amounts to the modeling version of the “when you have a hammer, try to make every problem look like a nail”</em> (<a href="https://www.routledge.com/Generalized-Linear-Mixed-Models-Modern-Concepts-Methods-and-Applications/Stroup-Ptukhina-Garai/p/book/9781498755566?srsltid=AfmBOoo-C2dJm7p5SEH4mizPbgCJC_a8nHQ-mvKc91FaplWRSM499OkL">Stroup et al., 2024</a>)</li>
+</ul></li>
 </ul>
 </div>
 </div>

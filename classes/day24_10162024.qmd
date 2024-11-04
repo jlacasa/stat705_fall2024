@@ -46,7 +46,7 @@ This data example was used in [Zou and Hastie (2005)](https://academic.oup.com/j
 dd <- read.csv("data/prostate.csv")
 names(dd)
 y <- dd$lpsa # log prostate-specific antigen
-X <- model.matrix(lpsa ~ ., dd)[, -1]
+X <- model.matrix(lpsa ~ ., dd[,-10])[, -1]
 ```
 
 

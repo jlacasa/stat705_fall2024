@@ -9,7 +9,7 @@ Aug 19
 Aug 21
 : Intro to statistical modeling
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day02_08212024)
-Intro to legume data; live R code
+: Intro to legume data; live R code
 : []()
   : **Complete [survey](https://forms.gle/Anv7f1uFUZDwoDsS9)**{: .label .label-yellow } Due 08/21
 : []()

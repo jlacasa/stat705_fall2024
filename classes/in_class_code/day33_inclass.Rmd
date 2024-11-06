@@ -33,3 +33,13 @@ dd %>%
 
 ```
 
+```{r}
+library(mgcv)
+
+m1 <- gam(y ~ 1 + spray * lead + block,
+          family = poisson(link = "log"),
+          data = dd)
+summary(m1)
+anova(m1)
+```
+

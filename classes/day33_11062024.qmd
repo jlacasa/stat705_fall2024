@@ -35,11 +35,12 @@ library(tidyverse)
 library(ggpubr)
 
 n <- 2000
+set.seed(42)
 snorm <- rnorm(n, mean = 1, sd = sqrt(1))
 spois <- rpois(n, lambda = 1)
 sbinom <- rbinom(n, size = 12, prob = .3)
 sbeta <- rbeta(n, shape1 = 2, shape2 = 4)
-st <- rt(n, df = 2, ncp = 1)
+st <- rt(n, df = 10, ncp = 1)
 sgamma <- rgamma(n, shape = 10, rate = 2)
 
 data.frame(normal = snorm, 
@@ -63,6 +64,8 @@ data.frame(normal = snorm,
 ## Applied examples   
 
 ### Modeling counts of insects    
+
+[R script](in_class_code/day33_inclass.Rmd)
 
 ```{r message=FALSE, warning=FALSE}
 library(agridat)

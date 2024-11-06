@@ -7,6 +7,7 @@ editor: visual
 ## Announcements  
 
 - Assignment review  
+- [glmnet documentation](https://glmnet.stanford.edu/)
 
 ## Generalized linear model (GLM) 
 

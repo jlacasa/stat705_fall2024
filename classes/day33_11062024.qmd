@@ -74,6 +74,9 @@ data(beall.webworms)
 dd <- beall.webworms
 str(dd)
 
+unique(dd %>% 
+         dplyr::select(trt, spray, lead))
+
 dd %>% 
   ggplot(aes(y , trt))+
   geom_jitter(alpha = .25, width = 0.1)+
@@ -92,11 +95,11 @@ dd %>%
 
 ```{r message=FALSE, warning=FALSE}
 library(mgcv)
-m1 <- gam(y ~ trt,
+m1 <- gam(y ~ spray*lead,
           family = poisson(link = "log"),
           data = dd)
 
-summary(m1)
+# summary(m1)
 anova(m1)
 ```
 

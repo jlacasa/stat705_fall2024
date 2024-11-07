@@ -13,4 +13,4 @@ Nov 6
 
 Nov 8
 : Generalized linear models III
-  : [](https://jlacasa.github.io/stat705_fall2024/classes/day34_11082024)  
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day34_11082024)  

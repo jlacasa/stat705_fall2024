@@ -1,0 +1,32 @@
+---
+title: "In class R script - Day 33"
+author: "Emmanuela van Versendaal"
+date: "11/6/2024"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(agridat)
+
+data(crowder.seeds)
+dd <- crowder.seeds %>% 
+  unite("trt", c(gen, extract), remove = FALSE)
+str(dd)
+
+dd %>% 
+  ggplot(aes(trt, germ/n))+
+  geom_point(alpha = .85)+
+  theme_classic()+
+  labs(y = "Germination (%)",
+       x = "Genotype")+
+  scale_fill_manual(values = c("#FC4C02", "#B47978", "#008E97", "#99D17B"))+
+  scale_color_manual(values = c("#FC4C02", "#B47978", "#008E97", "#99D17B"))+
+  theme(legend.position = "bottom")
+```
+
+

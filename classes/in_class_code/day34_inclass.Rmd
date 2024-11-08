@@ -32,3 +32,16 @@ dd %>%
 ```
 
 
+```{r}
+dd <- crowder.seeds %>% 
+  unite("trt", c(gen, extract), remove = FALSE) %>% 
+  mutate(gp = ifelse(germ/n!=0, germ/n, .000000001))
+```
+ 
+```{r}
+gam(gp ~ extract*gen + s(plate, bs = "re"),
+    family = betar(link = "logit"),
+    data = dd)
+```
+ 
+ 

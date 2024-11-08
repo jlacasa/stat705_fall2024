@@ -31,17 +31,32 @@ dd %>%
   theme(legend.position = "bottom")
 ```
 
+```{r}
+library(mgcv)
+
+
+m1 <- gam(cbind(germ, n-germ) # n successes , n failures 
+    ~ 1+extract * gen, 
+    family = binomial(link = "logit"),
+    data =dd)
+summary(m1)
+```
+
 
 ```{r}
 dd <- crowder.seeds %>% 
   unite("trt", c(gen, extract), remove = FALSE) %>% 
-  mutate(gp = ifelse(germ/n!=0, germ/n, .000000001))
+  mutate(germ_prop = ifelse(germ/n!=0, germ/n, .000000001))
+
+hist(dd$germ_prop)
 ```
  
 ```{r}
-gam(gp ~ extract*gen + s(plate, bs = "re"),
+m2 <- gam(germ_prop ~ 1+extract*gen,
     family = betar(link = "logit"),
     data = dd)
+
+summary(m2)
 ```
  
  

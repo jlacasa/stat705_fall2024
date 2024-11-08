@@ -19,13 +19,15 @@ dd <- crowder.seeds %>%
 str(dd)
 
 dd %>% 
-  ggplot(aes(trt, germ/n))+
-  geom_point(alpha = .85)+
+  ggplot(aes(trt, germ, group = plate))+
+  geom_linerange(aes(xmin=trt, xmax =trt, ymin = germ, ymax = n, group = plate), alpha = .85, 
+               position = position_dodge(width = .25))+
+  geom_point(aes(fill = germ/n), shape =21, size =2.5, position = position_dodge(width = .25), alpha = .85)+
   theme_classic()+
-  labs(y = "Germination (%)",
-       x = "Genotype")+
-  scale_fill_manual(values = c("#FC4C02", "#B47978", "#008E97", "#99D17B"))+
-  scale_color_manual(values = c("#FC4C02", "#B47978", "#008E97", "#99D17B"))+
+  scale_fill_viridis_c()+
+  labs(y = "Germination (y, n)",
+       x = "Genotype", 
+       fill = "Germination (%)")+
   theme(legend.position = "bottom")
 ```
 

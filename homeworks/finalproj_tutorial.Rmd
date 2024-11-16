@@ -2,7 +2,7 @@
 title: "Untitled"
 author: "J Lacasa"
 date: "2024-10-17"
-output: html_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -211,7 +211,58 @@ ggplot(mean_comparisons, aes(emmean, species))+
        y = "Species",
        color = "Treatment", 
        fill = "Treatment")+
-  theme(aspect.ratio = 1)
+  theme(aspect.ratio = 1, 
+        legend.position = "bottom")
+
+# ggsave("finalproj_figure1.png", width = 5, height = 5)
+```
+
+```{r}
+means2 <- emmeans::emmeans(m3,
+                          ~trt:species, at = list("doy" = c(155)))
+
+mean_comparisons2 <- multcomp::cld(means2,
+                                  level = 0.05,
+                                  adjust = "none",
+                                  decreasing = TRUE,
+                                  Letters = letters) %>%
+  mutate(.group = trimws(.group))
+
+ggplot(mean_comparisons2, aes(emmean, species))+
+  geom_errorbarh(aes(xmin = emmean-SE, xmax = emmean + SE, color = trt), height = 0.1)+
+  geom_point(aes(color = trt) , position = "dodge")+
+  scale_fill_manual(values = c("#FC4C02", "#008E97"))+
+  scale_color_manual(values = c("#FC4C02", "#008E97"))+
+  theme_pubclean()+
+  labs(x = expression(Aboveground~Biomass~(Mg~ha^{-1})), 
+       y = "Species",
+       color = "Treatment", 
+       fill = "Treatment")+
+  theme(aspect.ratio = 1, 
+        legend.position = "bottom")
+
+means3 <- emmeans::emmeans(m3,
+                          ~trt:species, at = list("doy" = c(194)))
+
+mean_comparisons3 <- multcomp::cld(means3,
+                                  level = 0.05,
+                                  adjust = "none",
+                                  decreasing = TRUE,
+                                  Letters = letters) %>%
+  mutate(.group = trimws(.group))
+ggplot(mean_comparisons3, aes(emmean, species))+
+  geom_errorbarh(aes(xmin = emmean-SE, xmax = emmean + SE, color = trt), height = 0.1)+
+  geom_point(aes(color = trt) , position = "dodge")+
+  scale_fill_manual(values = c("#FC4C02", "#008E97"))+
+  scale_color_manual(values = c("#FC4C02", "#008E97"))+
+  theme_pubclean()+
+  labs(x = expression(Aboveground~Biomass~(Mg~ha^{-1})), 
+       y = "Species",
+       color = "Treatment", 
+       fill = "Treatment")+
+  theme(aspect.ratio = 1, 
+        legend.position = "bottom")
+
 ```
 
 ```{r}

@@ -15,12 +15,9 @@ The following guides are solved homeworks, indicating what was expected from eac
 | HW2       | [PDF](../homeworks/hw2_solved.pdf) |[R script](../homeworks/hw2_solved.Rmd) |             |
 | HW3       | [PDF](../homeworks/hw3_solved.pdf) |[R script](../homeworks/hw3_solved.Rmd)|              |
 | HW4       |         |[R script](../homeworks/hw4_solved.html) |[python script](../homeworks/hw4_solved_py.html) |
-| HW5       |         |             |             |
-| HW6       |         |             |             |
-| HW7       |         |             |             |
 |Project proposal | [PDF](../homeworks/finalproj.pdf) |             |
 |Project tutorial | [PDF](../homeworks/finalproj_tutorial.pdf) | [R script](../homeworks/finalproj_tutorial.Rmd) |
-|Project manuscript | [PDF](../homeworks/finalproj_final.pdf) |             |
+|Project manuscript | [PDF](../homeworks/finalproj_final.pdf) | [R script](../homeworks/finalproj_final.Rmd)            |
 
 
 

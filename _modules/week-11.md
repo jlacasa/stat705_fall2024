@@ -4,7 +4,7 @@
   
 Nov 18
 : Applied example I
-  : [](https://jlacasa.github.io/stat705_fall2024/classes/day38_11182024)  
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day38_11182024)  
 
 Nov 20
 : Applied example II

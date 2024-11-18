@@ -1,0 +1,64 @@
+---
+title: "Day 38 - 11/18/2024"
+format: html
+editor: visual
+---
+
+## Applied data example I (what are ouliers anyways?)  
+
+### The clover example  
+
+- Last day (harvest)  
+
+- Crown biomass
+
+```{r warning=FALSE, message=FALSE}
+library(tidyverse)
+url <-  "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/dd_finalproj.csv"
+dd <- read.csv(url) %>% filter(doy == 237) %>% 
+    filter(species %in% c("A", "D", "E")) 
+```
+
+### Outliers definitions  
+
+#### Default boxplot  
+```{r}
+dd %>% 
+  ggplot(aes(paste(species, trt), crown_g))+
+  theme_classic()+
+  labs(x = "Species", 
+       y = expression(Crown~biomass~(grams~plant^{-1})))+
+  geom_boxplot(alpha = .6)
+```
+
+```{r}
+boxplot(crown_g ~species:trt, data = dd,
+        xlab = "Species",
+        ylab = expression(Crown~biomass~(grams~plant^{-1})))
+```
+
+#### Interquartile range  
+
+```{r}
+dd %>% 
+  group_by(trt, species) %>% 
+  transmute(outlier = crown_g > (quantile(crown_g, probs = .75)+ IQR(crown_g)) |
+              crown_g < (quantile(crown_g, probs = .25) - IQR(crown_g)) ) %>% 
+  filter(outlier == TRUE)
+```
+
+### A fammous example of removing data sort of arbitrarily  
+
+![](https://bookdown.org/egarpor/PM-UC3M/images/figures/challenger.png)
+
+[Feynman's visit to NASA](https://feynman.com/science/the-challenger-disaster/). 
+
+## Let's work on an example  
+
+[R script](in_class_code/day38_inclass.Rmd)
+
+## Announcements  
+
+- Project due Friday  
+
+

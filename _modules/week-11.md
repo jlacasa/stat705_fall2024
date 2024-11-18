@@ -10,3 +10,6 @@ Nov 20
 : Applied example II
   : [](https://jlacasa.github.io/stat705_fall2024/classes/day39_11202024)  
 
+Nov 22
+: Work on projects
+

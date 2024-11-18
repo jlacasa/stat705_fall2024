@@ -4,7 +4,7 @@ format: html
 editor: visual
 ---
 
-## Applied data example I (what are ouliers anyways?)  
+## Applied data example I (what are outliers anyways?)  
 
 ### The clover example  
 

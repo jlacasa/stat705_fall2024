@@ -7,3 +7,21 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+url <-  "https://raw.githubusercontent.com/jlacasa/stat705_fall2024/main/classes/data/dd_finalproj.csv"
+dd <- read.csv(url) %>% filter(doy == 237) %>% 
+    filter(species %in% c("A", "D", "E")) 
+
+dd %>% 
+  ggplot(aes(paste(species, trt), crown_g))+
+  geom_jitter()+
+  geom_boxplot(alpha = .6)
+```
+
+```{r}
+dd %>% 
+  group_by(trt, species) %>% 
+  transmute(outlier = crown_g > (quantile(crown_g, probs = .75)+ IQR(crown_g)) |
+              crown_g < (quantile(crown_g, probs = .25) - IQR(crown_g)) ) %>% 
+  filter(outlier == TRUE)
+```

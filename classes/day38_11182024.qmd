@@ -21,6 +21,10 @@ dd <- read.csv(url) %>% filter(doy == 237) %>%
 
 ### Outliers definitions  
 
+>With Q1 and Q3 denoting (essentially) the lower and upper quartiles in the sample, observations greater than $Q3 + k(Q3 − Q1)$ or less than $Q1 − k(Q3 − Q1)$ are flagged as outliers. These values are sometimes outliers and sometimes not. With the typical value of 1.5 for $k$, a normal sample of size 100 has more than 50 percent chance of containing one or more of these ‘outliers’!   
+
+*From [International Encyclopedia of the Social & Behavioral Sciences](https://www.sciencedirect.com/referencework/9780080970875/international-encyclopedia-of-the-social-and-behavioral-sciences)*
+
 #### Default boxplot  
 ```{r}
 dd %>% 
@@ -42,16 +46,20 @@ boxplot(crown_g ~species:trt, data = dd,
 ```{r}
 dd %>% 
   group_by(trt, species) %>% 
-  transmute(outlier = crown_g > (quantile(crown_g, probs = .75)+ IQR(crown_g)) |
-              crown_g < (quantile(crown_g, probs = .25) - IQR(crown_g)) ) %>% 
+  transmute(crown_g, 
+            outlier = crown_g > (quantile(crown_g, probs = .75)+ 1.5*IQR(crown_g)) |
+              crown_g < (quantile(crown_g, probs = .25) - 1.5*IQR(crown_g)) ) %>% 
   filter(outlier == TRUE)
 ```
 
-### A fammous example of removing data sort of arbitrarily  
+### Data manipulation goes wrong - a famous example  
 
-![](https://bookdown.org/egarpor/PM-UC3M/images/figures/challenger.png)
+- [The Challenger disaster](https://en.wikipedia.org/wiki/Space_Shuttle_Challenger_disaster).    
+- [Feynman's visit to NASA](https://feynman.com/science/the-challenger-disaster/): a communication issue behind the disaster. 
 
-[Feynman's visit to NASA](https://feynman.com/science/the-challenger-disaster/). 
+
+![](https://bookdown.org/egarpor/PM-UC3M/images/figures/challenger.png){fig-align="center" width="289"}
+
 
 ## Let's work on an example  
 

@@ -7,8 +7,7 @@ Nov 18
   : [html](https://jlacasa.github.io/stat705_fall2024/classes/day38_11182024)  
 
 Nov 20
-: Applied example II
-  : [](https://jlacasa.github.io/stat705_fall2024/classes/day39_11202024)  
+: Work on projects
 
 Nov 22
 : Work on projects

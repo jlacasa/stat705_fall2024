@@ -11,4 +11,4 @@ Nov 20
 
 Nov 22
 : Work on projects
-
+  : **Project due 11.59 pm**{: .label .label-red } Send to your classmate!

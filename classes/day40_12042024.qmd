@@ -30,3 +30,14 @@ editor: visual
 
 - The connection between scientific questions and statistics.  
 
+
+
+## Miscellaneous  
+
+- Next class: review linear regression, multiple linear regression.  
+- Sources where to learn how to code better without relying on AI:  
+  - [R for Data Science (2e)](https://r4ds.hadley.nz/)  
+  - [Advanced R](https://adv-r.hadley.nz/)  
+  - More advanced: [WTF - What They Forgot to Teach You About R](https://rstats.wtf/)  
+  - Practice hands-on!  
+  - Remember learning is not always painless (:

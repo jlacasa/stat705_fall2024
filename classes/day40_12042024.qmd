@@ -40,4 +40,4 @@ editor: visual
   - [Advanced R](https://adv-r.hadley.nz/)  
   - More advanced: [WTF - What They Forgot to Teach You About R](https://rstats.wtf/)  
   - Practice hands-on!  
-  - Remember learning is not always painless (:
+  - Remember learning is not always pain free (:

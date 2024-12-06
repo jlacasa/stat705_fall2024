@@ -11,4 +11,4 @@ Dec 4
 
 Dec 6
 : Wrap up II 
-  : [](https://jlacasa.github.io/stat705_fall2024/classes/day40_12062024)
+  : [html](https://jlacasa.github.io/stat705_fall2024/classes/day41_12062024)

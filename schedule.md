@@ -7,6 +7,6 @@ nav_order: 2
 
 # Schedule
 
-{% for module in site.schedules %}
-{{ schedule }}
+{% for module in site.modules %}
+{{ module }}
 {% endfor %}
